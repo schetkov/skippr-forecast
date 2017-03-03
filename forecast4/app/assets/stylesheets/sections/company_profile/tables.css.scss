@@ -1,0 +1,17 @@
+.company {
+  .table tbody tr td {
+    padding-top: 13px;
+
+    a.action {
+      padding-right: 3px;
+    }
+  }
+
+  .table tbody tr td.add-invoice {
+    padding: 8px;
+  }
+
+  .table tbody tr td.status {
+    padding-top: 10px;
+  }
+}

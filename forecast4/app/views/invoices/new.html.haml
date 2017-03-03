@@ -1,0 +1,21 @@
+#showcase
+  .container
+    .row.header
+      .col-md-12
+        = link_to '<< Back to Invoices', invoices_path
+        %h3 Register an Invoice
+        %p
+          Please complete this form to register a current invoice (issued
+          within the last 30 days) for approval by the exchange.
+
+    .row
+      .col-md-12
+        .auction
+          = form_for [@debtor, @invoice], html: { role: 'form' } do |form|
+
+            = render '/application/error_messages', object: @invoice
+            = render 'form', f: form
+
+            .submit-field
+              = form.submit "Create Invoice for #{@debtor.legal_business_name}",
+                class: 'button button-green'

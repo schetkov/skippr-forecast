@@ -1,0 +1,255 @@
+.row.registration-business
+  .col-md-10.col-md-offset-1
+    .wizard-progress
+      .row
+        .col-md-4
+          .step.filled
+            My Business
+            %span
+        .col-md-4
+          .step
+            My Customers
+            %span
+        .col-md-4
+          .step.last
+            Director Details
+            %span
+    .auction.with-progress-bar
+      .row
+        .col-md-12
+          = form_for @business_registration, url: business_registration_path, method: :post do |f|
+            = render "/application/error_messages", object: @business_registration
+
+            .fieldset
+              .form-group
+                = f.label :accounting_platform, "What accounting platform do you use?"
+                = f.select :accounting_platform,
+                  options_for_select(["Xero", "MYOB", "Intuit", "Reckon", "Netsuite", "Other"], @business_registration.accounting_platform),
+                  {},
+                  class: "form-control"
+
+              .form-group
+                %label Do you currently have lending with another financial institution?
+                .checkboxes
+                  %label
+                    = radio_button_tag :existing_facility_check, "yes"
+                    Yes
+                  %label
+                    = radio_button_tag :existing_facility_check, "no", checked: true
+                    No
+
+              .existing-facilities
+                %h5
+                  Please list any financial institutions you currently have a loan or factoring facility with
+
+                = f.fields_for "existing_facility[]", ExistingFacility.new do |builder|
+                  = render "existing_facility_fields", f: builder
+                = link_to_add_fields "Add Another Facility", f, :existing_facility
+
+              .blue-help-box
+                %h5 We need to learn about your business!
+                %ul
+                  %li Most recent full filed accounts - Balance Sheet &amp; Income Statement
+                  %li Last 3 months bank statements
+
+              .form-group
+                #financial_statement_upload
+                  %p Upload Financial Statements
+                  .preview-financial-statement
+                    - if current_seller.seller_company && current_seller.seller_company.financial_statements.any?
+                      - current_seller.seller_company.financial_statements.each do |fs|
+                        = image_tag(cl_image_path(fs.file_name + ".jpg"), width: 150, height: 200)
+                  .upload_button_holder{ style: "float: none;" }
+                    = link_to '#', class: 'financial_upload_button button button-clear' do
+                      %span Attach File
+                    = f.cl_image_upload(:financial_statement,
+                                        html: { id: 'fs-upload' },
+                                        multiple: true,
+                                        allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
+                                        use_filename: true,
+                                        unique_filename: false,
+                                        folder: "financial_statements",
+                                        return_delete_token: true)
+
+                  .progress
+                    .progress-bar{ role: "progressbar" }
+
+              .form-group
+                #bank_statement_upload
+                  %p Upload Bank Statements
+                  .preview-bank-statement
+                    - if current_seller.seller_company && current_seller.seller_company.bank_statements.any?
+                      - current_seller.seller_company.bank_statements.each do |bs|
+                        = image_tag(cl_image_path(bs.file_name + ".jpg"), width: 150, height: 200)
+                  .upload_button_holder{ style: "float: none;" }
+                    = link_to '#', class: 'bank_upload_button button button-clear' do
+                      %span Attach File
+                    = f.cl_image_upload(:bank_statement,
+                                        html: { id: 'bs-upload' },
+                                        multiple: true,
+                                        allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
+                                        use_filename: true,
+                                        unique_filename: false,
+                                        folder: "bank_statements",
+                                        return_delete_token: true)
+
+                  .progress
+                    .progress-bar{ role: "progressbar" }
+
+              .form-group
+                #other_documents_upload
+                  %p Additional Supporting Documents
+                  %p.tip
+                    If you have additional information like your debtor ledger,
+                    draft accounts or forecasts, please upload also.
+                  .preview-other-documents
+                    - if current_seller.seller_company && current_seller.seller_company.misc_documents.any?
+                      - current_seller.seller_company.misc_documents.each do |md|
+                        = image_tag(cl_image_path(md.file_name + ".jpg"), width: 150, height: 200)
+                  .upload_button_holder{ style: "float: none;" }
+                    = link_to '#', class: 'other_upload_button button button-clear' do
+                      %span Attach File
+                    = f.cl_image_upload(:other_supporting_documents,
+                                        html: { id: 'ods-upload' },
+                                        multiple: true,
+                                        allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
+                                        use_filename: true,
+                                        unique_filename: false,
+                                        folder: "misc",
+                                        return_delete_token: true)
+
+                  .progress
+                    .progress-bar{ role: "progressbar" }
+
+
+              .submit-field
+                = f.submit "Add Customers", class: 'button button-green'
+
+= cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $("#existing_facility_check_yes").click(function(){
+      $('.existing-facilities').show();
+    });
+
+    $("#existing_facility_check_no").click(function(){
+      $('.existing-facilities').hide();
+    });
+  });
+
+  $(document).ready(function() {
+
+    $('.progress').attr('style', 'display:none');
+
+    $("#financial_statement_upload input[type='file']")
+    .fileupload({
+      dropZone: '#financial_statement_upload',
+
+      start: function () {
+        $('.financial_upload_button').hide()
+        $('#financial_statement_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#financial_statement_upload .progress .progress-bar").attr("style","width:"+com+"%")
+      },
+
+      fail: function (e, data) {
+        $('.financial_upload_button').show()
+        $('#financial_statement_upload .progress').attr('style', 'display:none');
+        $('.preview-financial-statement').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.financial_upload_button').show()
+      $("#financial_statement_upload .progress").attr("style","display:none")
+      $("#financial_statement_upload .progress .progress-bar").attr("style","width:0%")
+
+      $('.preview-financial-statement').append(
+        $.cloudinary.image(data.result.public_id,
+          { format: 'png', version: data.result.version,
+            crop: 'fill', width: 150, height: 200 })
+      );
+    });
+
+    $("#bank_statement_upload input[type='file']")
+    .fileupload({
+      dropZone: '#bank_statement_upload',
+
+      start: function () {
+        $('.bank_upload_button').hide()
+        $('#bank_statement_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#bank_statement_upload .progress .progress-bar").attr("style","width:"+com+"%")
+      },
+
+      fail: function (e, data) {
+        $('.bank_upload_button').show()
+        $('#bank_statement_upload .progress').attr('style', 'display:none');
+        $('.preview-bank-statement').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.bank_upload_button').show()
+      $("#bank_statement_upload .progress").attr("style","display:none")
+      $("#bank_statement_upload .progress .progress-bar").attr("style","width:0%")
+
+      $('.preview-bank-statement').append(
+        $.cloudinary.image(data.result.public_id,
+          { format: 'png', version: data.result.version,
+            crop: 'fill', width: 150, height: 200 })
+      );
+    });
+
+    $("#other_documents_upload input[type='file']")
+    .fileupload({
+      dropZone: '#other_documents_upload',
+
+      start: function () {
+        $('.other_upload_button').hide()
+        $('#other_documents_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#other_documents_upload .progress .progress-bar").attr("style","width:"+com+"%")
+      },
+
+      fail: function (e, data) {
+        $('.other_upload_button').show()
+        $('#other_documents_upload .progress').attr('style', 'display:none');
+        $('.preview-other-documents').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.other_upload_button').show()
+      $("#other_documents_upload .progress").attr("style","display:none")
+      $("#other_documents_upload .progress .progress-bar").attr("style","width:0%")
+
+      $('.preview-other-documents').append(
+        $.cloudinary.image(data.result.public_id,
+          { format: 'png', version: data.result.version,
+            crop: 'fill', width: 150, height: 200 })
+      );
+    });
+  });
+
+  jQuery(function() {
+    $('form').on('click', '.remove_fields', function(event) {
+      $(this).closest('fieldset').hide();
+      return event.preventDefault();
+    });
+
+    return $('form').on('click', '.add_fields', function(event) {
+      var regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g');
+      $(this).before($(this).data('fields').replace(regexp, time));
+      return event.preventDefault();
+    });
+  });

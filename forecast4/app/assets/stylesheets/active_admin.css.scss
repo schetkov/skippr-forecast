@@ -1,0 +1,65 @@
+// SASS variable overrides must be declared before loading up Active Admin's styles.
+//
+// To view the variables that Active Admin provides, take a look at
+// `app/assets/stylesheets/active_admin/mixins/_variables.css.scss` in the
+// Active Admin source.
+//
+// For example, to change the sidebar width:
+// $sidebar-width: 242px;
+
+// Active Admin's got SASS!
+@import "active_admin/mixins";
+@import "active_admin/base";
+
+// Overriding any non-variable SASS must be done after the fact.
+// For example, to change the default status-tag color:
+//
+//   .status_tag { background: #6090DB; }
+
+.upload_button_holder {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.upload_button_holder .upload_button {
+  // display: block;
+  position: relative;
+}
+
+.upload_button_holder .cloudinary-fileupload {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+span.fail-status {
+  display: inline;
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+span.preview {
+  float: right;
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #a94442;
+}
+
+.submit-field {
+  margin-top: 20px;
+}
+
+.admin-credit-reports {
+  table {
+    margin-top: 30px;
+  }
+}

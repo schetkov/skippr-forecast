@@ -1,0 +1,41 @@
+#exchange-fee-breakdown.modal{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title Exchange Fee Breakdown
+      .modal-body
+        .row
+          .col-md-12.trade-summary
+            .headers
+              .row
+                .col-xs-3
+                  Inv #
+                .col-xs-3
+                  Face Value
+                .col-xs-3
+                  Exchange Fee %
+                .col-xs-3
+                  Exchange Fee $
+
+            .fees
+              - @trade.invoices.each do |invoice|
+                .row.fee
+                  .col-xs-3
+                    = invoice.invoice_no
+                  .col-xs-3
+                    = number_to_currency(invoice.face_value, precision: 0)
+                  .col-xs-3
+                    = "#{number_to_percentage((invoice.seller.exchange_fee * 100), precision: 1)}"
+                  .col-xs-3
+                    = number_to_currency((invoice.face_value * invoice.seller.exchange_fee), precision: 0)
+
+      .modal-footer
+        .row
+          .col-md-4.col-md-offset-5
+            %strong
+              Total Exchange Fee
+          .col-md-3.text-left
+            %strong
+              = number_to_currency(@trade.seller_exchange_fee, precision: 0)

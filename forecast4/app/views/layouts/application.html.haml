@@ -1,0 +1,26 @@
+!!!
+%html.bg
+  %head
+    = render "shared/meta_tags"
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
+    %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+    = yield :javascript
+    = csrf_meta_tags
+  %body#auction
+
+    = render "shared/failed_import"
+    = render "shared/header"
+
+    .container
+      .row
+        #flash
+          - flash.each do |name, msg|
+            = content_tag :div, msg, class: "alert alert-#{name}"
+
+    = yield
+
+    = render "shared/dark_footer"
+
+    = render "analytics"
+    = yield :analytics_identifier

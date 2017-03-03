@@ -1,0 +1,13 @@
+= form.hidden_field :buyer_id, value: params[:id]
+.form-group
+  = form.label :debtor_id, "Select Approved Debtor", class: "col-sm-2 control-label"
+  .col-sm-4
+    = form.select :debtor_id, options_from_collection_for_select(Debtor.approved, "id", "debtor_and_seller_company_name"), class: "form-control"
+.form-group
+  = form.label :percentage_of_funds_for_investor, "% of funds for this investor", class: "col-sm-2 control-label"
+  .col-sm-4
+    = form.text_field :percentage_of_funds_for_investor, class: "form-control"
+.form-group
+  = form.label :percentage_of_each_invoice, "% of each invoice", class: "col-sm-2 control-label"
+  .col-sm-4
+    = form.text_field :percentage_of_each_invoice, class: "form-control"

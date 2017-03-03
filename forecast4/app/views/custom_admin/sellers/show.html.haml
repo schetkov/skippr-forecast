@@ -1,0 +1,77 @@
+.admin-page__header
+  = link_to @seller.seller_company_name, "#", class: "admin-page__header_heading"
+  .admin-page__header--right
+    = link_to "Edit Seller", edit_custom_admin_seller_path(@seller), class: "button button-small"
+
+.main-content
+  %ul.main-content__heading
+    %li.main-content__heading_list_element
+      = link_to "Details", custom_admin_seller_path(@seller), class: "main-content__heading_title"
+    %li.main-content__heading_list_element
+      = link_to "Invoices", custom_admin_seller_invoices_path(@seller),
+        class: "main-content__heading_title seller-invoices"
+  %table.small-table
+    %tbody
+      %tr
+        %td.name Name
+        %td= @seller.name
+      %tr
+        %td.name Email
+        %td= @seller.email
+      %tr
+        %td.name Company Name
+        %td= @seller.seller_company_name
+      %tr
+        %td.name Phone Number
+        %td= @seller.seller_company_phone_number
+      %tr
+        %td.name ACN
+        %td= @seller.seller_company_acn
+      %tr
+        %td.name Exchange Fee
+        %td= number_to_percentage (@seller.exchange_fee * 100), precision: 1
+      %tr
+        %td.name Website
+        %td= @seller.seller_company_website
+      %tr
+        %td.name Terms Accepted
+        %td= @seller.accepted_terms
+      %tr
+        %td.name Drivers License Number
+        %td= @seller.drivers_license_number
+      %tr
+        %td.name Date of Birth
+        %td= @seller.dob.try(:strftime, "%e %B %Y")
+      %tr
+        %td.name Company Address
+        %td= @seller.seller_company.address
+      %tr
+        %td.name Company Description
+        %td= @seller.seller_company.description
+      %tr
+        %td.name Principal Business Owner
+        %td= @seller.seller_company.principal_business_owner
+      %tr
+        %td.name Principal Ownership
+        %td= @seller.seller_company.principal_ownership
+      %tr
+        %td.name Other Registered Name
+        %td= @seller.seller_company.other_registered_name
+      %tr
+        %td.name Industry
+        %td= @seller.seller_company.industry
+      %tr
+        %td.name Associated Institutions
+        %td= @seller.seller_company.associated_institutions
+      %tr
+        %td.name Directors Name
+        %td= @seller.seller_company.directors_name
+      %tr
+        %td.name Directors Email
+        %td= @seller.seller_company.directors_email
+      %tr
+        %td.name Directors Address
+        %td= @seller.seller_company.directors_address
+      %tr
+        %td.name Cash Flow User
+        %td= @seller.is_cash_flow_user ? "Yes" : "No"

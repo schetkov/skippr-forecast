@@ -1,0 +1,272 @@
+#company {
+  -webkit-font-smoothing: antialiased;
+
+  .container.company {
+    min-height: 500px;
+  }
+
+  #header {
+    margin-top: -20px;
+    margin-bottom: 40px;
+    background: #f4f4f4;
+    border-bottom: 1px solid #DCE4EC;
+    padding: 50px 0px;
+
+    @media(max-width: 767px) {
+      padding: 30px 0px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 5px;
+    }
+
+    .imgrounded {
+      border-radius: 10px;
+      //box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  aside {
+    .list-group-item.active, {
+      @include background-gradient(#5DA4FF, #417BFF);
+    }
+  }
+
+  .financial-table {
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    //box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.1);
+    .header {
+      text-align: center;
+      background: #fbfbfb;
+      margin: 0px -15px;
+      padding: 20px 35px;
+      font-weight: 500;
+      font-size: 17px;
+      color: #444;
+      border-bottom: 1px solid #dfdfdf;
+      height: 73px;
+
+      span {
+        font-size: 13px;
+        font-weight: normal;
+        padding-left: 5px;
+      }
+
+
+      @media(max-width: 991px) {
+        font-size: 15px;
+      }
+
+      @media(max-width: 767px) {
+        font-size: 13px;
+      }
+
+      .price {
+        color: #1a80d9;
+        position: relative;
+        top: 3px;
+        font-size: 14px;
+
+        @media(max-width: 767px) {
+          font-size: 13px;
+        }
+      }
+    }
+
+    .features-col {
+      .header {
+        text-align: left;
+        border-radius: 5px 0px 0px 0px;
+        margin-bottom: 30px;
+        padding: 23px 30px;
+        font-size: 15px;
+
+        @media(max-width: 991px) {
+          font-size: 16px;
+        }
+      }
+      .spec {
+        margin-bottom: 32px;
+        padding-left: 40px;
+        position: relative;
+
+        .icon {
+          position: absolute;
+          font-size: 27px;
+          color: #849FC4;
+          left: 0px;
+          top: -4px;
+        }
+
+        &.financials {
+          padding-left: 15px;
+        }
+      }
+    }
+    .plan-col {
+      border-left: 1px solid #dfdfdf;
+      &.last {
+        .header {
+          border-radius: 0px 5px 0px 0px;
+          font-size: 15px;
+        }
+      }
+      .header {
+        padding: 13px 0px;
+      }
+      .spec {
+        margin-bottom: 34px;
+        margin-top: 25px;
+        .check {
+          margin: 0 auto;
+          display: block;
+          max-width: 20px;
+        }
+      }
+      .spec.terms {
+        span.icon {
+          font-size: 24px;
+          display: block;
+          text-align: center;
+        }
+
+        .icon.entypo-cross {
+          color: #ac2925;
+        }
+
+        .icon.entypo-checkmark {
+          color: #0F9B0F;
+        }
+      }
+      .button {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        font-size: 13px;
+        padding: 11px 24px;
+        @include background-gradient(#4ABCF3, #1a80d9);
+
+        @media(max-width: 991px) {
+          padding: 6px 10px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .financial-file-table {
+    margin-top: 30px;
+    border: 1px solid #E3E3E3;
+    border-radius: 5px;
+    .files {
+      border-right: 0px;
+
+      &.middle {
+        border-right: 1px solid #E3E3E3;
+        border-left: 1px solid #E3E3E3;
+      }
+
+      .header {
+        text-align: left;
+        padding: 18px 25px;
+        border-bottom: 1px solid #E3E3E3;
+        margin: 0px -15px;
+        font-weight: 500;
+        font-size: 15px;
+        background: #fbfbfb;
+        overflow: hidden;
+
+        .icon {
+          color: #B7C5D8;
+          font-size: 18px;
+          position: relative;
+          top: 2px;
+          left: -4px;
+        }
+        .price {
+          float: right;
+          text-align: right;
+          color: #3CA2E5;
+        }
+
+        span {
+          display: inline-block;
+          padding-top: 10px;
+        }
+      }
+      .specs {
+        margin-top: 25px;
+        padding: 0px 10px 17px 10px;
+        .spec {
+          font-size: 15px;
+          color: #666;
+          margin-bottom: 13px;
+
+          a {
+            color: #666;
+            padding-bottom: 2px;
+          }
+
+          span {
+            color: #1FBEE7;
+            font-weight: 400;
+            padding-right: 10px;
+          }
+        }
+      }
+
+      p {
+        margin: 0px;
+        padding: 30px;
+        text-align: center;
+      }
+    }
+
+    .upload-ageing-debtors,
+    .upload-profit-and-loss-attachment,
+    .upload-balance-sheet-attachment,
+    .upload-aged-payables{
+      visibility: hidden;
+    }
+
+    .button.button-small {
+      padding: 8px 12px;
+    }
+  }
+
+  #cta-panel {
+
+    .wrapper {
+      background: #F7F8FB;
+      border: 1px solid #EAEDF7;
+      border-radius: 8px;
+      padding: 30px 60px;
+      box-shadow: inset rgba(100, 100, 100, 0.25) 0 1px 1px;
+      margin: 0 auto;
+      text-align: center;
+
+      @media(max-width: 991px) {
+        text-align: center;
+      }
+
+      p {
+        margin-bottom: 20px;
+      }
+    }
+
+    h4 {
+      font-size: 14px;
+      color: #5F6E7C;
+      font-weight: 400;
+      float: left;
+      text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+      padding-top: 5px;
+
+      @media(max-width: 767px) {
+        font-size: 17px;
+        line-height: 23px;
+      }
+    }
+  }
+}

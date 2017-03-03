@@ -1,0 +1,38 @@
+.fieldset.margin-bottom-50
+  %h3.page-header Company Settings
+
+  .form-group
+    = f.label :name, 'Business name'
+    .row
+      .col-md-6
+        = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :address
+    .row
+      .col-md-6
+        = f.text_field :address, class: 'form-control'
+
+  .form-group
+    = f.label :phone_number
+    .row
+      .col-md-6
+        = f.text_field :phone_number, class: 'form-control'
+
+  .form-group
+    = f.label :website
+    .row
+      .col-md-6
+        = f.text_field :website, class: 'form-control'
+
+  .form-group
+    = f.label :acn, 'ACN'
+    .row
+      .col-md-6
+        = f.text_field :acn, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    .row
+      .col-md-6
+        = f.text_field :description, class: 'form-control'

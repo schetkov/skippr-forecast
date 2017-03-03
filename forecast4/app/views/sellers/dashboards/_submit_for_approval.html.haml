@@ -1,0 +1,59 @@
+%div{ id: "submit_invoice_#{invoice.id}", class: "modal", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title Submit Invoice for Approval
+      = form_for invoice, url: invoice_approval_path(invoice), method: :patch, html: { role: "form" } do |f|
+        .modal-body
+          .row
+            .col-md-12
+              .invoice-approval-tip
+                %p
+                  %strong Want faster approval?
+                %p
+                  Please confirm the anticipated date of payment and upload any
+                  supporting documents to help verify this invoice.
+
+          .row
+            .col-md-6
+              .form-group#date-field
+                = f.label :anticipated_pay_date, "Anticipated Pay Date", class: "control-label"
+                .input-group.date
+                  = f.text_field :anticipated_pay_date,
+                    value: "",
+                    class: "form-control",
+                    data: { provide: "datepicker" }
+                  %span.input-group-addon
+                    %i.glyphicon.glyphicon-th
+          .row
+            .col-md-12#direct_upload
+              = f.label :attachments, "Upload Supporting Documents"
+              .preview-upload
+              .upload_button_holder{ style: "float: none;" }
+                = link_to '#', class: 'upload_button button button-clear' do
+                  %span Attach File
+                = f.cl_image_upload(:misc,
+                                    html: { id: 'cloudinary-upload' },
+                                    multiple: true,
+                                    allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
+                                    use_filename: true,
+                                    unique_filename: false,
+                                    folder: "invoice",
+                                    return_delete_token: true)
+
+              .progress
+                .progress-bar{ role: "progressbar" }
+
+        .modal-footer
+          = f.submit "Submit for Approval", class: "btn btn-primary"
+
+:javascript
+  $(document).ready(function() {
+    $('#date-field .input-group.date').datepicker({
+      autoclose: true,
+      todayHighlight: true,
+      defaultViewDate: { year: "#{Date.current.year}", month: "#{Date.current.month}", day: "#{Date.current.day}" }
+    });
+  });

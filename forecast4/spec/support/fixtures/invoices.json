@@ -1,0 +1,53 @@
+[
+{
+  "type": "ACCREC",
+    "invoice_id": "b75b3928-ab72-4424-8b93-9cdbbde4cd72",
+    "invoice_number": "ORC1005",
+    "reference": "",
+    "payments": [],
+    "credit_notes": [
+    {
+      "credit_note_id": "50e98404-2fba-4031-af67-8ba4bb227c44",
+      "credit_note_number": "CR1005",
+      "id": "50e98404-2fba-4031-af67-8ba4bb227c44",
+      "applied_amount": 550.00,
+      "date_string": "2015-05-04T00:00:00",
+      "date": "\/Date(1430654400000+1200)\/",
+      "line_items": [],
+      "total": 1550.00
+    }
+  ],
+    "prepayments": [],
+    "overpayments": [],
+    "amount_due": 0.00,
+    "amount_paid": 0.00,
+    "amount_credited": 550.00,
+    "has_errors": false,
+    "is_discounted": false,
+    "has_attachments": false,
+    "contact_id": "565acaa9-e7f3-4fbf-80c3-16b081ddae10",
+    "contact": {
+      "contact_id": "565acaa9-e7f3-4fbf-80c3-16b081ddae10",
+      "name": "Bank West",
+      "addresses": [],
+      "phones": [],
+      "contact_groups": [],
+      "contact_persons": [],
+      "has_validation_errors": false
+    },
+    "date_string": "2015-05-04T00:00:00",
+    "date": "\/Date(1430654400000+1200)\/",
+    "due_date_string": "2015-05-14T00:00:00",
+    "due_date": "\/Date(1431518400000+1200)\/",
+    "status": "PAID",
+    "line_amount_types": "Exclusive",
+    "line_items": [],
+    "sub_total": 1500.00,
+    "total_tax": 50.00,
+    "total": 1550.00,
+    "updated_date_utc": "\/Date(1221591169030+1200)\/",
+    "currency_code": "AUD",
+    "fully_paid_on_date": "\/Date(1430654400000+1200)\/",
+    "expected_payment_date": "\/Date(1430654400000+1200)\/"
+}
+]

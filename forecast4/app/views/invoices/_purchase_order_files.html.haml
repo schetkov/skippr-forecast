@@ -1,0 +1,14 @@
+.col-md-12.purchase-order-files
+  .heading
+    %span Purchase Order Files
+
+  - if @invoice.purchase_order_files.any?
+    .specs
+      - @invoice.purchase_order_files.each do |pof|
+        .spec
+          %span.icon.entypo-folder{ style: "color: #1FBEE7" }
+          = link_to 'View File',
+            cl_image_path(pof.file_name),
+            target: '_blank'
+  - else
+    %p There are no purchase order files to display.

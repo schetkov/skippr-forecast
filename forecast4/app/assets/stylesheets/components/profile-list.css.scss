@@ -1,0 +1,52 @@
+.profile-list {
+  padding-right: 20px;
+
+  h3 {
+    margin: 0 0 20px
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    li:nth-child(odd) {
+      background-color: #f9f9f9;
+    }
+
+    span {
+      font-weight: normal;
+      padding-left: 10px;
+    }
+
+    span.right-aside {
+      font-weight: normal;
+      float: right;
+      padding: 0 10px 0 0;
+    }
+
+    span.first-column {
+      width: 150px;
+    }
+
+    span.secondary-column {
+      width: 100px;
+    }
+
+    span.money-column {
+      width: 70px;
+    }
+
+    span.date-column {
+      width: 180px;
+    }
+
+    span.columns {
+      display: inline-block;
+    }
+  }
+}

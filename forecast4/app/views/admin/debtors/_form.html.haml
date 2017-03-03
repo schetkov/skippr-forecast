@@ -1,0 +1,224 @@
+.debtors-form
+  - if @debtor.new_record?
+    = semantic_form_for [:admin, Debtor.new] do |f|
+      = f.inputs do
+        = f.input :seller,
+          as: :select,
+          collection: Seller.all,
+          include_blank: "Please select a Seller"
+        = f.input :seller_company,
+          as: :select,
+          collection: SellerCompany.all,
+          include_blank: "Please select a Company"
+        = f.input :legal_business_name
+        = f.input :address
+        = f.input :acn
+        = f.input :website
+        = f.input :business_type
+        = f.input :business_sector
+        = f.input :contact_name
+        = f.input :contact_phone_number
+        = f.input :internal_account_debtor_id
+        = f.input :customer_reference_id
+        = f.input :payment_processor
+        = f.input :other_name
+        = f.input :thirty_days
+        = f.input :sixty_days
+        = f.input :ninety_days
+        = f.input :over_ninety_days
+        = f.input :warranties
+        = f.input :progressive_billing
+        = f.input :return_rights
+        = f.input :consignment_basis
+        = f.input :relationship_start_date
+        = f.input :contact_email
+        = f.input :contact_id
+        = f.input :contact_status
+        = f.input :account_number
+        = f.input :tax_number
+        = f.input :addresses, as: :text
+        = f.input :phones, as: :text
+
+      .cloudinary
+        #credit_report_upload
+          .credit_report_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload credit report', '#', class: 'credit_report_upload_button'
+
+              = f.cl_image_upload(:credit_report,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'credit_reports',
+                                  return_delete_token: true)
+
+      .cloudinary
+        #sales_agreement_upload
+          .sales_agreement_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload sales agreement', '#', class: 'sales_agreement_upload_button'
+
+              = f.cl_image_upload(:sales_agreement,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'sales_agreements',
+                                  return_delete_token: true)
+
+      = f.actions
+  - else
+    = semantic_form_for [:admin, @debtor], url: admin_debtor_credit_reports_path do |f|
+      = f.inputs do
+        = f.input :seller,
+          as: :select,
+          collection: Seller.all,
+          include_blank: "Please select a Seller"
+        = f.input :seller_company,
+          as: :select,
+          collection: SellerCompany.all,
+          include_blank: "Please select a Company"
+        = f.input :legal_business_name
+        = f.input :address
+        = f.input :acn
+        = f.input :website
+        = f.input :business_type
+        = f.input :business_sector
+        = f.input :contact_name
+        = f.input :contact_phone_number
+        = f.input :internal_account_debtor_id
+        = f.input :customer_reference_id
+        = f.input :payment_processor
+        = f.input :other_name
+        = f.input :thirty_days
+        = f.input :sixty_days
+        = f.input :ninety_days
+        = f.input :over_ninety_days
+        = f.input :warranties
+        = f.input :progressive_billing
+        = f.input :return_rights
+        = f.input :consignment_basis
+        = f.input :relationship_start_date
+        = f.input :contact_email
+        = f.input :contact_id
+        = f.input :contact_status
+        = f.input :account_number
+        = f.input :tax_number
+        = f.input :addresses, as: :text
+        = f.input :phones, as: :text
+
+      .cloudinary
+        #credit_report_upload
+          .credit_report_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload credit report', '#', class: 'credit_report_upload_button'
+
+              = f.cl_image_upload(:credit_report,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'credit_reports',
+                                  return_delete_token: true)
+
+      .cloudinary
+        #sales_agreement_upload
+          .sales_agreement_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload sales agreement', '#', class: 'sales_agreement_upload_button'
+
+              = f.cl_image_upload(:sales_agreement,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'sales_agreements',
+                                  return_delete_token: true)
+
+      = f.actions
+
+= cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $("input[type='submit]").attr('style', 'display:block');
+
+    $("#credit_report_upload input[type='file']")
+    .fileupload({
+      dropZone: '#credit_report_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.credit_report_upload_button').text('Uploading...')
+      },
+
+      progress: function (e, data) {
+        $(".credit_report_upload_button").text("Credit Report Uploaded")
+      },
+
+      fail: function (e, data) {
+        $('.credit_report_upload_button').show()
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo('.credit_report_upload_container').
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.credit_report_upload_button').text('Upload Credit Report')
+            $('input[name="debtor[file_id]"]').remove();
+            $('a.delete_by_token').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+
+    $("#sales_agreement_upload input[type='file']")
+    .fileupload({
+      dropZone: '#sales_agreement_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.sales_agreement_upload_button').text('Uploading...')
+      },
+
+      progress: function (e, data) {
+        $(".sales_agreement_upload_button").text("Sales Agreement Uploaded")
+      },
+
+      fail: function (e, data) {
+        $('.sales_agreement_upload_button').show()
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo('.sales_agreement_upload_container').
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.sales_agreement_upload_button').text('Upload Credit Report')
+            $('input[name="debtor[file_id]"]').remove();
+            $('a.delete_by_token').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+  });

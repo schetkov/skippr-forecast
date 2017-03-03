@@ -1,0 +1,221 @@
+.fieldset
+  %h3.page-header Invoice Details
+
+  .form-group
+    = f.label :invoice_no, 'Invoice No'
+    = f.text_field :invoice_no, class: 'form-control'
+  .form-group
+    = f.label :face_value, 'Face Value (including GST)'
+    = f.number_field :face_value, class: 'form-control'
+  .form-group
+    = f.label :purchase_order_number, 'Purchase Order No'
+    = f.text_field :purchase_order_number, class: 'form-control'
+
+  %section.revenues
+    .row
+      .form-group.col-md-3
+        = f.label :date, "Invoice Date"
+        .input-group.date
+          = f.text_field :date,
+            value: "",
+            class: "form-control",
+            data: { provide: "datepicker" }
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-th
+    .row
+      .col-md-12
+        %p.help-block
+          This is the date your company produced the invoice.
+    .row
+      .form-group.col-md-3
+        = f.label :due_date
+        .input-group.date
+          = f.text_field :due_date,
+            value: "",
+            class: "form-control",
+            data: { provide: "datepicker" }
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-th
+    .row
+      .col-md-12
+        %p.help-block
+          This is the date the invoice should be paid according to your sales terms with this customer.
+
+    .row
+      .form-group.col-md-3
+        = f.label :anticipated_pay_date
+        .input-group.date
+          = f.text_field :anticipated_pay_date,
+            value: "",
+            class: "form-control",
+            data: { provide: "datepicker" }
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-th
+
+    .row
+      .col-md-12
+        %p.help-block
+          This is the date your company expects the invoice to actually be paid based on transaction history with this customer.
+
+.fieldset.margin-bottom-50
+  %h3 Purchase Order Files
+
+  .form-group
+    %p
+      %em
+        Please upload purchase order files pertaining to this invoice.
+
+    .row
+      .col-sm-6#purchase-order-upload
+        %span.preview-upload
+        .upload_button_holder{ style: "float: none" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload
+          = f.cl_image_upload(:purchase_order,
+            html: { id: 'cloudinary-upload' },
+            allowed_formats: ['pdf'],
+            use_filename: true,
+            unique_filename: false,
+            folder: 'purchase_orders',
+            return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+.fieldset
+  %h3 Invoice Attachment
+
+  .form-group
+    %p
+      %em
+        Please upload a copy of the actual invoice for sale.
+
+    .row
+      .col-sm-6#invoice-upload
+        %span.preview-upload
+        .upload_button_holder{ style: "float: none" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload
+          = f.cl_image_upload(:invoice_document,
+            html: { id: 'cloudinary-upload' },
+            allowed_formats: ['pdf'],
+            use_filename: true,
+            unique_filename: false,
+            folder: 'invoice_attachments',
+            return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+= cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $('.register-invoice').attr('style', 'display:block');
+    $('.progress').attr('style', 'display:none');
+
+    $("#purchase-order-upload input[type='file']")
+    .fileupload({
+      dropZone: '#purchase-order-upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#purchase-order-upload .upload_button').hide()
+        $('#purchase-order-upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#purchase-order-upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#purchase-order-upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#purchase-order-upload .upload_button').show()
+        $('#purchase-order-upload .progress').attr('style', 'display:none');
+        $('#purchase-order-upload .preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $("#purchase-order-upload .upload_button").hide()
+      $("#purchase-order-upload .progress").attr("style","display:none")
+      $("#purchase-order-upload .progress .progress-bar").attr("style","width:0%")
+      $("#purchase-order-upload .progress .progress-bar").text("0% Complete")
+
+      var preview = $('#purchase-order-upload .preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#purchase-order-upload .upload_button').show()
+            $('#purchase-order-upload .preview-upload').html('');
+            $('#purchase-order-upload input[name="debtor[file_id]"]').remove();
+          }).fail(function() {
+            $('#purchase-order-upload .status').text("Cannot delete image");
+        });
+      });
+    });
+
+    $("#invoice-upload input[type='file']")
+    .fileupload({
+      dropZone: '#invoice-upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#invoice-upload .upload_button').hide()
+        $('#invoice-upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#invoice-upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#invoice-upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#invoice-upload .upload_button').show()
+        $('#invoice-upload .progress').attr('style', 'display:none');
+        $('#invoice-upload .preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $("#invoice-upload .upload_button").hide()
+      $("#invoice-upload .progress").attr("style","display:none")
+      $("#invoice-upload .progress .progress-bar").attr("style","width:0%")
+      $("#invoice-upload .progress .progress-bar").text("0% Complete")
+
+      var preview = $('#invoice-upload .preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#invoice-upload .upload_button').show()
+            $('#invoice-upload .preview-upload').html('');
+            $('#invoice-upload input[name="debtor[file_id]"]').remove();
+          }).fail(function() {
+            $('#invoice-upload .status').text("Cannot delete image");
+        });
+      });
+    });
+  });
+

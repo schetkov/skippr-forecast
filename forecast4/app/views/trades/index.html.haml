@@ -1,0 +1,35 @@
+#features
+  #tabs
+    .container
+      .row.header
+        .col-md-12
+          = render 'application/flash'
+
+      .row
+        .col-md-12
+          .trade-list
+            .tabs-wrapper
+              %ul.nav.nav-tabs
+                %li.active
+                  %a{ href: "#live", data: { toggle: "tab" } }
+                    Your Trades
+
+              .tab-content
+                #live.tab-pane.active
+                  - if @trades.any?
+                    %table
+                      %thead
+                        %tr
+                          %th Date
+                          %th Total Face Value
+                          %th Advance Amount
+                          %th Discount Fee
+                          %th Actions
+                      %tbody
+                        - @trades.each do |trade|
+                          = render 'trades/trade', trade: trade
+                  - else
+                    .widget-container.text-center{style: "margin-top: 30px;"}
+                      %span
+                        There are no trades to display! Get started by adding
+                        customers and invoices to your profile.

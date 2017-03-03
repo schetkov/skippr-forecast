@@ -1,0 +1,44 @@
+.financial-file-table.clearfix.bank-statements
+  .files.col-md-12
+    .header
+      %span Bank Statements
+
+      .price
+        - if current_seller == @company.seller
+          = form_for [@seller, @attachment],
+            html: { id: "new_bank_statements" } do |f|
+            .upload_button_holder
+              %span.fail-status
+              = link_to 'Upload', '#',
+                class: 'upload_button button button-small button-green',
+                id: 'bank-statement-upload'
+              = f.cl_image_upload(:bank_statements,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'bank_statements')
+
+            = f.submit nil, class: 'upload-bank-statement'
+
+
+    - if @seller.latest_bank_statements.any?
+      .specs
+        - @seller.latest_bank_statements.each_with_index do |attachment, index|
+          - if index > 1
+            .spec.hide-show-financials
+              %span.icon.entypo-folder{ style: "color: #a0d1ca" }
+              = link_to cloudinary_file_name(attachment.file_name),
+                cl_image_path(attachment.file_name),
+                target: '_blank'
+          - else
+            .spec
+              %span.icon.entypo-folder{ style: "color: #a0d1ca" }
+              = link_to cloudinary_file_name(attachment.file_name),
+                cl_image_path(attachment.file_name),
+                target: '_blank'
+        -# - if @seller.financial_attachments.size > 2
+        -#   .spec.show-more-financials.text-center
+        -#     Show more
+    - else
+      %p There are no bank statements to display.

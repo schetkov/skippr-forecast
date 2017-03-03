@@ -1,0 +1,51 @@
+.registration-customer {
+  .new-debtor:nth-of-type(1) {
+    .remove_fields {
+      visibility: hidden;
+    }
+  }
+
+  #registration_customer_registrar_debtor__value_of_outstanding_invoices {
+    height: 39px;
+  }
+
+  .remove-field {
+    padding-top: 33px;
+  }
+
+  .blue-help-box {
+    h5 {
+      margin-top: 0;
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    border: 1px solid #bee1f3;
+    background: #f8fdfe;
+    padding: 20px 22px 18px 22px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+  }
+
+  .drag-drop-area {
+    border-radius: 8px;
+    border: 2px dashed #eee;
+    margin: 30px 0px;
+    padding: 60px;
+    text-align: center;
+  }
+
+  .preview-upload {
+    margin-bottom: 30px;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  .submit-field {
+    float: right;
+  }
+}

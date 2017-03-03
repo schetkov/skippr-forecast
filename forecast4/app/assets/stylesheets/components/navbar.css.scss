@@ -1,0 +1,39 @@
+.navbar {
+  background: #205081;
+  border-bottom: 1px solid #2e3d54;
+  color: white;
+  margin-bottom: 40px;
+
+  .logo {
+    margin-right: 20px;
+  }
+
+  a:hover {
+    color: white;
+  }
+}
+
+// Style links inside li tags in the navbar
+.navbar-default .navbar-nav > li > a {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: white;
+}
+
+// Style active list elements to have blue bg
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #3b73af;
+    color: white;
+}
+
+// Style li elements when hovering over them
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  background-color: #3b73af;
+  color: white;
+}
+
+// Style dropdown menu in navbar when active/hover state
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background-color: #3b73af;
+  color: white;
+}

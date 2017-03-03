@@ -1,0 +1,36 @@
+- if @company.financials
+  .financial-table.clearfix
+    .features-col.col-sm-10
+      .header
+        Financial Summary
+      .spec.financials
+        Last reported* Net Revenues for 12 month Period ($)
+      .spec.financials
+        Last reported Operating Profit for 12 month Period ($)
+      .spec.financials
+        Last reported Trade Debtors ($)
+      .spec.financials
+        Last reported Trade Creditors ($)
+      .spec.financials
+        Loans Outstanding ($)
+      .spec.financials
+        Tax Liability Outstanding ($)
+    .plan-col.last.col-sm-2
+      .header
+        Amount
+        .price
+          ($AUD)
+      .spec
+        = number_to_currency(@company.financials.net_revenues, precision: 0)
+      .spec
+        = number_to_currency(@company.financials.gross_profit_margin, precision: 0)
+      .spec
+        = number_to_currency(@company.financials.last_reported_trade_debtors, precision: 0)
+      .spec
+        = number_to_currency(@company.financials.last_reported_trade_creditors, precision: 0)
+      .spec
+        = number_to_currency(@company.financials.loans_outstanding, precision: 0)
+      .spec
+        = number_to_currency(@company.financials.liability_outstanding, precision: 0)
+- else
+  %p Financials have not yet been added.

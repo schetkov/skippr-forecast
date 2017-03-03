@@ -1,0 +1,41 @@
+@import "radar/variables";
+
+.table {
+  z-index: 10;
+  th {
+    text-align: left;
+    font-family: $subheader-font;
+  }
+
+  // Use a custom color here. The black hurts the eyes!
+  td {
+    color: #3C3C3C;
+    vertical-align: middle!important;
+  }
+
+  tr.highlight td, tr.highlight:nth-child(odd) td {
+    $background-color: rgba(164, 221, 126, 0.40);
+    background-image: linear-gradient(to bottom,lighten($background-color,20%) 0, $background-color 100%);
+  }
+
+  tr.blue td {
+    color: blue;
+  }
+
+  tr.red td {
+    color: red;
+  }
+
+  tr.green td {
+    color: green;
+  }
+
+  .input-group.date{
+    width: 100px;
+  }
+
+  .input-group.date input[type="text"]{
+    width: auto;
+    float: right;
+  }
+}

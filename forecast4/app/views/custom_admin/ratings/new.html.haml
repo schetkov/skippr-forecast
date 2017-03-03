@@ -1,0 +1,32 @@
+.admin-page__header
+  = link_to "Invoice ##{@invoice.id}", custom_admin_invoice_path(@invoice)
+  \>
+  = link_to "Apply Rating", "#"
+
+.main-content
+  %h2= "Apply a Rating for Invoice ##{@invoice.id}"
+  .row
+    .col-sm-12
+      %table.small-table
+        %tbody
+          %tr
+            %th Rating Value
+            %th Discount Rate
+            %th Advance Amount
+          - @master_ratings.each do |master_rating|
+            %tr
+              %td.name= "##{master_rating.rating_value}"
+              %td= master_rating.discount_rate
+              %td= master_rating.advance_amount
+
+  .row
+    .col-sm-12
+      = form_for [@invoice, Rating.new],
+        url: custom_admin_invoice_ratings_path,
+        html: { role: "form", class: "form-horizontal main-content__form" }  do |form|
+
+        = render "form", form: form
+
+        .col-sm-offset-2
+          = button_tag(type: 'submit', class: "button-clear") do
+            %span Apply Rating

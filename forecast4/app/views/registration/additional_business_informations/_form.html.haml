@@ -1,0 +1,37 @@
+.form-group
+  = f.label :groups_revenues, "What are the group's revenues?", class: 'control-label'
+  = f.select :groups_revenues, options_for_select([ 'less than $1 million',
+                                                    'between $1 million and $5 million',
+                                                    'greater than $5 million']),
+                                                    {}, class: 'form-control'
+
+.form-group
+  = f.label :industry, 'What industry do you operate in?', class: 'control-label'
+  = f.select :industry, options_for_select(['Recruitment and labour hire',
+    'Wholesale trade',
+    'Transport and logistics',
+    'Manufacturing',
+    'Printing',
+    'Smash Repairs',
+    'Retail',
+    'Professional Services',
+    'Construction Services',
+    'Mining Services',
+    'Exports',
+    'Other']), {}, class: 'form-control'
+
+.form-group
+  = f.label :debtors_past_due, 'What % of your debtors are over 90 days past due?', class: 'control-label'
+  = f.select :debtors_past_due, options_for_select(['between 0-10%', 'between 11-20%', 'between 21-40%', 'more than 40%']), {}, class: 'form-control'
+
+.form-group
+  = f.label :largest_debtor, 'What % of total debtors does your largest debtor account for?', class: 'control-label'
+  = f.select :largest_debtor, options_for_select(['between 0-20%', 'between 21-50%', 'greater than 50%']), {}, class: 'form-control'
+
+.form-group
+  = f.label :b2b_sales, 'What percentage of your sales are B2B?', class: 'control-label'
+  = f.select :b2b_sales, options_for_select(['between 0-20%', 'between 21-50%', 'greater than 50%']), {}, class: 'form-control'
+
+.form-group
+  = f.label :accounting_software, 'What accounting software do you use?', class: 'control-label'
+  = f.text_field :accounting_software, class: 'form-control'

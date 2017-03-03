@@ -1,0 +1,16 @@
+[
+  {
+    "account_id": "3c47df04-5154-4a6e-8c21-d9c2e94d7a36",
+    "name": "Ralph's Widgets",
+    "status": "ACTIVE",
+    "type": "BANK",
+    "tax_type": "BASEXCLUDED",
+    "class": "ASSET",
+    "enable_payments_to_account": false,
+    "show_in_expense_claims": false,
+    "bank_account_number": "12345687654321",
+    "currency_code": "AUD",
+    "reporting_code": "ASS",
+    "reporting_code_name": "Assets"
+  }
+]

@@ -1,0 +1,29 @@
+.check_months{
+  & .radio_button{
+    display: inline-block;
+    padding: 2px 4px;
+    min-width: 100px;
+    font-size: 13px;
+    text-align: center;
+    border: 1px solid #000;
+    box-shadow: 2px 2px 2px;
+    position: relative;
+  }
+ & .blue_button{
+    background-color: #95bcf2;
+    &:hover{
+    }
+  }
+  & .white_button{
+    margin-left: -5px;
+    background-color: #fff;
+  }
+  & label:hover{
+    box-shadow: 1px 1px 1px;
+    top: 1px;
+  }
+  & #tab_1:checked ~ #tab_l1, #tab_2:checked ~ #tab_l2{
+    box-shadow: 1px 1px 1px;
+    top: 1px;
+  }
+}

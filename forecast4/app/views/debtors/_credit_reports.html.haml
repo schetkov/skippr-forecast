@@ -1,0 +1,18 @@
+- if current_user.buyer? || current_seller == @company.seller
+  .financial-file-table.clearfix
+    .files.col-md-12
+      .header
+        %span{style: "padding-top: 0px;" } Credit Reports
+
+      - if @debtor.credit_reports.present?
+        .specs
+          - @debtor.credit_reports.each do |credit_report|
+            .spec
+              %span.icon.entypo-folder{ style: "color: #1FBEE7" }
+              = link_to cloudinary_file_name(credit_report.file_name),
+                cl_image_path(credit_report.file_name), target: '_blank'
+      - else
+        %p
+          There are no currently no credit reports to be displayed.
+          %br
+          Credit reports will be uploaded by Skippr.

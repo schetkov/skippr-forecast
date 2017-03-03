@@ -1,0 +1,89 @@
+.admin-credit-reports
+  %h3
+    - if @seller.seller_company
+      = "Upload Credit Reports for #{@seller.seller_company_name}"
+
+  = form_for [:admin, @seller],
+    url: admin_seller_credit_reports_path(@seller),
+    method: :create do |f|
+
+    #direct_upload
+      .upload_container
+      %span
+        .upload_button_holder
+          = link_to 'Upload credit report', '#', class: 'upload_button'
+
+          = f.cl_image_upload(:credit_report,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['pdf'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'credit_reports',
+                              return_delete_token: true)
+
+    .submit-field
+      = f.submit 'Update',
+        class: 'btn btn-lg btn-success update-seller'
+
+  %table
+    %thead
+      %tr
+        %th File Name
+        %th Created at
+        %th Actions
+    %tbody
+      - @seller.credit_reports.each do |credit_report|
+        %tr
+          %td
+            = link_to credit_report.file_name, cl_image_path(credit_report.file_name), target: '_blank'
+          %td= credit_report.created_at
+          %td
+            = link_to 'View file', cl_image_path(credit_report.file_name), target: '_blank'
+            = link_to 'Delete', admin_seller_credit_report_path(@seller, credit_report),
+              method: :delete, style: 'padding-left: 10px'
+
+
+= cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $('.update-seller').attr('style', 'display:block');
+
+    $("#direct_upload input[type='file']")
+    .fileupload({
+      dropZone: '#direct_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.upload_button').text('Uploading...')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $(".upload_button").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('.upload_button').show()
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo('.upload_container').
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.upload_button').text('Upload Credit Report')
+            $('input[name="debtor[file_id]"]').remove();
+            $('a.delete_by_token').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+  });

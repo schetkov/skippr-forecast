@@ -1,0 +1,63 @@
+.row
+  .col-md-10.col-md-offset-1
+    .wizard-progress
+      .row
+        .col-md-4
+          .step.filled
+            My Business
+            %span
+        .col-md-4
+          .step.filled
+            My Customers
+            %span
+        .col-md-4
+          .step.last
+            Director Details
+            %span
+
+    .auction.with-progress-bar.xero-connect
+      .row
+        .col-md-12
+          %p
+            To help faciliate the registration process, please connect your
+            Xero account with Skippr so we can access basic information
+            regarding your company, debtors and invoices.
+
+          %p
+            = link_to(image_tag("connect_xero_button_blue_2x.png"),
+              new_xero_session_path, id: "xero-connect")
+
+          .blue-help-box
+            %span.icon.entypo-lock
+            %p Rest assured your data remains safe. We never see your accounting password.
+
+          %p
+            = link_to "Back to Business Details", business_wizard_path
+
+      - if false
+        .row
+          .col-md-12
+            %hr
+            %p
+              Don't have Xero?
+              = link_to "Upload your company information manually", "#", class: "js-manual-upload"
+
+            = form_for @registration, url: seller_registration_path,
+              html: { role: "form" } do |form|
+
+              = render "/application/error_messages", object: @registration
+              = render "form", f: form
+
+              .form-group{ style: "text-align: center; margin-top: 35px;" }
+                = content_tag "button", class: "button button-clear" do
+                  %span Submit
+
+            %p.help
+              Have any questions?
+              = mail_to "info@skippr.com.au", "Talk to us today"
+
+:javascript
+  //$('.js-manual-upload').click(function(){
+   // $('.new_registration_seller_registrar').toggle();
+   // $('.help').toggle();
+  //});

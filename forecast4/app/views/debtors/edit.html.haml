@@ -1,0 +1,22 @@
+#showcase
+  .container
+    .row.header
+      .col-md-12
+        %span.back-link
+          - if params[:action] == 'edit'
+            = link_to "<< Back to #{@debtor.legal_business_name}", @debtor
+          - else
+            = link_to '<< Back to Customers', debtors_path
+
+    .row
+      .col-md-12
+        .auction
+          = form_for @debtor, html: { role: 'form' } do |form|
+
+            = render '/application/error_messages', object: @debtor
+            = render 'form', f: form
+
+            .submit-field
+              = form.submit 'Edit Debtor', class: 'button button-green', style: "margin: 15px 0"
+
+          = render 'delete_debtor'

@@ -1,0 +1,37 @@
+#footer-white
+  .container
+    .row
+      .col-sm-3.menu
+        %h3 About us
+        %ul
+          %li= link_to 'The Company', about_us_path
+          %li= link_to 'Terms', '#'
+          %li= link_to 'Privacy', privacy_path
+      .col-sm-3.menu
+        %h3 Learn more
+        %ul
+          - if signed_in?
+            %li= link_to 'How it works', how_it_works_path
+          %li= link_to 'FAQ', faq_path
+      -# .col-sm-2.menu
+        -# %h3 Social
+        -# %ul
+        -#   %li
+        -#     %a{:href => "features.html"} Youtube
+        -#   %li
+        -#     %a{:href => "services.html"} Facebook
+        -#   %li
+        -#     %a{:href => "pricing.html"} Twitter
+      .col-sm-6.newsletter
+        .signup.clearfix
+          %p
+            PostInvoice is an innovative funding alternative to traditional lending or factoring.
+        -# %a{:href => "#"}
+        -#   = image_tag "social/fb.png", alt: "facebook-social-icon"
+        -# %a{:href => "#"}
+        -#   = image_tag "social/tw.png", alt: "twitter-social-icon"
+        -# %a{:href => "#"}
+        -#   = image_tag "social/gp.png", alt: "google-social-icon"
+    .row.credits
+      .col-md-12
+        Copyright © 2014. PostInvoice

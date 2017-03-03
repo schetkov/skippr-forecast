@@ -1,0 +1,40 @@
+.financial-file-table.clearfix.other-supporting-documents
+  .files.col-md-12
+    .header
+      %span Other Supporting Documents
+
+      .price
+        - if current_seller == @company.seller
+          = form_for [@seller, @attachment],
+            html: { id: "new_other_supporting_document" } do |f|
+            .upload_button_holder
+              %span.fail-status
+              = link_to 'Upload', '#',
+                class: 'upload_button button button-small button-green',
+                id: 'other-supporting-document-upload'
+              = f.cl_image_upload(:misc,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'misc')
+
+            = f.submit nil, class: 'upload-other-supporting-document'
+
+    - if @seller.latest_misc_documents.any?
+      .specs
+        - @seller.latest_misc_documents.each_with_index do |attachment, index|
+          - if index > 1
+            .spec.hide-show-financials
+              %span.icon.entypo-folder{ style: "color: #a0d1ca" }
+              = link_to cloudinary_file_name(attachment.file_name),
+                cl_image_path(attachment.file_name),
+                target: '_blank'
+          - else
+            .spec
+              %span.icon.entypo-folder{ style: "color: #a0d1ca" }
+              = link_to cloudinary_file_name(attachment.file_name),
+                cl_image_path(attachment.file_name),
+                target: '_blank'
+    - else
+      %p There are no supporting documents to display.

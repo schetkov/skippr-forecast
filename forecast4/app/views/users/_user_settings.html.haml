@@ -1,0 +1,20 @@
+.fieldset
+  %h3{style: "margin-top: 0px;" } Account Settings
+
+  .form-group
+    = f.label :name
+    .row
+      .col-md-6
+        = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :email
+    .row
+      .col-md-6
+        = f.text_field :email, class: 'form-control'
+
+  .form-group
+    = f.label :password
+    .row
+      .col-md-6
+        = f.password_field :password, class: 'form-control'

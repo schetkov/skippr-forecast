@@ -1,0 +1,103 @@
+#how-it-works
+  .container
+    .row
+      .col-md-12
+        .how-it-works
+          .header
+            .row
+              .col-md-12
+                %h1 What is Skippr
+                %p
+                  A funding platform enabling a SME to accelerate payments from their invoices. Seamlessly trade your invoices to unlock funding and optimise business liquidity.
+            .row
+              .col-md-12
+                .how-it-works-section-header
+                  = link_to "#invoice-raised-to-customer", class: "header-button blue" do
+                    = image_tag "bill.png"
+                    Invoice raised to customer
+                  .arrow-down
+                    %span.icon.entypo-arrow-down
+                .how-it-works-section-header
+                  = link_to "#customer-approves-invoices", class: "header-button dark-grey" do
+                    = image_tag "tick.png"
+                    Customer approves invoices
+                  .arrow-down
+                    %span.icon.entypo-arrow-down
+                .how-it-works-section-header
+                  = link_to "Invoice sold", "#invoice-sold", class: "header-button grey"
+                  .arrow-down
+                    %span.icon.entypo-arrow-down
+                .how-it-works-section-header
+                  = link_to "Funds paid", "#funds-paid", class: "header-button white"
+          .main-content
+            .row
+              .col-md-12.tagline
+                %h5
+                  You can now focus on invoices. The next steps can compliment your existing invoice submission and reconciliation process.
+            .row
+              %section.col-md-12
+                %h5#invoice-raised-to-customer.center Invoice Raised to Customer
+                %p
+                  The more transparent the process of invoicing is with your customer the better. Clearly understanding invoice status, gives certainty of payment even though it may not be as soon as you want.
+                %p
+                  To ready an invoice to be funded take the following steps:
+                %ol
+                  %li Raise the invoices noting the new lock-box bank account details.
+                  %li Upload invoices onto the platform manually or via Xero.
+                  %li Select ‘pending invoices’ you want prioritised for approval.
+                  %li Send the invoices to your customer copying in Skippr. Important to request confirmation of:
+                  %ul
+                    %li Invoice receipt and approval.
+                    %li Invoice payment to be made to the lock-box account.
+
+                .faqs
+                  %p FAQ's
+                  = link_to "Why do invoices have to be verified?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "Why do invoices have to be paid into the lock-box account?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "Do I need to have all invoices paid into this lock-box account?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "What if I have already submitted my invoice, can I still trade it?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+
+            .row
+              %section.col-md-12
+                %h5#customer-approves-invoices.center Customer Approves Invoices
+                %p
+                  Invoice approval gives certainty for you and Skippr that the invoice is going to be paid. This may be done via email confirmation, phone or via an online invoice system. Invoice approval should be:
+                %ul
+                  %li Transparent – confirmation given directly to you and Skippr.
+                  %li Clear –  concise confirmation that invoice has been received and approved.
+
+                .faqs
+                  %p FAQ's
+                  = link_to "Will Skippr contact my customers?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "Why do invoices have to be verified?",  "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "Can I have a confidential service with Skippr?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "Do I need to have all invoices paid into this lock-box account?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+
+            .row
+              %section.col-md-12
+                %h5#invoice-sold.center Invoice Sold
+                %p Once an invoice is verified, it will show in the “Approved Invoices” tab. You are now ready to unlock funding!
+
+                %ol
+                  %li Select invoices you would like to fund and click Create Trade.
+                  %li In the trade window, review the invoices selected and terms of funding.
+                  %li Accept the T&amp;C’s of the trade and click ‘Sell Now’.
+
+                .faqs
+                  %p FAQ's
+                  = link_to "Can I unlock funding from multiple invoices from different customers?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "What are the seller's fees in Skippr?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "How do we rate invoices?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+
+            .row
+              %section.col-md-12
+                %h5#funds-paid.center Funds Paid
+                %p
+                  You have now sold your invoices. Funds will be advanced to your account within 24 hours. You receive the stated Advance less the Exchange Fee and Transaction Fee.
+
+                .faqs
+                  %p FAQ's
+                  = link_to "How are invoices funded?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "How do I access my funds?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "When do I receive the residual amount of the invoice?", "http://www.skippr.com.au/faq-the-process", target: "_blank"
+                  = link_to "Who is responsible for collection of the invoice?", "http://www.skippr.com.au/faq-the-process", target: "_blank"

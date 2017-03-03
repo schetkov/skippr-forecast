@@ -1,0 +1,19 @@
+%tr{ class: "invoice_#{invoice.id}" }
+  %td.name
+    = link_to "Invoice ##{invoice.invoice_no}", invoice
+  %td= number_to_currency(invoice.face_value, precision: 0)
+  %td= invoice.debtor.try(:legal_business_name)
+  %td
+    -# - if invoice.expired?
+    -#   %span.label.label-danger
+    -#     Expired
+    - if invoice.workflow_state == "approved"
+      %span.label.label-success= invoice.workflow_state.capitalize
+    - else
+      %span.label.label-warning= invoice.workflow_state.capitalize
+  %td= invoice.payment_status
+  %td= invoice.rating_value || "-"
+  - if current_seller == invoice.seller
+    %td
+      = link_to invoice, class: 'button button-clear' do
+        %span.small View

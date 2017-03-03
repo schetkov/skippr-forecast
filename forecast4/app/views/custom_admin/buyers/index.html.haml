@@ -1,0 +1,22 @@
+.admin-page__header
+  %ul.admin-page__header_links
+    = tab_link "All", "#"
+  .admin-page__header--right
+    = link_to "Create Buyer", new_custom_admin_buyer_path, class: "button button-small"
+
+.main-content
+  %h2 Buyers
+  %table.full-width__table
+    %tbody
+      %tr.head
+        %th Name
+        %th Email
+        %th Action
+      - @buyers.each do |buyer|
+        %tr{ class: "buyer_#{buyer.id}" }
+          %td.reference= link_to buyer.name, custom_admin_buyer_path(buyer)
+          %td= buyer.email
+          %td
+            = link_to "View", custom_admin_buyer_path(buyer)
+            = link_to "Edit", edit_custom_admin_buyer_path(buyer)
+            = link_to "Delete", "#"

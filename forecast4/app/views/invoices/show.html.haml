@@ -1,0 +1,14 @@
+#features
+  #tabs
+    .container
+      .col-md-12
+        = render 'application/flash'
+        .row
+          %section.col-md-12.invoices-show
+            = render 'invoice_header'
+
+            = render 'invoice_details'
+
+            = render 'purchase_order_files'
+
+            = render 'delete_invoice'

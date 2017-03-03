@@ -1,0 +1,25 @@
+
+.scroll{
+  margin-top: 440px;
+}
+.isStuck{
+  background-color: #fff;
+  z-index: 100;
+}
+.row.radar-graph-itself{
+  padding-top: 10px;
+}
+.stuckMenu.isStuck{
+  padding-top: 0;
+}
+.highcharts-container{width:100% !important;}
+.row.radar-graph-itself{
+  svg{
+    width: 100%!important;
+  }
+}
+.row.radar-graph-itself.stuckMenu.isStuck{
+  width: 100%;
+  max-width: 1410px;
+}
+

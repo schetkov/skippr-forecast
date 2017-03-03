@@ -1,0 +1,27 @@
+.admin-page__header
+  %ul.admin-page__header_links
+    = tab_link "All", "#"
+  .admin-page__header--right
+
+.main-content
+  %h2 Trades
+  %table.full-width__table
+    %tbody
+      %tr.head
+        %th ID
+        %th Total Face Value
+        %th Advance Amount
+        %th Net Advance Amount
+        %th Discount Fee
+        %th Action
+      - @trades.each do |trade|
+        %tr{ class: "trade_#{trade.id}" }
+          %td.reference= link_to trade.id, custom_admin_trade_path(trade)
+          %td= number_to_currency(trade.total_face_value, precision: 0)
+          %td= number_to_currency(trade.advance_amount, precision: 0)
+          %td= number_to_currency(trade.net_advance_amount, precision: 0)
+          %td= number_to_currency(trade.discount_fee, precision: 0)
+          %td
+            = link_to "View", custom_admin_trade_path(trade)
+            = link_to "Edit", "#"
+            = link_to "Delete", "#"

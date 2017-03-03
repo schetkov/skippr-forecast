@@ -1,0 +1,21 @@
+section.revenues {
+  border: 1px solid #E4EAF1;
+  padding: 30px;
+  border-radius: 5px;
+  margin: 30px 0;
+
+  p.revenues-instructions {
+    padding: 20px;
+    margin: 40px 0 0;
+    background-color: #fcfcfc;
+    border: 1px solid #E8ECF1;
+    border-radius: 5px;
+
+    strong {
+      display: block;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}

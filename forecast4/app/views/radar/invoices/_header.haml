@@ -1,0 +1,25 @@
+.container-fluid
+  .navbar-header.-radar
+    %button.navbar-toggle{"data-target" => ".bs-navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    = link_to image_tag('radar/skippr_logo.png'), '/', class: 'navbar-brand -radar'
+  %nav.collapse.navbar-collapse.bs-navbar-collapse{role: 'navigation'}
+    %ul.nav.navbar-nav.navbar-left.-radar
+
+    %ul.nav.navbar-nav.navbar-right.-radar
+      %li= link_to "Home", '/', class: 'btn btn-default'
+      %li
+        = link_to new_xero_session_path(return_to: '/radar/invoices'), class: 'btn btn-default' do
+          %i.ion-ios-refresh-empty
+          Refresh
+
+      %li= link_to "Sign out", sign_out_path, class: 'btn btn-default', method: :delete, id: "sign-out"
+
+
+.splash
+  .container-fluid
+    %h1 Cash Flow Forecasting Tool
+    %p.subheading by Skippr
+

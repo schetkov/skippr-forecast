@@ -1,0 +1,116 @@
+.sellers
+  #header
+    .container
+      .row
+        .col-md-12
+          = render 'shared/company_profile_header'
+
+  .container
+    .col-md-12
+      = render 'application/flash'
+      .row
+        %section.col-md-12
+
+          = render 'financial_statements'
+
+          = render 'bank_statements'
+
+          = render 'other_supporting_documents'
+
+          = render 'credit_reports'
+
+-# # TODO: Use Jquery Toggle
+
+:javascript
+  $(document).ready(function() {
+    $('.hide-show-debtors').hide();
+    $('.hide-show-financials').hide();
+    $('.hide-show-aged-payables').hide();
+
+    $('.show-more-debtors').on('click', function(e) {
+      $('.hide-show-debtors').show();
+      $('.show-more-debtors').hide();
+    });
+
+    $('.show-more-financials').on('click', function(e) {
+      $('.hide-show-financials').show();
+      $('.show-more-financials').hide();
+    });
+
+    $('.show-more-aged-payables').on('click', function(e) {
+      $('.hide-show-aged-payables').show();
+      $('.show-more-aged-payables').hide();
+    });
+  });
+
+  $(function() {
+
+    $("#new_financial_statement input[type='file']")
+    .fileupload( {
+
+      start: function () {
+        $('#financial-statement-upload').text('Uploading..')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $('#financial-statement-upload').text(com +"%")
+      },
+
+      fail: function (e, data) {
+        $('#financial-statement-upload').text("Try again")
+        $('#new_financial_statement .fail-status').text('Something went wrong with your upload!')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#new_financial_statement').submit();
+    });
+  });
+
+  $(function() {
+
+    $("#new_bank_statements input[type='file']")
+    .fileupload( {
+
+      start: function () {
+        $('#bank-statement-upload').text('Uploading..')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $('#bank-statement-upload').text(com +"%")
+      },
+
+      fail: function (e, data) {
+        $('#bank-statement-upload').text("Try again")
+        $('#new_bank_statements .fail-status').text('Something went wrong with your upload!')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#new_bank_statements').submit();
+    });
+  });
+
+  $(function() {
+
+    $("#new_other_supporting_document input[type='file']")
+    .fileupload( {
+
+      start: function () {
+        $('#other-supporting-document-upload').text('Uploading..')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $('#other-supporting-document-upload').text(com +"%")
+      },
+
+      fail: function (e, data) {
+        $('#other-supporting-document-upload').text("Try again")
+        $('#new_other_supporting_document .fail-status').text('Something went wrong with your upload!')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#new_other_supporting_document').submit();
+    });
+  });

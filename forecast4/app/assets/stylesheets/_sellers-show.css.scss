@@ -1,0 +1,8 @@
+.sellers {
+  input[type="submit"].upload-financial-statement,
+  input[type="submit"].upload-bank-statement,
+  input[type="submit"].upload-other-supporting-document,
+  {
+    visibility: hidden;
+  }
+}

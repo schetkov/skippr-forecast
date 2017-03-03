@@ -1,0 +1,118 @@
+.fieldset
+  %h3.page-header
+    - if f.object.new_record?
+      Add a New Customer
+    - else
+      Edit Customer
+
+  .form-group
+    = f.label :legal_business_name, 'Business Name'
+    = f.text_field :legal_business_name, class: 'form-control'
+  .form-group
+    = f.label :address, 'Main Address'
+    = f.text_field :address, class: 'form-control'
+  .form-group
+    = f.label :acn, 'ACN'
+    = f.number_field :acn, class: 'form-control'
+  .form-group
+    = f.label :website, 'Website'
+    = f.text_field :website, class: 'form-control'
+
+  .row
+    .form-group.col-md-3
+      = f.label :relationship_start_date
+      .input-group.date
+        = f.text_field :relationship_start_date,
+          value: "",
+          class: "form-control",
+          data: { provide: "datepicker" }
+        %span.input-group-addon
+          %i.glyphicon.glyphicon-th
+
+- if params[:action] == 'new'
+  .fieldset
+    %h3.page-header.new-form Customer Trade Payments History
+
+    .form-group
+      %p
+        %em
+          Please upload the latest customer receipt’s journal pertaining to this
+          debtor. File uploads should be in PDF format and show transactions with
+          this customer going back at least 12 months.
+
+      .row
+        .col-sm-6#direct_upload
+          %span.preview-upload
+          .upload_button_holder{ style: "float: none" }
+            = link_to '#', class: 'upload_button button button-clear' do
+              %span Upload
+            = f.cl_image_upload(:customer_receipt,
+                                html: { id: 'cloudinary-upload' },
+                                allowed_formats: ['pdf'],
+                                use_filename: true,
+                                unique_filename: false,
+                                folder: 'customer_receipts',
+                                return_delete_token: true)
+
+          .progress
+            .progress-bar{ role: "progressbar" }
+
+= cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $('.register-debtor').attr('style', 'display:block');
+    $('.progress').attr('style', 'display:none');
+
+    $("#direct_upload input[type='file']")
+    .fileupload({
+      dropZone: '#direct_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.upload_button').hide()
+        $('#direct_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#direct_upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#direct_upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('.upload_button').show()
+        $('#direct_upload .progress').attr('style', 'display:none');
+        $('.preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.upload_button').hide()
+      $("#direct_upload .progress").attr("style","display:none")
+      $("#direct_upload .progress .progress-bar").attr("style","width:0%")
+      $("#direct_upload .progress .progress-bar").text("0% Complete")
+
+      var preview = $('.preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.upload_button').show()
+            $('.preview-upload').html('');
+            $('input[name="debtor[file_id]"]').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+  });

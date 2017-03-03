@@ -1,0 +1,190 @@
+.admin-page__header
+  = link_to "Buyer Details", "#", class: "admin-page__header_heading"
+  .admin-page__header--right
+    = link_to "Edit Buyer", edit_custom_admin_buyer_path(@buyer), class: "button button-small"
+
+.main-content
+  %section
+    %h2= @buyer.buyer_company_name
+    %table.small-table
+      %tbody
+        %tr
+          %td.name Name
+          %td= @buyer.name
+        %tr
+          %td.name Email
+          %td= @buyer.email
+        %tr
+          %td.name Company Name
+          %td= @buyer.buyer_company_name
+        %ltr
+          %td.name Investor Type
+          %td= @buyer.investor_type
+        %tr
+          %td.name Phone Number
+          %td= @buyer.buyer_company_phone_number
+        %tr
+          %td.name ACN
+          %td= @buyer.buyer_company.acn
+        %tr
+          %td.name ABN
+          %td= @buyer.buyer_company.abn
+        %tr
+          %td.name Description
+          %td= @buyer.buyer_company.description
+
+  %section
+    %h2 Mandates
+    = link_to "Create Mandate",
+      new_custom_admin_mandate_path(id: @buyer.id),
+      class: "button button-small"
+
+    %table.full-width__table
+      %tbody
+        %tr.head
+          %th Debtor Name
+          %th % of funds for this investor
+          %th % of each invoice
+          %th Action
+        - @mandates.each do |mandate|
+          %tr
+            %td.reference= mandate.debtor.legal_business_name
+            %td= number_to_percentage mandate.percentage_of_funds_for_investor, precision: 0
+            %td= number_to_percentage mandate.percentage_of_each_invoice, precision: 0
+            %td
+              = link_to "Edit", "#"
+              = link_to "Delete", "#"
+
+  %section
+    %h2 Moving Balances
+    - if @buyer.fund_statements.empty?
+      = link_to "Deposit Funds",
+        custom_admin_new_deposit_path(id: @buyer.id),
+        class: "button button-small"
+
+    %table.full-width__table
+      %tbody
+        %tr.head
+          %th Date
+          %th Unallocated Cash
+          %th Cash Allocated
+          %th Funds Deployed
+          %th Cash Balance
+          %th Note
+        - @buyer.fund_statements.order(created_at: :asc).each do |statement|
+          %tr{ class: "fund_statement_#{statement.id}" }
+            %td.reference= statement.created_at.strftime("%d %b %Y")
+            %td{ class: "unallocated_cash_#{statement.id}" }
+              = number_to_currency statement.unallocated_cash, precision: 0
+            %td{ class: "allocated_cash_#{statement.id}"}
+              = number_to_currency statement.allocated_cash, precision: 0
+            %td{ class: "funds_deployed_#{statement.id}" }
+              = number_to_currency statement.funds_deployed, precision: 0
+            %td{ class: "total_cash_#{statement.id}" }
+              = number_to_currency statement.total_cash, precision: 0
+            %td
+              = statement.note
+
+  %section.buyer_invoices__table
+    %h2 Invoices
+    .tabs-wrapper
+      %ul.nav.nav-tabs
+        %li.active
+          %a{ href: "#approved", data: { toggle: "tab" } }
+            Approved Invoices
+        %li
+          %a{ href: "#sold", data: { toggle: "tab" } }
+            Sold Invoices
+        %li
+          %a{ href: "#funded", data: { toggle: "tab" } }
+            Funded Invoices
+        %li
+          %a{ href: "#repaid", data: { toggle: "tab" } }
+            Repaid Invoices
+
+      .tab-content
+        #approved.tab-pane.fade.active.in
+          %table.approved-invoices
+            %tbody
+              %tr.head
+                %th Invoice ID
+                %th Advance Amount
+                %th Debtor
+                %th Seller
+              - @buyer.approved_invoices.each do |invoice|
+                %tr
+                  %td.reference= invoice.id
+                  %td= number_to_currency invoice.advance_amount_in_dollars, precision: 0
+                  %td= invoice.debtor.legal_business_name
+                  %td= invoice.seller.seller_company_name
+
+        #sold.tab-pane.fade
+          %table.sold-invoices
+            %tbody
+              %tr.head
+                %th Invoice ID
+                %th Trade
+                %th Advance Amount
+                %th Debtor
+                %th Seller
+              - @buyer.sold_invoices.each do |invoice|
+                %tr
+                  %td.reference= invoice.id
+                  %td= link_to invoice.trade.id, custom_admin_trade_path(invoice.trade)
+                  %td= number_to_currency invoice.advance_amount_in_dollars, precision: 0
+                  %td= invoice.debtor.legal_business_name
+                  %td= invoice.seller.seller_company_name
+
+        #funded.tab-pane.fade
+          %table.funded-invoices
+            %tbody
+              %tr.head
+                %th Invoice ID
+                %th Trade
+                %th Advance Amount
+                %th Debtor
+                %th Seller
+              - @buyer.funded_invoices.each do |invoice|
+                %tr
+                  %td.reference= invoice.id
+                  %td= link_to invoice.trade.id, custom_admin_trade_path(invoice.trade)
+                  %td= number_to_currency invoice.advance_amount_in_dollars, precision: 0
+                  %td= invoice.debtor.legal_business_name
+                  %td= invoice.seller.seller_company_name
+
+        #repaid.tab-pane.fade
+          %table.repaid-invoices
+            %tbody
+              %tr.head
+                %th Invoice ID
+                %th Trade
+                %th Advance Amount
+                %th Debtor
+                %th Seller
+              - @buyer.repaid_invoices.each do |invoice|
+                %tr
+                  %td.reference= invoice.id
+                  %td= link_to invoice.trade.id, "#"
+                  %td= number_to_currency invoice.advance_amount_in_dollars, precision: 0
+                  %td= invoice.debtor.legal_business_name
+                  %td= invoice.seller.seller_company_name
+
+  %section
+    %h2 Exposure by Debtor
+
+    %table.full-width__table
+      %tbody
+        %tr.head
+          %th Debtor
+          %th Cash Allocated
+          %th Funds Deployed
+          %th Current Exposure
+        - @buyer.debtors.uniq.each do |debtor|
+          %tr
+            %td.reference= debtor.legal_business_name
+            %td{ class: "debtor_cash_allocated_#{debtor.id}" }
+              = number_to_currency buyers_allocated_cash_for_debtor(@buyer, debtor), precision: 0
+            %td{ class: "debtor_funds_deployed_#{debtor.id}" }
+              = number_to_currency buyers_funds_deployed_for_debtor(@buyer, debtor), precision: 0
+            %td{ class: "debtor_current_exposure_#{debtor.id}" }
+              = number_to_currency buyers_current_exposure_for_debtor(@buyer, debtor), precision: 0

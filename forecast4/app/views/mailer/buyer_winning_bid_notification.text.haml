@@ -1,0 +1,36 @@
+Congratulations!
+
+= "Your bid for auction ##{@auction.id} was successful."
+
+
+- if @seller.seller_company.bank_details.present?
+  Can you please deposit the upfront payment amount of 
+  = number_to_currency(@upfront_payment)
+  into the following account by close of business today or before close of
+  business on the next working day;
+
+  Bank account name:
+  = @seller.seller_company.bank_details.account_name
+
+  Bank account no:
+  = @seller.seller_company.bank_details.account_number
+
+  If for some reason you cannot pay this amount into the sellers nominated
+  account can you please notify the exchange immediately via email to the
+  following email address: info@postinvoice.com.au**
+- else
+  PostInvoice will contact you shortly to verify bank account details for
+  payment. You will be required to pay the upfront payment amount of
+  = number_to_currency(@upfront_payment)
+  by close of business today or before close of business on the next
+  working day.
+
+PostInvoice will notify you once payment has been received into the
+trust account. Please see the following link to exchange rules on fee
+structure. (www.postinvoice.com.au/feestructure)
+
+** Please note you are bound by the sites terms of service and failure to
+deposit the money into the sellers nominated account constitutes a breach
+of contract.
+
+The Post Invoice Team

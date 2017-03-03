@@ -1,0 +1,25 @@
+#showcase
+  .container
+    .row
+      .col-md-12
+        .auction
+          = render 'preview_header'
+
+          = render 'auctions/show/invoice_snapshot'
+
+          = render 'auctions/show/invoices_for_sale'
+
+          .row
+            .col-md-12
+              #bid-cta
+                %p
+                  %strong
+                    This auction will start on
+                    = @auction.start_date.strftime('%e %B %Y')
+                    and end on
+                    = "#{@auction.end_date.strftime('%e %B %Y')}."
+                    %br
+                    Please confirm your auction details are correct.
+                .submit-field
+                  = button_to 'Confirm', auction_preview_path(@auction),
+                    class: 'button', id: "main-confirm-cta"

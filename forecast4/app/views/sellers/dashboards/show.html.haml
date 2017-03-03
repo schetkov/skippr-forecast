@@ -1,0 +1,73 @@
+#features
+  #tabs
+    .container
+      .row.header
+        .col-md-12
+          %h3
+            Hi
+            = current_seller.name.split.first.capitalize
+          %p
+            - if current_seller.has_an_approved_invoice?
+              %strong You have invoices approved!
+              To draw funding refer below to the invoice dashboard.
+            - else
+              We are
+              %strong currently reviewing your information.
+              To understand more about the funding process
+              = link_to "click here.", how_it_works_path
+
+      .row
+        .col-md-4.dashboard-widget
+          = render "total_value_invoices_funded"
+        .col-md-4.dashboard-widget
+          = render "funding_available"
+        .col-md-4.dashboard-widget
+          = render "potential_funding_available"
+      .row
+        .col-md-12
+          .dashboard
+            .col-md-12.trades
+              = render "trades"
+            .col-md-12.invoices
+              = render "invoices"
+
+= render "identifier"
+
+= cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $('.progress').attr('style', 'display:none');
+
+    $("#direct_upload input[type='file']")
+    .fileupload({
+      dropZone: '#direct_upload',
+
+      start: function () {
+        $('.upload_button').hide()
+        $('#direct_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#direct_upload .progress .progress-bar").attr("style","width:"+com+"%")
+      },
+
+      fail: function (e, data) {
+        $('.upload_button').show()
+        $('#direct_upload .progress').attr('style', 'display:none');
+        $('.preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.upload_button').show()
+      $("#direct_upload .progress").attr("style","display:none")
+      $("#direct_upload .progress .progress-bar").attr("style","width:0%")
+
+      $('.preview-upload').append(
+        $.cloudinary.image(data.result.public_id,
+          { format: 'png', version: data.result.version,
+            crop: 'fill', width: 150, height: 200 })
+      );
+    });
+  });

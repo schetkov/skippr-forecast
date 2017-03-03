@@ -1,0 +1,16 @@
+.admin-page__header
+  = link_to "Edit Seller", "#", class: "admin-page__header_heading"
+
+.main-content
+  %h2= "Edit #{@seller.seller_company_name}"
+  = form_for @seller,
+    url: custom_admin_seller_path,
+    method: :patch,
+    html: { role: "form", class: "form-horizontal main-content__form" } do |form|
+
+    = render "/application/error_messages", object: @seller
+    = render "form", form: form
+
+    .col-sm-offset-2
+      = button_tag(type: 'submit', class: "button-clear") do
+        %span Update Seller

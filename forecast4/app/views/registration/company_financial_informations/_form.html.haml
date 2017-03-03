@@ -1,0 +1,514 @@
+.fieldset
+  %h4.registration-sub-header
+    Section 1: General Business Information
+
+  .form-group
+    = f.label :principal_business_owner, 'Who is the principal owner of the business?'
+    = f.text_field :principal_business_owner, class: 'form-control'
+
+  .form-group
+    = f.label :principal_ownership, 'What is the % ownership of the principal investor?'
+    = f.text_field :principal_ownership, class: 'form-control'
+
+  .form-group
+    = f.label :other_registered_name, 'Please specify any other names the business has been registered under'
+    = f.text_field :other_registered_name, class: 'form-control'
+
+  .form-group
+    = f.label :associated_institutions,
+      'Please list any financial institutions you currently have a loan or factoring facility with (please separate with a comma)'
+    = f.text_field :associated_institutions, class: 'form-control', style: "height: 60px"
+
+.fieldset
+  %h4.registration-sub-header
+    Section 2: Financial Snapshot
+
+  .form-group
+    = f.label :net_revenues, "Last Reported* Net Revenues for 12 month Period ($)"
+    = f.text_field :net_revenues, class: 'form-control'
+
+  .form-group
+    = f.label :gross_profit_margin, "Last reported Operating Profit 12 month Period ($)"
+    = f.text_field :gross_profit_margin, class: 'form-control'
+
+  .form-group
+    = f.label :last_reported_trade_debtors, "Last reported Trade Debtors ($)"
+    = f.text_field :last_reported_trade_debtors, class: 'form-control'
+
+  .form-group
+    = f.label :last_reported_trade_creditors, "Last reported Trade Creditors ($)"
+    = f.text_field :last_reported_trade_creditors, class: 'form-control'
+
+  .form-group
+    = f.label :loans_outstanding, "Loans Outstanding ($)"
+    = f.text_field :loans_outstanding, class: 'form-control'
+
+  .form-group
+    = f.label :liability_outstanding, "Tax Liability Outstanding ($)"
+    = f.text_field :liability_outstanding, class: 'form-control'
+
+  .form-group
+    *Fiscal year end or financial year end, whichever occurred most recently
+
+.fieldset
+  %h4.registration-sub-header
+    Section 3: Two Years Financial Information
+
+  .form-group
+    %p
+      %em
+        Please upload a profit &amp; loss statement and balance sheet for the most
+        recent 12-month period. The files must be in PDF format.
+
+    .row
+      -# .col-sm-6#financial_upload
+      .col-sm-6#profit_and_loss
+        -# File upload goes here
+        %span.profit-and-loss-preview-upload
+        .upload_button_holder{ style: "float: none;" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload Profit &amp; Loss
+          = f.cl_image_upload(:profit_and_loss,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['pdf'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'profit_and_loss_attachments',
+                              return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+  .form-group
+    %p
+      %em
+        Please upload a balance sheet for the most recent 12-month period.
+        The files must be in PDF format.
+
+    .row
+      .col-sm-6#balance_sheet
+        %span.balance-sheet-preview-upload
+        .upload_button_holder{ style: "float: none;" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload Balance Sheet
+          = f.cl_image_upload(:balance_sheet,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['pdf'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'balance_sheet_attachments',
+                              return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+.fieldset
+  %h4.registration-sub-header
+    Section 4: Aged Debtors Information
+
+  .form-group
+    %p
+      %em
+        Please upload your last reported ageing debtors report. The file must be in PDF format.
+
+    .row
+      .col-sm-6#ageing_debtor_upload
+        %span.ageing-debtor-preview-upload
+        .upload_button_holder{ style: "float: none;" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload
+          = f.cl_image_upload(:ageing_debtor_report,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['pdf'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'ageing_debtors',
+                              return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+.fieldset
+  %h4.registration-sub-header
+    Section 5: Aged Payables Information
+
+  .form-group
+    %p
+      %em
+        Please upload your last reported ageing payables report. The file must be in PDF format.
+
+    .row
+      .col-sm-6#aged_payables_upload
+        %span.aged-payables-preview-upload
+        .upload_button_holder{ style: "float: none;" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload
+          = f.cl_image_upload(:aged_payable_report,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['pdf','png', 'jpg', 'jpeg'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'aged_payables',
+                              return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+
+.fieldset
+  %h4.registration-sub-header
+    Section 6: Driver's License
+
+  .form-group
+    %p
+      %em
+        Please upload a scanned copy of the drivers license for the registered user of this PostInvoice account.
+
+    .row
+      .col-sm-6#drivers_license_upload
+        %span.drivers-license-preview-upload
+        .upload_button_holder{ style: "float: none;" }
+          = link_to '#', class: 'upload_button button button-clear' do
+            %span Upload
+          = f.cl_image_upload(:drivers_license,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['pdf','png', 'jpg', 'jpeg'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'drivers_license',
+                              return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+.fieldset
+  %h4.registration-sub-header
+    Section 7: Debtor Terms
+
+  .form-group
+    %p Do you offer warranties?
+    = f.radio_button :debtor_warranties, 'yes'
+    = label :debtor_warranties, 'Yes'
+    = f.radio_button :debtor_warranties, 'no', checked: true
+    = label :debtor_warranties, 'No'
+
+  .form-group
+    %p Do you ever bill on a progessive basis?
+    = f.radio_button :debtor_progressive_billing, 'yes'
+    = label :debtor_progressive_billing, 'Yes'
+    = f.radio_button :debtor_progressive_billing, 'no', checked: true
+    = label :debtor_progressive_billing, 'No'
+
+  .form-group
+    %p Do you offer return rights?
+    = f.radio_button :debtor_return_rights, 'yes'
+    = label :debtor_return_rights, 'Yes'
+    = f.radio_button :debtor_return_rights, 'no', checked: true
+    = label :debtor_return_rights, 'No'
+
+  .form-group
+    %p Do you sell to any affiliates, subsidiaries or customers on a consignment basis?
+    = f.radio_button :debtor_consignment_basis, 'yes'
+    = label :debtor_consignment_basis, 'Yes'
+    = f.radio_button :debtor_consignment_basis, 'no', checked: true
+    = label :debtor_consignment_basis, 'No'
+
+  .form-group
+    %p Do you offer any discounts, rebates or allowances to customers?
+    = f.radio_button :debtor_discounts, 'yes'
+    = label :debtor_discounts, 'Yes'
+    = f.radio_button :debtor_discounts, 'no', checked: true
+    = label :debtor_discounts, 'No'
+
+  .form-group
+    %p Do you allow offsets?
+    = f.radio_button :allow_offsets, 'yes'
+    = label :allow_offsets, 'Yes'
+    = f.radio_button :allow_offsets, 'no', checked: true
+    = label :allow_offsets, 'No'
+
+.fieldset
+  %h4.registration-sub-header
+    Section 8: Bank Details
+
+  .form-group
+    = f.label :bank_account_name
+    = f.text_field :bank_account_name, class: 'form-control'
+  .form-group
+    = f.label :bank_account_number
+    = f.text_field :bank_account_number, class: 'form-control'
+  .form-group
+    = f.label :bsb_number
+    = f.text_field :bsb_number, class: 'form-control'
+
+= cloudinary_js_config
+
+-# TODO: The javascript below really sucks and is intended to be cleaned up.
+
+:javascript
+  $(document).ready(function() {
+    //$('.register-debtor').attr('style', 'display:block');
+    $('.progress').attr('style', 'display:none');
+
+    $("#profit_and_loss input[type='file']")
+    .fileupload({
+      dropZone: '#profit_and_loss',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#profit_and_loss .upload_button').hide()
+        $('#profit_and_loss .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#profit_and_loss .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#profit_and_loss .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#profit_and_loss .upload_button').show()
+        $('#profit_and_loss .progress').attr('style', 'display:none');
+        $('#profit_and_loss .profit-and-loss-preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#profit_and_loss .upload_button').hide()
+      $("#profit_and_loss .progress").attr("style","display:none")
+      $("#profit_and_loss .progress .progress-bar").attr("style","width:0%")
+      $("#profit_and_loss .progress .progress-bar").text("0% Complete")
+
+      var preview = $('.profit-and-loss-preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#profit_and_loss .upload_button').show()
+            $('#profit_and_loss .financial-preview-upload').html('');
+            $('input[name="registration_step_four[profit_and_loss]"]').remove();
+          }).fail(function() {
+            $('#profit_and_loss .status').text("Cannot delete image");
+        });
+      });
+    });
+
+    $("#balance_sheet input[type='file']")
+    .fileupload({
+      dropZone: '#balance_sheet',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#balance_sheet .upload_button').hide()
+        $('#balance_sheet .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#balance_sheet .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#balance_sheet .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#balance_sheet .upload_button').show()
+        $('#balance_sheet .progress').attr('style', 'display:none');
+        $('#balance_sheet .balance-sheet-preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#balance_sheet .upload_button').hide()
+      $("#balance_sheet .progress").attr("style","display:none")
+      $("#balance_sheet .progress .progress-bar").attr("style","width:0%")
+      $("#balance_sheet .progress .progress-bar").text("0% Complete")
+
+      var preview = $('.balance-sheet-preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#balance_sheet .upload_button').show()
+            $('#balance_sheet .financial-preview-upload').html('');
+            $('input[name="registration_step_four[balance_sheet]"]').remove();
+          }).fail(function() {
+            $('#balance_sheet .status').text("Cannot delete image");
+        });
+      });
+    });
+
+
+    $("#aged_payables_upload input[type='file']")
+    .fileupload({
+      dropZone: '#aged_payables_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#aged_payables_upload .upload_button').hide()
+        $('#aged_payables_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#aged_payables_upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#aged_payables_upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#aged_payables_upload .upload_button').show()
+        $('#aged_payables_upload .progress').attr('style', 'display:none');
+        $('#aged_payables_upload .financial-preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#aged_payables_upload .upload_button').hide()
+      $("#aged_payables_upload .progress").attr("style","display:none")
+      $("#aged_payables_upload .progress .progress-bar").attr("style","width:0%")
+      $("#aged_payables_upload .progress .progress-bar").text("0% Complete")
+
+      var preview = $('.aged-payables-preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#aged_payables_upload .upload_button').show()
+            $('#aged_payables_upload .financial-preview-upload').html('');
+            $('input[name="registration_step_four[aged_payable_report]"]').remove();
+          }).fail(function() {
+            $('#aged_payables_upload .status').text("Cannot delete image");
+        });
+      });
+    });
+
+    $("#ageing_debtor_upload input[type='file']")
+    .fileupload({
+      dropZone: '#ageing_debtor_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#ageing_debtor_upload .upload_button').hide()
+        $('#ageing_debtor_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#ageing_debtor_upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#ageing_debtor_upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#ageing_debtor_upload .upload_button').show()
+        $('#ageing_debtor_upload .progress').attr('style', 'display:none');
+        $('#ageing_debtor_upload .financial-preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#ageing_debtor_upload .upload_button').hide()
+      $("#ageing_debtor_upload .progress").attr("style","display:none")
+      $("#ageing_debtor_upload .progress .progress-bar").attr("style","width:0%")
+      $("#ageing_debtor_upload .progress .progress-bar").text("0% Complete")
+
+      var preview = $('.ageing-debtor-preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#ageing_debtor_upload .upload_button').show()
+            $('#ageing_debtor_upload .financial-preview-upload').html('');
+            $('input[name="registration_step_four[ageing_debtor_report]"]').remove();
+          }).fail(function() {
+            $('#ageing_debtor_upload .status').text("Cannot delete image");
+        });
+      });
+    });
+
+    $("#drivers_license_upload input[type='file']")
+    .fileupload({
+      dropZone: '#drivers_license_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('#drivers_license_upload .upload_button').hide()
+        $('#drivers_license_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#drivers_license_upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#drivers_license_upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('#drivers_license_upload .upload_button').show()
+        $('#drivers_license_upload .progress').attr('style', 'display:none');
+        $('#drivers_license_upload .financial-preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('#drivers_license_upload .upload_button').hide()
+      $("#drivers_license_upload .progress").attr("style","display:none")
+      $("#drivers_license_upload .progress .progress-bar").attr("style","width:0%")
+      $("#drivers_license_upload .progress .progress-bar").text("0% Complete")
+
+      var preview = $('.drivers-license-preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 200, height: 300
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('#drivers_license_upload .upload_button').show()
+            $('#drivers_license_upload .financial-preview-upload').html('');
+            $('input[name="registration_step_four[drivers_license]"]').remove();
+          }).fail(function() {
+            $('#drivers_license_upload .status').text("Cannot delete image");
+        });
+      });
+    });
+
+  });

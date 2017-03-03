@@ -1,0 +1,132 @@
+= form.fields_for :user, (@seller.user || @seller.build_user) do |user_fields|
+  = user_fields.hidden_field :account_type, value: "seller"
+  .form-group
+    = user_fields.label :name, class: "col-sm-2 control-label"
+    .col-sm-4
+      = user_fields.text_field :name, class: "form-control", placeholder: "John Smith"
+  .form-group
+    = user_fields.label :email, class: "col-sm-2 control-label"
+    .col-sm-4
+      = user_fields.text_field :email,
+        class: "form-control",
+        placeholder: "valid@example.com"
+  .form-group
+    = user_fields.label :password, class: "col-sm-2 control-label"
+    .col-sm-4
+      = user_fields.text_field :password,
+        class: "form-control",
+        placeholder: "Skippr1234"
+  .form-group
+    = form.label :exchange_fee, "Exchange Fee", class: "col-sm-2 control-label"
+    .col-sm-4
+      = form.text_field :exchange_fee, class: "form-control", placeholder: "e.g. 0.01 for 1%"
+  .form-group
+    = form.label :is_cash_flow_user, "CashFlow user?", class: "col-sm-2 control-label"
+    .col-sm-4
+      = form.check_box :is_cash_flow_user
+
+= form.fields_for :seller_company, (@seller.seller_company || @seller.build_seller_company) do |company_fields|
+  .form-group
+    = company_fields.label :name, "Company name", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :name, class: "form-control", placeholder: "Company Name Ltd"
+  .form-group
+    = company_fields.label :acn, "ACN", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :acn, class: "form-control", placeholder: "A12345"
+  .form-group
+    = company_fields.label :website, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :website, class: "form-control", placeholder: "http://www.website.com"
+  .form-group
+    = company_fields.label :phone_number, "Phone number", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :phone_number, class: "form-control", placeholder: "0441 234 567"
+
+.divider
+- if @seller.persisted?
+  .form-group
+    = label_tag "Has seller signed rules?", nil, class: "col-sm-2 control-label"
+    .col-sm-10
+      = form.radio_button :accepted_terms, "true"
+      = form.label :accepted_terms, "Yes"
+      = form.radio_button :accepted_terms, "false"
+      = form.label :accepted_terms, "No"
+.form-group
+  = form.label :drivers_license_number, class: "col-sm-2 control-label"
+  .col-sm-4
+    = form.text_field :drivers_license_number, class: "form-control"
+.form-group
+  = form.label :dob_day, "Date of Birth", class: "col-sm-2 control-label"
+  .col-sm-4
+    = form.date_select :dob,
+      { start_year: 100.years.ago.year,
+      end_year: Date.today.year,
+      order: [:day, :month, :year] }
+
+.divider
+
+= form.fields_for :seller_company, (@seller.seller_company || @seller.build_seller_company) do |company_fields|
+  .form-group
+    = company_fields.label :years_in_business, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :years_in_business, class: "form-control"
+  .form-group
+    = company_fields.label :address, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :address, class: "form-control"
+  .form-group
+    = company_fields.label :abn, "ABN", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :abn, class: "form-control"
+  .form-group
+    = company_fields.label :description, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :description, class: "form-control"
+  .form-group
+    = company_fields.label :principal_business_owner, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :principal_business_owner, class: "form-control"
+  .form-group
+    = company_fields.label :principal_ownership, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :principal_ownership, class: "form-control"
+  .form-group
+    = company_fields.label :other_registered_name, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :other_registered_name, class: "form-control"
+
+  .form-group
+    = company_fields.label :industry, 'What industry do you operate in?', class: 'col-sm-2 control-label'
+    .col-sm-4
+      = company_fields.select :industry,
+        options_for_select(['Recruitment and labour hire',
+        'Wholesale trade',
+        'Transport and logistics',
+        'Manufacturing',
+        'Printing',
+        'Smash Repairs',
+        'Retail',
+        'Professional Services',
+        'Construction Services',
+        'Mining Services',
+        'Exports',
+        'Other']), { include_blank: "Select industry" }, class: 'form-control'
+  .form-group
+    = company_fields.label :associated_institutions, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :associated_institutions, class: "form-control"
+  .form-group
+    = company_fields.label :directors_name, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :directors_name, class: "form-control"
+  .form-group
+    = company_fields.label :directors_email, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :directors_email, class: "form-control"
+  .form-group
+    = company_fields.label :directors_address, class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :directors_address, class: "form-control"
+
+  .divider{ style: "margin: 30px 0" }

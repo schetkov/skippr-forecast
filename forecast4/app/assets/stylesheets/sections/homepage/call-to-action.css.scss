@@ -1,0 +1,18 @@
+.call-to-action {
+  padding: 160px 0;
+  background-image: asset-url('shattered.png');
+
+  p {
+    margin-bottom: 50px;
+    color: #8c989e;
+  }
+
+  p.lead {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+}

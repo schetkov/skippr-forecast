@@ -1,0 +1,24 @@
+.investors-testimonial {
+  padding: 70px 0 100px;
+
+  h2, p {
+    padding-bottom: 20px;
+  }
+
+  .media.testimonial {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #eeeeee;
+    border-radius: 6px;
+
+    .media-body {
+      padding-top: 10px;
+      padding-left: 10px;
+
+      p {
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+}

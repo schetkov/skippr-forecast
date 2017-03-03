@@ -1,0 +1,15 @@
+.landing {
+  background-color: #205081;
+}
+
+img.landing-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 100px;
+  margin-top: -75px; /* Half the height */
+  margin-left: -150px; /* Half the width */
+  display: inline-block;
+  vertical-align: middle;
+}

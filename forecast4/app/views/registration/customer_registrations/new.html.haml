@@ -1,0 +1,121 @@
+.row.registration-customer
+  .col-md-10.col-md-offset-1
+    .wizard-progress
+      .row
+        .col-md-4
+          .step.filled
+            My Business
+            %span
+        .col-md-4
+          .step.filled
+            My Customers
+            %span
+        .col-md-4
+          .step.last
+            Director Details
+            %span
+
+    .auction.with-progress-bar
+      .row
+        .col-md-12
+
+          .blue-help-box
+            %h5 Add your customers below!
+            %p
+              Please tell us about any customers you invoice and would like to
+              unlock funding from. We recommend you upload outstanding invoices
+              with these customers so we can rate them.
+            %p
+              %span What does the rating tell me?
+              It will confirm how much you can unlock from the invoice upfront
+              and how much it will cost you until it is paid by your customer.
+
+
+          = form_for @customer_registration, url: customer_registration_path do |f|
+
+            = f.fields_for "debtor[]", Debtor.new do |builder|
+              = render "debtor_fields", f: builder
+            = link_to_add_fields "Add Another Customer", f, :debtor
+
+            .row
+              .col-sm-12#direct_upload
+                .drag-drop-area
+                  %p Upload invoices you wish to sell by dragging files here or click the button below
+                  .upload_button_holder{ style: "float: none" }
+                    = link_to '#', class: 'upload_button button button-clear' do
+                      %span Upload Invoices
+                    = f.cl_image_upload(:invoice_documents,
+                                        html: { id: 'cloudinary-upload' },
+                                        allowed_formats: ['pdf'],
+                                        multiple: true,
+                                        use_filename: true,
+                                        unique_filename: false,
+                                        folder: 'invoice_documents',
+                                        return_delete_token: true)
+
+                  .progress
+                    .progress-bar{ role: "progressbar" }
+
+                .preview-upload
+
+            .submit-field
+              = link_to "Back to Business Details", business_wizard_path, style: "padding-right: 15px;"
+              = f.submit "Review Terms & Conditions", class: 'button button-green'
+
+
+= cloudinary_js_config
+
+:javascript
+  jQuery(function() {
+    $('form').on('click', '.remove_fields', function(event) {
+      $(this).closest('fieldset').hide();
+      return event.preventDefault();
+    });
+
+    return $('form').on('click', '.add_fields', function(event) {
+      var regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g');
+      $(this).before($(this).data('fields').replace(regexp, time));
+      return event.preventDefault();
+    });
+  });
+
+  $(document).ready(function() {
+    $('.progress').attr('style', 'display:none');
+
+    $("#direct_upload input[type='file']")
+    .fileupload({
+      dropZone: '.drag-drop-area',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.upload_button').hide()
+        $('#direct_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#direct_upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#direct_upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('.upload_button').show()
+        $('#direct_upload .progress').attr('style', 'display:none');
+        $('.preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.upload_button').show()
+      $("#direct_upload .progress").attr("style","display:none")
+      $("#direct_upload .progress .progress-bar").attr("style","width:0%")
+      $("#direct_upload .progress .progress-bar").text("0% Complete")
+
+      $('.preview-upload').append(
+        $.cloudinary.image(data.result.public_id,
+          { format: 'png', version: data.result.version,
+            crop: 'fill', width: 150, height: 200 })
+      );
+    });
+  });

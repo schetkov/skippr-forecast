@@ -1,0 +1,19 @@
+.row
+  .col-md-10.col-md-offset-1
+    .auction
+
+      %h3.registration-header Tell us about your company and debtor relationship
+
+      .row
+        .col-md-12
+          = form_for @registration, url: registration_company_financial_information_path, html: { role: 'role' } do |form|
+
+            = render '/application/error_messages', object: @registration
+            = render 'registration/company_financial_informations/form', f: form
+
+            -# .form-group
+            -#   = form.submit 'Submit', class: 'btn btn-lg btn-primary btn-wide margin-top-30'
+
+            .form-group{ style: "text-align: center; margin-top: 35px;" }
+              = content_tag 'button', class: 'button button-clear' do
+                %span Submit Application

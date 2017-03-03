@@ -1,0 +1,54 @@
+@import "radar/variables";
+
+/* Tab Navigation */
+.nav-tabs {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.nav-tabs > li {
+}
+
+.nav-tabs > li > a {
+  border-radius: 0;
+  font-family: $header-font;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  padding: 15px 30px;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover {
+
+}
+
+/* Tab Content */
+.tab-pane {
+  border: 1px solid #dddddd;
+  border-radius: 0;
+  padding: 10px;
+}
+
+#rules.tab-pane, #historical.tab-pane {
+  /*border: 0;*/
+}
+
+#filter-invoices{
+  height: 53px;
+  & div{
+    height: 100%;
+    & select{
+      margin: 10px 0 0 10px;
+    }
+  }
+}
+
+.check_months.list
+{
+  float: right!important;
+  & > a{
+    margin-right: 10px;
+  }
+}

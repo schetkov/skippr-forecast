@@ -1,0 +1,37 @@
+[
+  {
+  "name": "Demo Company (AU)",
+  "legal_name": "Demo Company (AU)",
+  "pays_tax": true,
+  "version": "AU",
+  "organisation_type": "COMPANY",
+  "base_currency": "AUD",
+  "country_code": "AU",
+  "is_demo_company": false,
+  "organisation_status": "ACTIVE",
+  "registration_number": "11111111138",
+  "tax_number": "53003086616",
+  "financial_year_end_day": 30,
+  "financial_year_end_month": 6,
+  "period_lock_date": "\/Date(1214740800000+1200)\/",
+  "created_date_utc": "\/Date(1437437699123)\/",
+  "timezone": "AUSEASTERNSTANDARDTIME",
+  "short_code": "!j0S3Y",
+  "addresses": [
+    {
+      "address_type": "POBOX",
+      "address_line1": "23 Main Street",
+      "city": "Marineville",
+      "region": "NSW",
+      "postal_code": "2000"
+    }
+  ],
+  "phones": [
+    {
+      "phone_type": "OFFICE",
+      "phone_number": "99998888",
+      "phone_area_code": "02"
+    }
+  ]
+  }
+]

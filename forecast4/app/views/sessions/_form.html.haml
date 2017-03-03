@@ -1,0 +1,10 @@
+= form_for :session, :url => session_path, html: { role: 'form' } do |form|
+  .form-group
+    = form.label :email
+    = form.text_field :email, :type => 'email', class: 'form-control'
+  .form-group
+    = form.label :password
+    = form.password_field :password, class: 'form-control'
+  .submit
+    = button_tag(type: 'submit', class: "button-clear") do
+      %span Sign in to my account

@@ -1,0 +1,40 @@
+.upload_button_holder {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.upload_button_holder .upload_button {
+  // display: block;
+}
+
+.upload_button_holder {
+ float: right;
+}
+
+.upload_button_holder .cloudinary-fileupload {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+span.fail-status {
+  display: inline;
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+span.preview {
+  float: right;
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #a94442;
+}

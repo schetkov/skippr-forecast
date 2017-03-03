@@ -1,0 +1,17 @@
+%tr{ class: "debtor_#{debtor.id}" }
+  %td.name
+    = link_to debtor.legal_business_name, debtor_path(debtor)
+  %td
+    = pluralize(debtor.invoices.size, 'Invoice')
+  %td.status
+    - if debtor.status == 'approved'
+      %span.label.label-success= debtor.status.capitalize
+    - else
+      %span.label.label-warning= debtor.status.capitalize
+  %td
+    - if debtor.seller == current_seller
+      = link_to debtor_path(debtor), class: 'button-clear' do
+        %span.small View
+  %td.add-invoice
+    - if debtor.seller == current_seller
+      = link_to "Add Invoice", new_debtor_invoice_path(debtor), class: 'button button-small button-green'

@@ -1,0 +1,42 @@
+#features
+  #tabs
+    .container
+      .row
+        .col-md-12
+          .invoice-list
+            .tabs-wrapper
+              %ul.nav.nav-tabs
+                %li.active
+                  %a{ href: "#live", data: { toggle: "tab" } }
+                    Your Invoices
+
+              .tab-content
+                #live.tab-pane.active
+                  - if current_seller.has_xero_authorisation?
+                    %p.refresh
+                      Refresh your invoices from Xero
+                      = link_to new_xero_session_path, class: "button button-clear" do
+                        %span.icon.entypo-cw.refresh-button
+                  - if current_seller.invoices.present?
+                    %table.invoices
+                      %thead
+                        %tr
+                          %th Internal ID
+                          %th Face Value
+                          %th Customer
+                          %th Invoice Status
+                          %th Invoice Payment Status
+                          %th Invoice Rating
+                          %th Actions
+                      %tbody
+                      - current_seller.latest_invoices.each do |invoice|
+                        = render invoice
+
+            .row
+              #cta-panel.col-md-10.col-md-offset-1
+                .wrapper.clearfix
+                  %p
+                    To add a new invoice, please go to your Customers page click
+                    add invoice for one of your customers.
+                  = link_to 'View Customers', debtors_path,
+                    class: 'button button-green'

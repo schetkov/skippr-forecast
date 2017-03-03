@@ -1,0 +1,64 @@
+.admin-page__header
+  = link_to "Trade Details", "#", class: "admin-page__header_heading"
+  .admin-page__header--right
+    = link_to "Edit Trade", "#", class: "button button-small"
+
+.main-content
+  %section
+    - if @trade.unfunded?
+      = button_to "Fund Trade", custom_admin_trade_funded_path(id: @trade)
+    %h2= "Trade #{@trade.id}"
+    %table.small-table
+      %tbody
+        %tr
+          %td.name Funding Status
+          %td= @trade.funding_status
+        %tr
+          %td.name Confirmed at / Sold on
+          %td= @trade.confirmed_at.try(:strftime, "%b %e, %l:%M %p")
+        %tr
+          %td.name Total Face Value
+          %td= number_to_currency @trade.total_face_value, precision: 0
+        %tr
+          %td.name Advance Amount
+          %td= number_to_currency @trade.advance_amount, precision: 0
+        %tr
+          %td.name Net Advance Amount
+          %td= number_to_currency @trade.net_advance_amount, precision: 0
+        %tr
+          %td.name Discount Fee
+          %td= number_to_currency @trade.discount_fee, precision: 0
+        %tr
+          %td.name Seller Exchange Fee
+          %td= number_to_currency @trade.seller_exchange_fee, precision: 0
+        %tr
+          %td.name Buyer Exchange Fee
+          %td= number_to_currency @trade.buyer_exchange_fee, precision: 0
+        %tr
+          %td.name Seller
+          %td= link_to @trade.seller.name, custom_admin_seller_path(@trade.seller)
+        %tr
+          %td.name Created at
+          %td= @trade.created_at.strftime("%b %e, %l:%M %p")
+        %tr
+          %td.name Updated at
+          %td= @trade.updated_at.strftime("%b %e, %l:%M %p")
+
+  %section
+    %table.full-width__table
+      %tbody
+        %tr.head
+          %th Invoice ID
+          %th Face Value
+          %th Invoice No
+          %th Anticipated Pay Date
+          %th Status
+          %th Action
+        - @trade.invoices.each do |invoice|
+          %tr
+            %td.reference= link_to invoice.id, custom_admin_invoice_path(invoice)
+            %td= number_to_currency invoice.face_value, precision: 0
+            %td= invoice.invoice_no
+            %td= invoice.anticipated_pay_date.strftime("%d %B %Y")
+            %td= invoice.workflow_state.try(:capitalize)
+            %td= link_to "View Invoice", custom_admin_invoice_path(invoice)

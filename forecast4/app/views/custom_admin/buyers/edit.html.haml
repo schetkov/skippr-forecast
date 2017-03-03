@@ -1,0 +1,16 @@
+.admin-page__header
+  = link_to "Edit Buyer", "#"
+
+.main-content
+  %h2= "Edit #{@buyer.buyer_company_name}"
+  = form_for @buyer,
+    url: custom_admin_buyer_path,
+    method: :patch,
+    html: { role: "form", class: "form-horizontal main-content__form" } do |form|
+
+    = render "/application/error_messages", object: @buyer
+    = render "form", form: form
+
+    .col-sm-offset-2
+      = button_tag(type: 'submit', class: "button-clear") do
+        %span Update Buyer

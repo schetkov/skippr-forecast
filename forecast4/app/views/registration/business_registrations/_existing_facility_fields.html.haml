@@ -1,0 +1,13 @@
+%fieldset.row.facilities
+  .form-group.col-md-4
+    = f.text_field :name, class: "form-control", placeholder: "Name of facility"
+
+  .form-group.col-md-3
+    = f.text_field :amount, class: "form-control", placeholder: "Amount"
+
+  .form-group.col-md-4
+    .last
+      = f.select :secured,
+        options_for_select(["Secured", "Unsecured"]), {}, class: "form-control"
+  .form-group.col-md-1
+    = link_to "x", "#", class: "remove_fields button-clear"

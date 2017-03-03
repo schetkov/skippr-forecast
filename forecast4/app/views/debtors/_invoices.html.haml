@@ -1,0 +1,92 @@
+.tabs-wrapper
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ href: "#traded", data: { toggle: "tab" } }
+        Traded Invoices
+  .tab-content
+    #traded.tab-pane.fade.active.in
+      - if @debtor.invoices.traded.any?
+        %table.debtors-invoices
+          %thead
+            %tr
+              %th Issue Date
+              %th Face Value
+              %th Invoice Number
+              %th Invoice Rating
+          %tbody
+            - @debtor.invoices.traded.each do |invoice|
+              %tr{ class: "invoice_#{invoice.id}" }
+                %td= invoice.created_at.strftime("%d %B")
+                %td= number_to_currency(invoice.face_value, precision: 2)
+                %td= link_to invoice.invoice_no, invoice
+                %td.rating
+                  = invoice.rating_value
+                  %span.icon.entypo-help{ data: { toggle: "tooltip", placement: "top", title: "Advance: #{number_to_percentage(invoice.rating.advance_amount * 100, precision: 1)} / Discount Rate: #{number_to_percentage(invoice.rating.discount_rate * 100, precision: 1)} (per 30 days)" } }
+
+      - else
+        %p.empty There are no traded invoices!
+
+
+.tabs-wrapper
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ href: "#approved", data: { toggle: "tab" } }
+        Approved Invoices
+    %li
+      %a{ href: "#pending", data: { toggle: "tab" } }
+        Pending Invoices
+
+  .tab-content
+    #approved.tab-pane.fade.active.in
+      - if @debtor.invoices.available_for_trade.any?
+        %table.debtors-invoices
+          %thead
+            %tr
+              %th Issue Date
+              %th Face Value
+              %th Invoice Number
+              %th Invoice Rating
+          %tbody
+            = form_tag new_trade_path, method: :get do
+              - @debtor.invoices.available_for_trade.each do |invoice|
+                %tr{ class: "invoice_#{invoice.id}" }
+                  %td= invoice.created_at.strftime("%d %B")
+                  %td= number_to_currency(invoice.face_value, precision: 2)
+                  %td= link_to invoice.invoice_no, invoice
+                  %td.rating
+                    = invoice.rating_value
+                    %span.icon.entypo-help{ data: { toggle: "tooltip", placement: "top", title: "Advance: #{number_to_percentage(invoice.rating.advance_amount * 100, precision: 1)} / Discount Rate: #{number_to_percentage(invoice.rating.discount_rate * 100, precision: 1)} (per 30 days)" } }
+
+      - else
+        %p.empty There are no approved invoices!
+
+    #pending.tab-pane.fade
+      - if @debtor.invoices.awaiting_approval.any?
+        %table.debtors-invoices
+          %thead
+            %tr
+              %th Issue Date
+              %th Face Value
+              %th Invoice Number
+              %th Actions
+          %tbody
+            - @debtor.invoices.awaiting_approval.each do |invoice|
+              %tr{ class: "invoice_#{invoice.id}" }
+                %td= invoice.created_at.strftime("%d %B")
+                %td= number_to_currency(invoice.face_value, precision: 2)
+                %td= link_to invoice.invoice_no, invoice
+                %td
+                  - if invoice.current_state == "selected"
+                    = link_to "Awaiting approval", "#", class: "round-filled-button"
+                  - else
+                    = link_to "Submit for approval", "#",
+                      class: "round-empty-button",
+                      data: { toggle: "modal", target: "#submit-for-approval" }
+                    = render "submit_for_approval", invoice: invoice
+      - else
+        %p.empty There are no pending invoices!
+
+:javascript
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  }) ;

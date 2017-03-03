@@ -1,0 +1,8 @@
+- if current_seller == @invoice.seller
+  .row
+    .col-md-12
+      #cta-panel{ style: "margin-top: 30px;" }
+        .wrapper.clearfix{ style: "text-align: center" }
+          %h4{ style: "float: none" }  *Careful! Deleting this invoice will delete it forever.
+          = link_to 'Delete Invoice', invoice_path(@invoice), method: :delete,
+            data: { confirm: 'Are you sure?' }, class: 'button button-small button-red'

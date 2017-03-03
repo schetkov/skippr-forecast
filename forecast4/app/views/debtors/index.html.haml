@@ -1,0 +1,32 @@
+#features
+  #tabs
+    .container
+      .row
+        .col-md-12
+          .debtor-list.debtors
+            .tabs-wrapper
+              %ul.nav.nav-tabs
+                %li.active
+                  %a{ href: "#live", data: { toggle: "tab" } }
+                    Your Customers
+
+              .tab-content
+                #live.tab-pane.active
+                  - if current_seller.debtors.any?
+                    %table
+                      %thead
+                        %tr
+                          %th Customer
+                          %th No. of Invoices
+                          %th Customer Status
+                          %th Actions
+                          %th
+                      %tbody
+                        - current_seller.debtors.each do |debtor|
+                          = render debtor
+            .row
+              #cta-panel.col-md-10.col-md-offset-1
+                .wrapper.clearfix
+                  %p
+                    To create an auction, please register a customer first, so that you may then register an invoice.
+                  = link_to 'Add a new Customer', new_debtor_path, class: 'button button-green'

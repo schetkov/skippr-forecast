@@ -1,0 +1,26 @@
+body.radar {
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  background: #E3E3E3;
+  .main-container {
+    background: white;
+    max-width: 1440px;
+    padding-bottom: 100px;
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@import 'radar/variables';
+@import 'radar/components/header';
+@import 'radar/components/tabs';
+@import 'radar/components/tables';
+@import 'radar/components/list-group';
+@import 'radar/components/btn';
+@import 'radar/components/config-section';
+@import 'radar/components/sticky';
+@import 'radar/components/scenario';
+@import 'radar/components/months-switch';

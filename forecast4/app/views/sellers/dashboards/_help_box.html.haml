@@ -1,0 +1,47 @@
+%h4 Help
+%p.questions
+  = link_to "How do I create a trade?", "#",
+ { data: { toggle: "modal", target: "#how-to-create-auction" } }
+  = link_to "How do I upload an invoice?", "#",
+ { data: { toggle: "modal", target: "#how-to-upload-an-invoice" } }
+  = link_to "I'm having difficulties. How do I contact PostInvoice?", "#",
+ { data: { toggle: "modal", target: "#how-do-i-contact-postinvoice" } }
+
+#how-to-create-auction.modal{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title How do I create an auction?
+      .modal-body
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent diam augue, condimentum luctus hendrerit sit amet, blandit a turpis. Donec consectetur eleifend tortor, at blandit purus eleifend quis. In congue et massa at pulvinar. Fusce maximus ante id lacus tempor ullamcorper. Duis cursus ante sapien, non tristique est luctus et. Etiam fringilla, libero ut mollis malesuada, ipsum ex tempor purus, lacinia tempus lacus ipsum id diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent mattis blandit mi, sed egestas neque commodo non. Nulla ac faucibus sem. Sed facilisis ex tellus, vitae feugiat eros molestie nec. Proin faucibus venenatis fermentum.
+      .modal-footer
+        %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button"} Thanks for the tip!
+
+#how-to-upload-an-invoice.modal{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title How do I upload an invoice?
+      .modal-body
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent diam augue, condimentum luctus hendrerit sit amet, blandit a turpis. Donec consectetur eleifend tortor, at blandit purus eleifend quis. In congue et massa at pulvinar. Fusce maximus ante id lacus tempor ullamcorper. Duis cursus ante sapien, non tristique est luctus et. Etiam fringilla, libero ut mollis malesuada, ipsum ex tempor purus, lacinia tempus lacus ipsum id diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent mattis blandit mi, sed egestas neque commodo non. Nulla ac faucibus sem. Sed facilisis ex tellus, vitae feugiat eros molestie nec. Proin faucibus venenatis fermentum.
+      .modal-footer
+        %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button"} Thanks for the tip!
+
+#how-do-i-contact-postinvoice.modal{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title How do I contact PostInvoice?
+      .modal-body
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent diam augue, condimentum luctus hendrerit sit amet, blandit a turpis. Donec consectetur eleifend tortor, at blandit purus eleifend quis. In congue et massa at pulvinar. Fusce maximus ante id lacus tempor ullamcorper. Duis cursus ante sapien, non tristique est luctus et. Etiam fringilla, libero ut mollis malesuada, ipsum ex tempor purus, lacinia tempus lacus ipsum id diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent mattis blandit mi, sed egestas neque commodo non. Nulla ac faucibus sem. Sed facilisis ex tellus, vitae feugiat eros molestie nec. Proin faucibus venenatis fermentum.
+      .modal-footer
+        %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button"} Thanks for the tip!

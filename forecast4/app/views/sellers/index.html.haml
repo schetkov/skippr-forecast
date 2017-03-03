@@ -1,0 +1,14 @@
+#showcase
+  .container
+    .row
+      .col-md-12
+        .auction
+          %h3.registration-header Approved Sellers on PostInvoice
+          -# %p
+          -#   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam.
+
+          - @sellers.each do |seller|
+            .row{ style: "margin-bottom: 25px;" }
+              .col-md-12
+                %h4= seller.seller_company_name
+                %p= seller.seller_company.description

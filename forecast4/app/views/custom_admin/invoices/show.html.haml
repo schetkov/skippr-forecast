@@ -1,0 +1,181 @@
+.admin-page__header
+  = link_to "Invoice Details", "#", class: "admin-page__header_heading"
+  .admin-page__header--right
+    = link_to "Edit Invoice", "#", class: "button button-small"
+
+.main-content
+  %section
+    - if @invoice.selected? && @invoice.rating.present? && @invoice.buyer
+      %span= button_to "Approve Invoice", custom_admin_invoice_approvals_path(id: @invoice)
+
+    - if @invoice.funded? && !@invoice.repaid?
+      %span= button_to "Paid in Full", custom_admin_invoice_repayments_path(id: @invoice, repayment_type: "full")
+      %span= button_to "Paid in Short", custom_admin_invoice_repayments_path(id: @invoice)
+
+    %h2= "Invoice #{@invoice.id}"
+    %table.small-table
+      %tbody
+        %tr
+          %td.name Status
+          %td= @invoice.workflow_state.capitalize
+        %tr
+          %td.name Face Value
+          %td= number_to_currency @invoice.face_value, precision: 0
+        %tr
+          %td.name Invoice No
+          %td= @invoice.invoice_no
+        %tr
+          %td.name Seller
+          %td= link_to @invoice.seller.name, custom_admin_seller_path(@invoice.seller)
+        %tr
+          %td.name Buyer
+          - if @invoice.buyer
+            %td= link_to @invoice.buyer.name, custom_admin_buyer_path(@invoice.buyer)
+          - else
+            %td -
+        %tr
+          %td.name Trade
+          - if @invoice.trade_id
+            %td= link_to @invoice.trade_id, custom_admin_trade_path(@invoice.trade)
+          - else
+            %td Not yet traded
+        %tr
+          %td.name Trade's Funding Status
+          - if @invoice.trade
+            %td= @invoice.trade.funding_status
+          - else
+            %td Not yet traded
+        %tr
+          %td.name Trade Funded On
+          - if @invoice.trade
+            %td= @invoice.trade.funded_on.try(:strftime, "%b %e, %l:%M %p") || "Not yet traded"
+          - else
+            %td Not yet traded
+        %tr
+          %td.name Invoice Payment Status
+          %td= @invoice.payment_status || "-"
+        %tr
+          %td.name Invoice Paid On
+          %td= @invoice.paid_on.try(:strftime, ("%b %e, %l:%M %p"))  || "-"
+        %tr
+          %td.name Amount Paid by Debtor
+          %td= @invoice.amount_paid_by_debtor || "-"
+        %tr
+          %td.name Rating
+          %td= @invoice.rating_value || "Not yet rated"
+        %tr
+          %td.name Purchase Order Number
+          %td= @invoice.purchase_order_number || "-"
+        %tr
+          %td.name Discount Offered
+          %td= @invoice.discounts_offered.try(:capitalize) || "-"
+        %tr
+          %td.name Date
+          %td= @invoice.date.try(:strftime, "%d %B %Y")
+        %tr
+          %td.name Due Date
+          %td= @invoice.due_date.try(:strftime, "%d %B %Y")
+        %tr
+          %td.name Anticipated Pay Date
+          %td= @invoice.anticipated_pay_date.try(:strftime, "%d %B %Y")
+        %tr
+          %td.name Created at
+          %td= @invoice.created_at.strftime("%b %e, %l:%M %p")
+        %tr
+          %td.name Last updated
+          %td= @invoice.updated_at.strftime("%b %e, %l:%M %p")
+        %tr
+          %td.name Invoice Xero ID
+          %td= @invoice.invoice_xero_id || "-"
+        %tr
+          %td.name Invoice Contact iD
+          %td= @invoice.invoice_contact_id || "-"
+        %tr
+          %td.name Reference
+          %td= @invoice.reference || "-"
+        %tr
+          %td.name Xero Type
+          %td= @invoice.xero_type || "-"
+        %tr
+          %td.name Xero Status
+          %td= @invoice.xero_status || "-"
+        %tr
+          %td.name Total Tax
+          %td= number_to_currency @invoice.total_tax || "-"
+        %tr
+          %td.name Sub Total
+          %td= number_to_currency @invoice.sub_total || "-"
+        %tr
+          %td.name Amount Due
+          %td= number_to_currency @invoice.amount_due || "-"
+        %tr
+          %td.name Amount Paid
+          %td= number_to_currency @invoice.amount_paid || "-"
+        %tr
+          %td.name Amount Credited
+          %td= number_to_currency @invoice.amount_credited || "-"
+        %tr
+          %td.name Last Updated in Xero (UTC)
+          %td= @invoice.updated_date_utc || "-"
+        %tr
+          %td.name Currency
+          %td= @invoice.currency_code || "-"
+        %tr
+          %td.name Fully Paid on Date
+          %td= @invoice.fully_paid_on_date || "-"
+
+.additional-content
+  %section.invoice-rating
+    - if @invoice.selected?
+      %span= link_to "Apply Rating", new_custom_admin_invoice_rating_path(@invoice)
+    %h2= "Invoice Rating"
+    %table.small-table
+      %tbody
+        - if @invoice.rating
+          %tr
+            %td.name Rating
+            %td= @invoice.rating.master_rating_value
+          %tr
+            %td.name Rating Applied At
+            %td= @invoice.rating.master_rating_applied_at.try(:strftime, "%b %e, %l:%M %p")
+          %tr
+            %td.name Discount Rate
+            %td= @invoice.rating.discount_rate
+          %tr
+            %td.name Advance Amount
+            %td= @invoice.rating.advance_amount
+        - else
+          %tr Invoice has not yet been rated.
+
+- if @invoice.selected? && @invoice.rating
+  .additional-content
+    %section
+      - if @invoice.buyer
+        %p= "#{@invoice.buyer.name} has been allocated this invoice."
+      - else
+        %table.full-width__table
+          %tbody
+            %tr.head
+              %th Buyer
+              %th Total Cash
+              %th Opening Unallocated
+              %th % Allocation
+              %th Cash Earmarked
+              %th Closing Unallocated
+              %th Action
+            - @buyers.each do |buyer|
+              - if buyer.latest_fund_statement
+                %tr
+                  %td.reference= buyer.name
+                  %td= number_to_currency buyer.latest_fund_statement.total_cash, precision: 0
+                  %td= number_to_currency buyer.latest_fund_statement.unallocated_cash, precision: 0
+                  %td= number_to_percentage buyer.find_relevant_mandate(@invoice).percentage_of_funds_for_investor, precision: 0
+                  %td= number_to_currency cash_earmarked(buyer.latest_fund_statement, @invoice), precision: 0
+                  %td= number_to_currency closing_unallocated_cash(buyer.latest_fund_statement, @invoice), precision: 0
+                  - if buyer_has_sufficient_funds?(buyer, @invoice)
+                    %td= button_to "Allocate", custom_admin_allocate_funds_path(id: @invoice.id, buyer_id: buyer.id)
+                  - else
+                    %td Insufficient funds to fund this invoice
+              - else
+                %tr
+                  %td.reference No Suitable Buyers!

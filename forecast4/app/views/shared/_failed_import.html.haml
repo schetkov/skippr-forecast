@@ -1,0 +1,7 @@
+- if current_seller && !!current_seller.error_importing_from_xero
+  .failed-import
+    %p
+      There was an error importing your data from Xero.
+      Please
+      = link_to("click here", retry_registration_path, method: :patch)
+      to register your information again.

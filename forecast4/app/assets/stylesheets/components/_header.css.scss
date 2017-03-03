@@ -1,0 +1,13 @@
+// Style links in right side navbar
+.navbar-right {
+  li.company-name {
+    a { padding-right: 10px !important; }
+  }
+
+  li.sign-out {
+    a span {
+      position: relative;
+      top: 2px;
+    }
+  }
+}

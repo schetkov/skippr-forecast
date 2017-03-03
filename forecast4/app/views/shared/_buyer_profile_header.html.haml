@@ -1,0 +1,8 @@
+.col-md-9
+  %h2
+    Bidder ID:
+    = @company.buyer.id
+.col-md-3
+  - if current_buyer == @company.buyer
+    = link_to 'Manage Profile', settings_path, class: 'button button-small',
+      style: 'float: right'

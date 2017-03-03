@@ -1,0 +1,17 @@
+!!!
+%html.bg
+  %head
+    %title Cash Flow Tool | Skippr
+    = stylesheet_link_tag    "radar_application", media: "all"
+    = javascript_include_tag "radar_application"
+    %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+    = yield :javascript
+    = csrf_meta_tags
+  %body.radar
+    -#= render "shared/failed_import"
+    .container-fluid.main-container
+      = yield
+
+    = render "shared/dark_footer"
+
+    -#= render "analytics"

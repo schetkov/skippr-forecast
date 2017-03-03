@@ -1,0 +1,30 @@
+#file-uploads, #aged-payables-uploads {
+  button {
+    visibility: hidden;
+  }
+
+  .dragdrop, .dragdrop-aged-payables {
+    width: 100%;
+    min-height: 150px;
+    padding-top: 60px !important;
+  }
+
+  .doc-preview {
+    padding-left: 0;
+
+    a {
+      height: 200px;
+      padding-top: 75px;
+      color: #333;
+
+      &:hover {
+        color: #333;
+        border: 1px solid #333;
+      }
+
+      span {
+        display: block;
+      }
+    }
+  }
+}

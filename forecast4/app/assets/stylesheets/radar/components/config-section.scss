@@ -1,0 +1,19 @@
+@import 'radar/variables';
+
+.config-section {
+  padding: 20px 40px 20px 40px;
+  background-image: linear-gradient(to bottom,$light-blue 0, darken($light-blue, 5%) 100%);
+  border: 1px solid darken($light-blue, 10%);
+  border-radius: 2px;
+  margin-bottom: 20px;
+
+  &.reports {
+    padding: 10px 20px 10px 20px;
+  }
+
+  h4 {
+    font-family: $header-font;
+    text-transform: uppercase;
+  }
+}
+

@@ -1,0 +1,6 @@
+.invoice-header
+  %span
+    = link_to '<< Back to Invoices', invoices_path
+
+  %h3.page-header
+    = "Invoice ##{@invoice.invoice_no}"

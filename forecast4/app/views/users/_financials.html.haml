@@ -1,0 +1,38 @@
+.fieldset.margin-bottom-50
+  %h3.page-header Financial Summary
+
+  .form-group
+    = f.label :net_revenues, 'Last Reported* Net Revenues for 12 month Period ($)'
+    .row
+      .col-md-6
+        = f.text_field :net_revenues, class: 'form-control'
+
+  .form-group
+    = f.label :gross_profit_margin, 'Last reported Gross Profit Margin for 12 month Period (%)'
+    .row
+      .col-md-6
+        = f.text_field :gross_profit_margin, class: 'form-control'
+
+  .form-group
+    = f.label :last_reported_trade_debtors, 'Last reported Trade Debtors ($)'
+    .row
+      .col-md-6
+        = f.text_field :last_reported_trade_debtors, class: 'form-control'
+
+  .form-group
+    = f.label :last_reported_trade_creditors, 'Last reported Trade Creditors ($)'
+    .row
+      .col-md-6
+        = f.text_field :last_reported_trade_creditors, class: 'form-control'
+
+  .form-group
+    = f.label :loans_outstanding, 'Loans Outstanding ($)'
+    .row
+      .col-md-6
+        = f.text_field :loans_outstanding, class: 'form-control'
+
+  .form-group
+    = f.label :liability_outstanding, 'Tax Liability Outstanding ($)'
+    .row
+      .col-md-6
+        = f.text_field :liability_outstanding, class: 'form-control'

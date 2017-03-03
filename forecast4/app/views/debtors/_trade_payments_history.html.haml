@@ -1,0 +1,38 @@
+.financial-file-table.clearfix.financial-information
+  .files.col-md-12
+    .header
+      %span Customer Trade Payments History
+
+      .price
+        - if current_seller == @debtor.seller
+          = form_for [@debtor, @attachment],
+            html: { id: "new_customer_receipt" } do |f|
+            .upload_button_holder
+              %span.fail-status
+              = link_to 'Upload', '#', class: 'upload_button button button-small button-green', id: 'upload'
+              = f.cl_image_upload(:customer_receipt,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'customer_receipts')
+
+            = f.submit nil, class: 'upload-customer-receipt'
+
+
+    - if @debtor.customer_receipts.present?
+      .specs
+        - @debtor.customer_receipts.each do |receipt|
+          .spec{ class: "customer_receipt_#{receipt.id}" }
+            %span.icon.entypo-folder{ style: "color: #a0d1ca" }
+            = link_to cloudinary_file_name(receipt.file_name),
+              prefixed_cloudinary_url(receipt.file_id),
+              target: '_blank'
+            - if current_seller == @debtor.seller
+              -# Hide delete button as debtor is not allowed to delete files for now
+              -# = link_to 'Delete', debtor_customer_receipt_path(@debtor, receipt),
+              -#   method: :delete, class: '',
+              -#   confirm: 'Are you sure?'
+    - else
+      %p
+        There are no customer receipts to display

@@ -1,0 +1,132 @@
+#showcase.trade-show
+  .container
+    .row
+      .col-md-12
+        .auction
+          %h3.trade-header Your Trade
+          .row
+            .col-md-12
+              .trade-info
+                %p.bold.completed
+                  Your trade has been completed.
+                %p
+                  Thank you for using Skippr! A Skippr representative
+                  will contact you shortly.
+
+                %p.bold
+                  = number_to_currency(@trade.net_advance_amount, precision: 0)
+                  will be transferred to your account within 24hrs.
+                %p
+                  If you have any questions please do not hesistate to contact
+                  us at
+                  = mail_to "info@skippr.com.au"
+
+          .row
+            .col-md-6
+              .headers
+                .row
+                  .col-xs-12
+                    Invoice Breakdown
+              #piechart
+
+            .col-md-6
+              .col-md-12.trade-summary
+                .headers
+                  .row
+                    .col-xs-4
+                      Description
+                    .col-xs-8.text-right
+                      Amount
+                .fees
+                  .row.fee
+                    .col-xs-6
+                      Total Face Value
+                    .col-xs-6.amount.text-right
+                      = number_to_currency(@trade.total_face_value, precision: 0)
+                  .row.fee
+                    .col-xs-6
+                      Advance Amount
+                    .col-xs-6.amount.text-right
+                      = link_to number_to_currency(@trade.advance_amount, precision: 0), "#",
+                        data: { toggle: "modal", target: "#advance-amount-breakdown" }
+                  .row.fee
+                    .col-xs-6
+                      Net Advance Amount
+                    .col-xs-6.amount.text-right
+                      = link_to number_to_currency(@trade.net_advance_amount, precision: 0), "#",
+                        data: { toggle: "modal", target: "#net-advance-amount-breakdown" }
+                  .row.fee
+                    .col-xs-6
+                      Exchange Fee
+                    .col-xs-6.amount.text-right
+                      = link_to number_to_currency(@trade.seller_exchange_fee, precision: 0), "#",
+                        data: { toggle: "modal", target: "#exchange-fee-breakdown" }
+                  .row.fee
+                    .col-xs-6
+                      Discount Fee
+                    .col-xs-6.amount.text-right
+                      = link_to number_to_currency(@trade.discount_fee, precision: 0), "#",
+                        data: { toggle: "modal", target: "#discount-fee-breakdown" }
+                  .row.fee
+                    .col-xs-6
+                      Payment Residual
+                    .col-xs-6.amount.text-right
+                      = link_to number_to_currency(@trade.residual, precision: 0), "#",
+                        data: { toggle: "modal", target: "#payment-residual-breakdown" }
+
+          %table.table.table-striped.margin-bottom-50
+            %thead
+              %tr
+                %th Invoice ID
+                %th Face Value
+                %th Payment Status
+                %th Due on
+                %th Rating
+                %th Customer
+            %tbody
+              - @trade.invoices.each do |invoice|
+                %tr{ id: "invoice_#{invoice.id}" }
+                  %td= invoice.invoice_no
+                  %td.face-value= number_to_currency(invoice.face_value, precision: 0)
+                  %td= invoice.payment_status
+                  %td= invoice.due_date.strftime('%d/%m/%Y')
+                  %td= invoice.rating_value || "-"
+                  %td
+                    = link_to invoice.debtor.legal_business_name,
+                      debtor_path(invoice.debtor), target: "_blank"
+
+
+  = render "exchange_fee_breakdown"
+  = render "advance_amount_breakdown"
+  = render "net_advance_amount_breakdown"
+  = render "discount_fee_breakdown"
+  = render "payment_residual_breakdown"
+
+= content_for :javascript do
+  :javascript
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Description', 'Amount'],
+        ['Net Advance Amount', #{@trade.net_advance_amount.to_i}],
+        ['Discount Fee', #{@trade.discount_fee.to_i}],
+        ['Exchange Fee', #{@trade.seller_exchange_fee.to_i}],
+        ['Residual', #{@trade.residual}],
+      ]);
+
+      var options = {
+        legend: {
+          position: 'none',
+        },
+        height: 260,
+        chartArea: {
+          height: 185,
+        },
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+      chart.draw(data, options);
+    }

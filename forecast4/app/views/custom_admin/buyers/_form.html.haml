@@ -1,0 +1,51 @@
+= form.fields_for :user, (@buyer.user || @buyer.build_user) do |user_fields|
+  = user_fields.hidden_field :account_type, value: "buyer"
+  .form-group
+    = user_fields.label :name, class: "col-sm-2 control-label"
+    .col-sm-4
+      = user_fields.text_field :name, class: "form-control", placeholder: "John Smith"
+  .form-group
+    = user_fields.label :email, class: "col-sm-2 control-label"
+    .col-sm-4
+      = user_fields.text_field :email,
+        class: "form-control",
+        placeholder: "valid@example.com"
+  .form-group
+    = user_fields.label :password, class: "col-sm-2 control-label"
+    .col-sm-4
+      = user_fields.text_field :password,
+        class: "form-control",
+        placeholder: "Skippr1234"
+
+.divider
+
+.form-group
+  = form.label :investor_type, "Investor Type", class: 'col-sm-2 control-label'
+  .col-sm-4
+    = form.select :investor_type, ["High Net Worth", "Sophisticated Investor", "Institutional"], class: "form-control"
+
+= form.fields_for :buyer_company, (@buyer.buyer_company || @buyer.build_buyer_company) do |company_fields|
+  .form-group
+    = company_fields.label :name, "Company name", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :name, class: "form-control", placeholder: "Company Name Ltd"
+  .form-group
+    = company_fields.label :phone_number, "Phone number", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :phone_number, class: "form-control", placeholder: "0441 234 567"
+  .form-group
+    = company_fields.label :acn, "ACN", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :acn, class: "form-control", placeholder: ""
+  .form-group
+    = company_fields.label :abn, "ABN", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :abn, class: "form-control", placeholder: ""
+  .form-group
+    = company_fields.label :description, "Description", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :description, class: "form-control", placeholder: ""
+  .form-group
+    = company_fields.label :afsl_number, "AFSL Number", class: "col-sm-2 control-label"
+    .col-sm-4
+      = company_fields.text_field :afsl_number, class: "form-control", placeholder: ""

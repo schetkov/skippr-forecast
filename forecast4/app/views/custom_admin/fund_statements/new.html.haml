@@ -1,0 +1,17 @@
+.admin-page__header
+  = link_to "Deposit Funds", "#"
+
+.main-content
+  %h2 Deposit Funds
+  .row
+    .col-sm-12
+      = form_for @fund_statement,
+        url: custom_admin_fund_statements_path,
+        html: { role: "form", class: "form-horizontal main-content__form" }  do |form|
+
+        = render "/application/error_messages", object: @fund_statement
+        = render "form", form: form
+
+        .col-sm-offset-2
+          = button_tag(type: 'submit', class: "button-clear") do
+            %span Deposit Funds

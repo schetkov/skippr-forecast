@@ -1,0 +1,22 @@
+.admin-page__header
+  %ul.admin-page__header_links
+    = tab_link "All", "#"
+  .admin-page__header--right
+    = link_to "Create Seller", new_custom_admin_seller_path, class: "button button-small"
+
+.main-content
+  %h2 Sellers
+  %table.full-width__table
+    %tbody
+      %tr.head
+        %th Name
+        %th Email
+        %th Action
+      - @sellers.each do |seller|
+        %tr{ class: "seller_#{seller.id}" }
+          %td.reference= link_to seller.name, custom_admin_seller_path(seller)
+          %td= seller.email
+          %td
+            = link_to "View", custom_admin_seller_path(seller)
+            = link_to "Edit", edit_custom_admin_seller_path(seller)
+            = link_to "Delete", "#"

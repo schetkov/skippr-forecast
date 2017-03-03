@@ -1,0 +1,51 @@
+.row
+  .col-md-12
+    .financial-table.clearfix{ style: "margin-top: 30px" }
+      .features-col.col-sm-10
+        .header.debtor-terms
+          Debtor Terms
+        .spec.financials
+          Does #{@company.name} offer warranties?
+        .spec.financials
+          Does #{@company.name} pay for % of work contracted as opposed to actual work completed?
+        .spec.financials
+          Does #{@company.name} offer any return rights to the customer?
+        .spec.financials
+          Does #{@company.name} offer sales to the customer on a consignment basis?
+        .spec.financials
+          Does #{@company.name} offer any discounts?
+        .spec.financials
+          Does #{@company.name} allow offsets?
+      .plan-col.last.col-sm-2
+        .header
+
+        .spec.terms
+          - if @debtor.warranties == 'yes'
+            %span.icon.entypo-checkmark
+          - else
+            %span.icon.entypo-cross
+        .spec.terms
+          - if @debtor.progressive_billing == 'yes'
+            %span.icon.entypo-checkmark
+          - else
+            %span.icon.entypo-cross
+        .spec.terms
+          - if @debtor.return_rights == 'yes'
+            %span.icon.entypo-checkmark
+          - else
+            %span.icon.entypo-cross
+        .spec.terms
+          - if @debtor.consignment_basis == 'yes'
+            %span.icon.entypo-checkmark
+          - else
+            %span.icon.entypo-cross
+        .spec.terms
+          - if @debtor.discounts_offered == 'yes'
+            %span.icon.entypo-checkmark
+          - else
+            %span.icon.entypo-cross
+        .spec.terms
+          - if @debtor.allow_offsets == 'yes'
+            %span.icon.entypo-checkmark
+          - else
+            %span.icon.entypo-cross

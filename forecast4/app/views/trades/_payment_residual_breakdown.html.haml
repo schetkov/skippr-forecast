@@ -1,0 +1,46 @@
+#payment-residual-breakdown.modal{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title Payment Residual Breakdown
+      .modal-body
+        .row
+          .col-md-12.trade-summary
+            .headers
+              .row
+                .col-xs-2
+                  Inv #
+                .col-xs-2
+                  Face Value
+                .col-xs-2
+                  Less Advance Amount
+                .col-xs-3
+                  Less Discount Fee (est)
+                .col-xs-3
+                  Payment Residual
+
+            .fees
+              - @trade.invoices.each do |invoice|
+                .row.fee
+                  .col-xs-2
+                    = invoice.invoice_no
+                  .col-xs-2
+                    = number_to_currency(invoice.face_value, precision: 0)
+                  .col-xs-2
+                    = number_to_currency(invoice.advance_amount_in_dollars, precision: 0)
+                  .col-xs-3
+                    = number_to_currency(invoice.discount_fee_in_dollars, precision: 0)
+                  .col-xs-3
+                    = number_to_currency(invoice.payment_residual, precision: 0)
+
+
+      .modal-footer
+        .row
+          .col-md-4.col-md-offset-5
+            %strong
+              Payment Residual
+          .col-md-3.text-left
+            %strong
+              = number_to_currency(@trade.residual, precision: 0)

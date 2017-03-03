@@ -1,0 +1,24 @@
+.row.header
+  .col-md-12
+    %h3.logo
+      = link_to 'Skippr', signed_out_root_path
+    %h4 Set up an account today.
+    %p
+      Apply now and we'll get back to you within 24 hours.
+.row
+  .col-md-12
+    .wrapper.clearfix
+      .formy
+        .row
+          .col-md-12
+            = form_for @signup, url: users_path,
+              html: { role: 'form' } do |form|
+              = render '/application/error_messages', object: @signup
+              = render '/users/form', f: form
+              .submit
+                = button_tag(type: 'submit', class: "button-clear") do
+                  %span Create my account
+
+    .already-account
+      Already have an account?
+      = link_to 'Sign in here', sign_in_path

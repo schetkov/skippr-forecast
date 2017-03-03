@@ -1,0 +1,5 @@
+.widget-container
+  %p.invoices-funded
+    = number_to_currency(current_seller.total_value_of_invoices_funded, precision: 0)
+  %p
+    Invoices Funded

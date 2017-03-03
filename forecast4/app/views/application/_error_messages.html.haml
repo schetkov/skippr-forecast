@@ -1,0 +1,6 @@
+- if object.errors.any?
+
+  %ul.form-errors
+    %p Please fix the following errors:
+    - object.errors.full_messages.each do |msg|
+      = content_tag(:li, msg)

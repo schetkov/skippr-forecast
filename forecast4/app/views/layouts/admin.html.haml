@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+    %title Skippr
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
+    %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+    = yield :javascript
+    = csrf_meta_tags
+  %body.admin
+    .row
+      #flash
+        - flash.each do |name, msg|
+          = content_tag :div, msg, class: "alert alert-#{name}"
+
+    .row
+      .col-md-2.sidebar-nav
+        .row
+          .col-md-12
+            .sidebar-nav__header
+              %h1 Skippr
+        .row
+          .col-md-12
+            %ul.sidebar-nav__links
+              = nav_link("Dashboard", custom_admin_path)
+              = nav_link("Sellers", custom_admin_sellers_path)
+              = nav_link("Buyers", custom_admin_buyers_path)
+              = nav_link("Trades", custom_admin_trades_path)
+              = nav_link("Customers", custom_admin_debtors_path)
+              = nav_link("Invoices", custom_admin_invoices_path)
+        .row
+          .col-md-12
+            .sidebar-nav__admin
+              = link_to sign_out_path, id: "sign-out", method: :delete do
+                %span.icon.entypo-logout
+              .sidebar-nav__admin--user
+                = link_to current_user.name
+                %p Administrator
+      .col-md-10.admin-content
+        = yield
+
+    = render "analytics"

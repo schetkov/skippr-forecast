@@ -1,0 +1,22 @@
+.col-md-9
+  %h2
+    = @company.name
+  %span
+    %em= @company.address
+
+  %p= @company.description
+  %span
+    %strong ACN:
+    = @company.acn
+  %p
+    %span
+      %strong Website:
+      - if @company.website
+        = link_to @company.website, @company.website, target: '_blank'
+    %span
+      %strong Phone:
+      = @company.phone_number
+.col-md-3
+  - if current_seller == @company.seller
+    = link_to 'Manage Profile', settings_path, class: 'button button-small button-green',
+      style: 'float: right'

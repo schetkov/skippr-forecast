@@ -1,0 +1,9 @@
+%header.navbar.navbar-inverse.normal{:role => "banner"}
+  .container
+    .navbar-header
+      = link_to (image_tag "skippr_logo.png"), current_root_path, class: 'navbar-brand'
+    %nav.collapse.navbar-collapse.bs-navbar-collapse{:role => "navigation"}
+      %ul.nav.navbar-nav.navbar-right.visible-md.visible-lg
+        - if signed_in?
+          %li
+            = link_to 'Sign out', sign_out_path, method: :delete

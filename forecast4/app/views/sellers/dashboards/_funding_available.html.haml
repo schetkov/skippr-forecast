@@ -1,0 +1,5 @@
+.widget-container
+  %p.funding-available
+    = number_to_currency(current_seller.total_value_of_funding_available, precision: 0)
+  %p
+    Funding Available

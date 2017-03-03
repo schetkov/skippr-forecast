@@ -1,0 +1,35 @@
+#showcase
+  .container
+    .row
+      .col-md-12
+        .users-edit
+          .margin-bottom-50
+            = form_for current_user, html: { role: 'form' } do |form|
+
+              = render '/application/error_messages', object: current_user
+              = render 'user_settings', f: form
+
+              .submit-field
+                = form.submit 'Update Account',
+                  class: 'button button-small button-green display-form-submit'
+
+          .company-settings
+            - if current_seller
+              = form_for current_seller.seller_company, html: { role: 'form', multipart: true } do |form|
+
+                = render '/application/error_messages', object: current_seller.seller_company
+                = render 'seller_company', f: form
+
+                .submit-field
+                  = form.submit 'Update Company',
+                    class: 'button button-small button-green display-form-submit'
+
+            - if current_buyer
+              = form_for current_buyer.buyer_company, html: { role: 'form', multipart: true } do |form|
+
+                = render '/application/error_messages', object: current_buyer.buyer_company
+                = render 'buyer_company', f: form
+
+                .submit-field
+                  = form.submit 'Update Company',
+                    class: 'button button-small button-green display-form-submit'

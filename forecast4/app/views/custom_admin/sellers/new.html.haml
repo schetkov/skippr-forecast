@@ -1,0 +1,17 @@
+.admin-page__header
+  = link_to "New Seller", "#"
+
+.main-content
+  %h2 Create a new seller
+  .row
+    .col-sm-12
+      = form_for @seller,
+        url: custom_admin_sellers_path,
+        html: { role: "form", class: "form-horizontal main-content__form" } do |form|
+
+        = render "/application/error_messages", object: @seller
+        = render "form", form: form
+
+        .col-sm-offset-2
+          = button_tag(type: 'submit', class: "button-clear") do
+            %span Create Seller

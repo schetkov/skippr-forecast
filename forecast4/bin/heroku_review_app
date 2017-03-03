@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# Set up the database
+bundle exec rake db:setup
+
+# Run DB Seed file to create site preferences and master ratings
+bundle exec rake db:seed
+
+# Create admin users
+bundle exec rake admin:create_admin_users
+
+# Create Peninsula Capital (default buyer of trades)
+bundle exec rake admin:create_peninsula_capital

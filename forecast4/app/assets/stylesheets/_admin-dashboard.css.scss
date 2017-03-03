@@ -1,0 +1,274 @@
+body.admin {
+  background-color: #f1f4f8;
+}
+
+.sidebar-nav {
+  padding-right: 0;
+}
+
+.sidebar-nav__header {
+  background-color: #323c48;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.06);
+  height: 70px;
+
+  h1 {
+    border-top: 3px solid #00a9ff;
+    color: #fff;
+    font-size: 26px;
+    margin: 0 0 0 24px;
+    padding: 18px 0;
+    position: relative;
+    width: 75px;
+  }
+}
+
+.sidebar-nav__links {
+  background-color: #2b333e;
+  border-left: 3px solid transparent;
+  min-height: 641px;
+  list-style: none;
+  padding: 30px 0 0;
+  margin: 0;
+
+  li {
+    &.active {
+      border-left: 3px solid #00a9ff;
+      background-color: #222933;
+
+      a {
+        color: #fff;
+      }
+    }
+
+    a {
+      color: #c5cfdd;
+      display: block;
+      line-height: 40px;
+      font-size: 14px;
+      text-decoration: none;;
+      padding-left: 22px;
+    }
+  }
+}
+
+.sidebar-nav__admin {
+  background-color: #323c48;
+  color: #7f8fa3;
+  font-size: 14px;
+  height: auto;
+  line-height: 18px;
+  padding: 24px 28px 20px 25px;
+  overflow: hidden;
+
+  a {
+    color: #fff;
+  }
+
+
+  a#sign-out {
+    padding-top: 10px;
+    float: right;
+  }
+}
+
+.admin-page__header {
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.06);
+  height: 70px;
+  margin-left: -30px;
+  padding-left: 15px;
+}
+
+.admin-page__header_heading {
+  color: #333b47;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 70px;
+  padding-left: 30px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.admin-page__header_links {
+  display: inline;
+  list-style: none;
+}
+
+.admin-page__header_link {
+  display: inline-block;
+  margin: 0 12px 0 12px;
+
+  a {
+    font-size: 18px;
+    color: #333b47;
+    line-height: 70px;
+    font-weight: normal;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.admin-page__header_link--active {
+  @extend .admin-page__header_link;
+
+  border-bottom: 2px solid #333b47;
+
+  a {
+    font-weight: bold;
+  }
+}
+
+.admin-page__header--right {
+  display: inline;
+  float: right;
+
+  a {
+    line-height: 14px;
+    margin-top: 17px;
+    margin-right: 15px;
+
+    &.button {
+      padding: 10px 20px;
+    }
+  }
+}
+
+.admin-content {
+  height: 800px;
+  overflow: scroll;
+}
+
+.main-content, .additional-content {
+  background-color: #fff;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #E7E9ED;
+  margin: 25px 27px 25px 0;
+  margin-left: 15px;
+
+  h2 {
+    border-bottom: 1px solid #e7e9ed;
+    margin: 25px 0 0px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+  }
+}
+
+.full-width__table {
+  width: 100%;
+
+  .head th {
+    background: #f8fafc;
+    color: #7f8fa3;
+    line-height: 40px;
+    text-align: left;
+    padding: 0 20px;
+  }
+
+  td.reference {
+    position: relative;
+    height: 65px;
+  }
+
+  td {
+    text-align: left;
+    padding: 0 20px;
+    border-bottom: 1px solid #e7e9ed;
+
+    a {
+      padding-right: 5px;
+    }
+  }
+}
+
+.small-table {
+  margin: 15px 0;
+  width: 50%;
+
+  td {
+    padding: 0 20px;
+    text-align: left;
+
+    &.name {
+      font-weight: bold;
+      height: 35px;
+      min-width: 250px;
+    }
+  }
+}
+
+.main-content__form {
+  margin: 30px 0;
+  padding-left: 30px;
+}
+
+.main-content__heading {
+  list-style: none;
+  border-bottom: 1px solid #e7e9ed;
+  padding: 0;
+  margin: 0;
+}
+
+.main-content__heading_list_element {
+  display: inline-block;
+  padding: 25px 20px 15px;
+  border-right: 1px solid #e7e9ed;
+}
+
+.main-content__heading_title {
+  color: inherit;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.1;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+label.message {
+  color: #a94442;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+
+.buyer_invoices__table {
+  table {
+    display: block;
+
+    thead {
+      display: block;
+      background-color: #fbfbfb;
+    }
+
+    tbody {
+      display: block;
+    }
+
+    tr {
+      display: block;
+    }
+
+    th {
+      font-weight: 500;
+    }
+
+    th, td {
+      padding: 15px 0px;
+      width: 200px;
+
+      &:first-child {
+        padding-left: 20px;
+      }
+    }
+
+    th, td {
+      color: #444;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+= semantic_form_for [:admin, @trade] do |f|
+  = f.inputs do
+    = f.input :total_face_value
+    = f.input :advance_amount
+    = f.input :net_advance_amount
+    = f.input :discount_fee
+    = f.input :seller_exchange_fee
+    = f.input :buyer_exchange_fee
+    = f.input :confirmed_at
+    = f.input :seller
+    = f.input :buyer
+    = f.input :created_at
+    = f.input :updated_at
+    %li
+      %p Don't forget to update funding status AND funded_on date!
+    = f.input :funded_on
+    = f.input :funding_status,
+      as: :select,
+      collection: ['Auction Closed - no bids', 'Invoices Unfunded', 'Invoices Funded'],
+      include_blank: "Select status"
+    = f.actions

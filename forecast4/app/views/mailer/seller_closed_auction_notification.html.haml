@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+  %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %p
+      Hi #{@recipient.name.split(' ').first},
+
+    %p
+      Congratulations!
+
+    %p
+      Your offer to sell was successful.
+
+    %p
+      You will receive the upfront payment amount of 
+      = number_to_currency(@upfront_payment) 
+      into the following account before close of business on the next working day.
+
+    %p
+      Bank account name:
+      = @seller.seller_company.bank_details.account_name
+      %br
+      Bank account no:
+      = @seller.seller_company.bank_details.account_number
+
+    %p
+      If this amount is not paid into your nominated account by the close of
+      the next working day, can you please notify the exchange immediately via
+      email to the following email address:
+      = mail_to "info@postinvoice.com.au"
+
+    %p
+      PostInvoice will notify you once payment has been received by the trust
+      account held on the platform. Please see the following link to exchange
+      rules on fee structure.
+      = link_to "www.postinvoice.com.au/feestructure.",
+        "www.postinvoice.com.au/feestructure."
+
+
+    %p
+      The Post Invoice Team

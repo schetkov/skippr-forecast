@@ -1,0 +1,27 @@
+.tabs-wrapper
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ href: "#live", data: { toggle: "tab" } }
+        Your Trades
+
+  .tab-content
+    #live.tab-pane.fade.active.in
+      - if @dashboard.confirmed_trades.any?
+        %table
+          %thead
+            %tr
+              %th Date
+              %th Total Face Value
+              %th Advance Amount
+              %th Discount Fee
+              %th Actions
+          %tbody
+            - @dashboard.confirmed_trades.each do |trade|
+              %tr{ class: "trade_#{trade.id}" }
+                %td= trade.confirmed_at.strftime("%d %B")
+                %td= number_to_currency(trade.total_face_value, precision: 2)
+                %td= number_to_currency(trade.advance_amount, precision: 2)
+                %td= number_to_currency(trade.discount_fee, precision: 2)
+                %td= link_to "View Trade", trade_path(trade)
+      - else
+        %p There are no trades to display!

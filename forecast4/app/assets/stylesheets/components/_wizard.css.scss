@@ -1,0 +1,52 @@
+.wizard-progress {
+  background-color: #717c7d;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  text-align: center;
+  color: #FFF;
+  padding: 15px 0;
+
+  .step {
+    padding: 20px 0;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 31px;
+      left: 54%;
+      display: block;
+      height: 2px;
+      background: #a0d1ca;
+      width: 100%;
+    }
+
+    &.last {
+      &:after {
+        display: none;
+      }
+    }
+
+    &.filled {
+      span {
+        background: #a0d1ca;
+      }
+    }
+
+    span {
+      width: 23px;
+      height: 23px;
+      display: block;
+      position: relative;
+      margin: 0 auto;
+      margin-top: 13px;
+      border-radius: 25px;
+      background: #6D8C87;
+      border: 2px solid #a0d1ca;
+      -webkit-transition: all 0.2s linear;
+      -moz-transition: all 0.2s linear;
+      -ms-transition: all 0.2s linear;
+      -o-transition: all 0.2s linear;
+      transition: all 0.2s linear;
+    }
+  }
+}

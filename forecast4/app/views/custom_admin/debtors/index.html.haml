@@ -1,0 +1,28 @@
+.admin-page__header
+  %ul.admin-page__header_links
+    = tab_link "All", custom_admin_debtors_path
+    = tab_link "Pending", custom_admin_debtors_path(p: "pending")
+    = tab_link "Approved", custom_admin_debtors_path(p: "approved")
+  .admin-page__header--right
+    = link_to "Create Customer", "#", class: "button button-small"
+
+.main-content
+  %h2 Customers
+  %table.full-width__table
+    %tbody
+      %tr.head
+        %th ID
+        %th Customer Name
+        %th Seller
+        %th Status
+        %th Action
+      - @debtors.each do |debtor|
+        %tr{ class: "debtor_#{debtor.id}" }
+          %td.reference= link_to debtor.id, "#"
+          %td= debtor.legal_business_name
+          %td= link_to debtor.seller.name, custom_admin_seller_path(debtor.seller)
+          %td= debtor.status.capitalize
+          %td
+            = link_to "View", custom_admin_debtor_path(debtor)
+            = link_to "Edit", "#"
+            = link_to "Delete", "#"

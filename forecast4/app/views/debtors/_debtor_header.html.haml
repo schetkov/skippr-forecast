@@ -1,0 +1,46 @@
+.debtor-header
+  %span.back-link
+    = link_to '<< Back to Customers', debtors_path
+  %h3.page-header
+    Customer Profile for
+    = @debtor.legal_business_name
+    %span
+      - if @debtor.seller == current_seller
+        %span.edit-link
+          = link_to 'Edit Customer', edit_debtor_path(@debtor),
+            style: "font-size: 14px; float: right; padding-top: 10px; font-weight: normal"
+
+.row
+  .col-md-12.debtor-info
+    %p
+      %em= @debtor.address
+    %p
+      %span
+        %strong ACN:
+        = @debtor.acn
+    - if @debtor.website.present?
+      %p
+        %span
+          %strong URL:
+          = link_to @debtor.website, @debtor.website, target: '_blank'
+
+    - if @debtor.other_name.present?
+      %p
+        %span
+          %strong Other name:
+          = @debtor.other_name
+    %p
+      %strong Status on Exchange:
+      %span= @debtor.status.capitalize
+    %p
+      %strong Relationship Start Date:
+      = @debtor.relationship_start_date
+
+    - if @debtor.business_type
+      %p
+        %strong Business Type:
+        %span= @debtor.business_type
+    - if @debtor.business_sector
+      %p
+        %strong Status Sector:
+        %span= @debtor.business_sector

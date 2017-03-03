@@ -1,0 +1,19 @@
+.company {
+  .profile-list {
+    li.show-more-financials, li.show-more-debtors {
+      cursor: pointer;
+      color: #336ea9;
+
+      &:hover {
+        color: #21486e;
+      }
+    }
+
+    span {
+      form {
+        display: inline;
+        float: right;
+      }
+    }
+  }
+}

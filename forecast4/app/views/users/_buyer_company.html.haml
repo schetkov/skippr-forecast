@@ -1,0 +1,125 @@
+.fieldset.margin-bottom-50
+  %h3.page-header Company Settings
+
+  .form-group
+    .preview-upload
+      - if current_buyer.buyer_company.avatar_id
+        = cl_image_tag current_buyer.buyer_company.avatar_id,
+          class: 'current-image margin-bottom-20 img-rounded',
+          width: 150,
+          height: 150,
+          crop: :fill
+      - else
+        = image_tag 'thumbnail_140.svg', class: 'current-image img-rounded margin-bottom-20'
+      = f.label :avatar, 'Company Logo'
+    .row
+      .col-md-6#direct_upload
+        .upload_button_holder{ style: "margin-top: 20px" }
+          = link_to 'Upload', '#', class: 'upload_button button button-small'
+          = f.cl_image_upload(:avatar,
+                              html: { id: 'cloudinary-upload' },
+                              allowed_formats: ['png', 'jpg', 'jpeg'],
+                              use_filename: true,
+                              unique_filename: false,
+                              folder: 'company_avatars',
+                              return_delete_token: true)
+
+        .progress
+          .progress-bar{ role: "progressbar" }
+
+        %p.save-cta
+          %em
+            Please click the 'Update Company' button below
+            when you are ready to save your profile image.
+
+        = cloudinary_js_config
+
+  .form-group
+    = f.label :name, 'Business name'
+    .row
+      .col-md-6
+        = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :phone_number
+    .row
+      .col-md-6
+        = f.text_field :phone_number, class: 'form-control'
+
+  .form-group
+    = f.label :website
+    .row
+      .col-md-6
+        = f.text_field :website, class: 'form-control'
+
+  .form-group
+    = f.label :acn, 'ACN'
+    .row
+      .col-md-6
+        = f.text_field :acn, class: 'form-control'
+
+  .form-group
+    = f.label :description
+    .row
+      .col-md-6
+        = f.text_field :description, class: 'form-control'
+
+:javascript
+  $(document).ready(function() {
+    $('.display-form-submit').attr('style', 'display:block');
+    $('#direct_upload .progress').attr('style', 'display:none');
+    $('#direct_upload p.save-cta').attr('style', 'display:none');
+
+    $("#direct_upload input[type='file']")
+    .fileupload({
+      dropZone: '#direct_upload',
+
+      start: function () {
+        $('.upload_button').hide()
+        $('#direct_upload .progress').attr('style', 'display:block')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $("#direct_upload .progress .progress-bar").attr("style","width:"+com+"%")
+        $("#direct_upload .progress .progress-bar").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('.upload_button').show()
+        $('#direct_upload .progress').attr('style', 'display:none');
+        $('.preview-upload').text('Sorry, there was an error with your upload. Please try again.')
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+      $('.upload_button').hide()
+      $('.current_image').hide()
+      $("#direct_upload .progress").attr("style","display:none")
+      $("#direct_upload .progress .progress-bar").attr("style","width:0%")
+      $("#direct_upload .progress .progress-bar").text("0% Complete")
+      $('.save-cta').show()
+
+      var preview = $('.preview-upload').html('');
+      $.cloudinary.image(data.result.public_id, {
+        format: 'png', version: data.result.version,
+        crop: 'fill', width: 150, height: 150
+      }).appendTo(preview);
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo(preview).
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.upload_button').show()
+            $('.preview-upload').html('');
+            $('input[name="debtor[file_id]"]').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+  });

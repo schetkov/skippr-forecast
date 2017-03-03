@@ -1,0 +1,13 @@
+%fieldset.row.new-debtor
+  .form-group.col-md-4
+    = f.label :legal_business_name, "Customer Name"
+    = f.text_field :legal_business_name, class: "form-control"
+  .form-group.col-md-2
+    = f.label :acn, "ACN"
+    = f.text_field :acn, class: "form-control"
+  .form-group.col-md-5
+    = f.label :value_of_outstanding_invoices, "Value of Outstanding Invoices ($)"
+    = f.number_field :value_of_outstanding_invoices, class: "form-control"
+  .form-group.col-md-1.remove-field
+    = link_to "x", "#", class: "remove_fields button-clear"
+

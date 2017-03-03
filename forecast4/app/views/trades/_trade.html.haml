@@ -1,0 +1,8 @@
+%tr{ class: "trade_#{trade.id}" }
+  %td.name= trade.confirmed_at.strftime("%d %B")
+  %td= number_to_currency(trade.total_face_value, precision: 2)
+  %td= number_to_currency(trade.advance_amount, precision: 2)
+  %td= number_to_currency(trade.discount_fee, precision: 2)
+  %td
+    = link_to trade_path(trade), class: "button-clear" do
+      %span.small View

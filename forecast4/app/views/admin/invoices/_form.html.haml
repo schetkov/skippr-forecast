@@ -1,0 +1,261 @@
+.invoices-form
+  - if @invoice.new_record?
+    = semantic_form_for [:admin, Invoice.new], url: admin_custom_invoices_path do |f|
+      = f.inputs do
+        = f.input :debtor_id,
+          as: :select,
+          collection: Debtor.all.map { |d| [d.legal_business_name, d.id] },
+          include_blank: "Please select a debtor"
+        = f.input :seller_id,
+          as: :select,
+          collection: Seller.all,
+          include_blank: "Please select a seller"
+        = f.input :invoice_no
+        = f.input :face_value
+        = f.input :purchase_order_number
+        = f.input :workflow_state, as: :select, collection: ["pending", "selected", "approved"]
+        = f.input :discounts_offered, as: :select, collection: ['yes', 'no']
+        = f.input :date, as: :date_select
+        = f.input :due_date, as: :date_select
+        = f.input :anticipated_pay_date, as: :date_select
+        = f.input :invoice_contact_id
+        = f.input :reference
+        = f.input :total_tax
+        = f.input :sub_total
+        = f.input :amount_due
+        = f.input :amount_paid
+        = f.input :amount_credited
+        = f.input :updated_date_utc
+        = f.input :currency_code
+        = f.input :currency_rate
+        = f.input :fully_paid_on_date
+
+      = f.inputs name: "Apply Invoice Rating System" do
+        = f.input :rating_value,
+          as: :select,
+          collection: ["1", "2", "3", "4", "5"],
+          include_blank: "Please apply a rating"
+
+      = f.inputs name: "Proof of Work" do
+        = f.input :merchandise_shipped_on
+        = f.input :merchandise_arrived_on
+        = f.input :shipping_company_url
+        = f.input :tracking_code
+        = f.input :services_started_on
+        = f.input :services_ended_on
+        = f.input :services_description
+
+      = f.inputs name: 'Invoice Payment Status' do
+        = f.input :payment_status,
+          as: :select,
+          collection: ['Outstanding', 'Paid in full', 'Short Paid'],
+          include_blank: "Invoice Payment Status"
+        = f.input :amount_paid_by_debtor,
+          label: 'Amount of invoice paid by debtor'
+        = f.input :paid_on, as: :date_select,
+          label: 'Date invoice was paid by debtor'
+        = f.input :admin_general_notes, label: 'Admin Notes'
+
+      .cloudinary
+        #ppsr_upload
+          .ppsr_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload PPSR', '#', class: 'ppsr_upload_button'
+
+              = f.cl_image_upload(:ppsr,
+                                  html: { id: 'cloudinary-upload' }, allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'ppsr',
+                                  return_delete_token: true)
+
+      .cloudinary
+        #notice_of_assignment_upload
+          .notice_of_assignment_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload Notice of Assignment', '#', class: 'notice_of_assignment_upload_button'
+
+              = f.cl_image_upload(:notice_of_assignment,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'notice_of_assignment',
+                                  return_delete_token: true)
+
+      = f.actions
+
+      = cloudinary_js_config
+  - else
+    = semantic_form_for [:admin, @invoice], url: admin_custom_invoice_path do |f|
+      = f.inputs do
+        = f.input :debtor_id,
+          as: :select,
+          collection: Debtor.all.map { |d| [d.legal_business_name, d.id] },
+          include_blank: "Please select a debtor"
+        = f.input :seller_id,
+          as: :select,
+          collection: Seller.all,
+          include_blank: "Please select a seller"
+        = f.input :invoice_no
+        = f.input :face_value
+        = f.input :purchase_order_number
+        = f.input :workflow_state, as: :select, collection: ["pending", "selected", "approved"]
+        = f.input :discounts_offered, as: :select, collection: ['yes', 'no']
+        = f.input :date, as: :date_select
+        = f.input :due_date, as: :date_select
+        = f.input :anticipated_pay_date, as: :date_select
+        = f.input :invoice_contact_id
+        = f.input :reference
+        = f.input :total_tax
+        = f.input :sub_total
+        = f.input :amount_due
+        = f.input :amount_paid
+        = f.input :amount_credited
+        = f.input :updated_date_utc
+        = f.input :currency_code
+        = f.input :currency_rate
+        = f.input :fully_paid_on_date
+
+      = f.inputs name: "Apply Invoice Rating System" do
+        = f.input :rating_value,
+          as: :select,
+          collection: ["1", "2", "3", "4", "5"],
+          include_blank: "Please apply a rating"
+
+      = f.inputs name: "Proof of Work" do
+        = f.input :merchandise_shipped_on
+        = f.input :merchandise_arrived_on
+        = f.input :shipping_company_url
+        = f.input :tracking_code
+        = f.input :services_started_on
+        = f.input :services_ended_on
+        = f.input :services_description
+
+      = f.inputs name: 'Invoice Payment Status' do
+        = f.input :payment_status,
+          as: :select,
+          collection: ['Outstanding', 'Paid in full', 'Short Paid'],
+          include_blank: "Invoice Payment Status"
+        = f.input :amount_paid_by_debtor,
+          label: 'Amount of invoice paid by debtor'
+        = f.input :paid_on, as: :date_select,
+          label: 'Date invoice was paid by debtor'
+        = f.input :admin_general_notes, label: 'Admin Notes'
+
+      .cloudinary
+        #ppsr_upload
+          .ppsr_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload PPSR', '#', class: 'ppsr_upload_button'
+
+              = f.cl_image_upload(:ppsr,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'ppsr',
+                                  return_delete_token: true)
+
+      .cloudinary
+        #notice_of_assignment_upload
+          .notice_of_assignment_upload_container
+          %span
+            .upload_button_holder
+              = link_to 'Upload Notice of Assignment', '#', class: 'notice_of_assignment_upload_button'
+
+              = f.cl_image_upload(:notice_of_assignment,
+                                  html: { id: 'cloudinary-upload' },
+                                  allowed_formats: ['pdf'],
+                                  use_filename: true,
+                                  unique_filename: false,
+                                  folder: 'notice_of_assignment',
+                                  return_delete_token: true)
+
+      = f.actions
+
+      = cloudinary_js_config
+
+:javascript
+  $(document).ready(function() {
+    $("input[type='submit]").attr('style', 'display:block');
+
+    $("#ppsr_upload input[type='file']")
+    .fileupload({
+      dropZone: '#ppsr_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.ppsr_upload_button').text('Uploading...')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $(".ppsr_upload_button").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('.ppsr_upload_button').show()
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo('.ppsr_upload_container').
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.ppsr_upload_button').text('Upload Credit Report')
+            $('input[name="debtor[file_id]"]').remove();
+            $('a.delete_by_token').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+
+    $("#notice_of_assignment_upload input[type='file']")
+    .fileupload({
+      dropZone: '#notice_of_assignment_upload',
+      acceptFileTypes: /\/(pdf)$/i,
+
+      start: function () {
+        $('.notice_of_assignment_upload_button').text('Uploading...')
+      },
+
+      progress: function (e, data) {
+        var com = Math.round((data.loaded * 100.0) / data.total)
+        $(".notice_of_assignment_upload_button").text(com +"% Complete")
+      },
+
+      fail: function (e, data) {
+        $('.notice_of_assignment_upload_button').show()
+      }
+    })
+    .on('cloudinarydone', function (e, data) {
+
+      $('<a/>').
+        addClass('delete_by_token').
+        attr({href: '#'}).
+        data({delete_token: data.result.delete_token}).
+        html('&times;').
+        appendTo('.notice_of_assignment_upload_container').
+        click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+            $('.notice_of_assignment_upload_button').text('Upload Credit Report')
+            $('input[name="debtor[file_id]"]').remove();
+            $('a.delete_by_token').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+        });
+      });
+    });
+  });

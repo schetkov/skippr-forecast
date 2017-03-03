@@ -1,0 +1,123 @@
+.admin-page__header
+  = link_to "Customer Details", "#", class: "admin-page__header_heading"
+  .admin-page__header--right
+    = link_to "Edit Customer", "#", class: "button button-small"
+
+.main-content
+  %section
+    %span= button_to "Approve Customer", custom_admin_debtor_approvals_path(id: @debtor)
+
+    %h2= "Customer ##{@debtor.id}"
+    %table.small-table
+      %tbody
+        %tr
+          %td.name Name
+          %td= @debtor.legal_business_name
+        %tr
+          %td.name Status
+          %td= @debtor.status.capitalize
+        %tr
+          %td.name Seller
+          %td= link_to @debtor.seller.name, custom_admin_seller_path(@debtor.seller)
+        %tr
+          %td.name Seller Company
+          %td= link_to @debtor.seller.seller_company_name, custom_admin_seller_path(@debtor.seller)
+        %tr
+          %td.name ACN
+          %td= @debtor.acn
+        %tr
+          %td.name Website
+          %td= @debtor.website
+        %tr
+          %td.name Business Type
+          %td= @debtor.business_type
+        %tr
+          %td.name Business Sector
+          %td= @debtor.business_sector
+        %tr
+          %td.name Contact Name
+          %td= @debtor.contact_name
+        %tr
+          %td.name Contact Phone Number
+          %td= @debtor.contact_phone_number
+        %tr
+          %td.name Contact Email
+          %td= @debtor.contact_email
+        %tr
+          %td.name Internal Account Debtor ID
+          %td= @debtor.internal_account_debtor_id
+        %tr
+          %td.name Customer Reference ID
+          %td= @debtor.customer_reference_id
+        %tr
+          %td.name Payment Processor
+          %td= @debtor.payment_processor
+        %tr
+          %td.name Other Name
+          %td= @debtor.other_name
+        %tr
+          %td.name Thirty Days
+          %td= @debtor.thirty_days
+        %tr
+          %td.name Sixty Days
+          %td= @debtor.sixty_days
+        %tr
+          %td.name Ninety Days
+          %td= @debtor.ninety_days
+        %tr
+          %td.name Over Ninety Days
+          %td= @debtor.over_ninety_days
+        %tr
+          %td.name Aged Receivables Last Updated At
+          %td= @debtor.aged_receivables_last_updated_at
+        %tr
+          %td.name Warranties
+          %td= @debtor.warranties
+        %tr
+          %td.name Progressive Billing
+          %td= @debtor.progressive_billing
+        %tr
+          %td.name Return Rights
+          %td= @debtor.return_rights
+        %tr
+          %td.name Consignment Basis
+          %td= @debtor.consignment_basis
+        %tr
+          %td.name Credit Terms
+          %td= @debtor.credit_terms
+        %tr
+          %td.name Relationship Start Date
+          %td= @debtor.relationship_start_date.try(:strftime, "%d %B %Y")
+        %tr
+          %td.name Created At
+          %td= @debtor.created_at.strftime("%b %e, %l:%M %p")
+        %tr
+          %td.name Updated At
+          %td= @debtor.updated_at.strftime("%b %e, %l:%M %p")
+        %tr
+          %td.name Discounts Offered
+          %td= @debtor.discounts_offered
+        %tr
+          %td.name Allow Offsets
+          %td= @debtor.allow_offsets
+        %tr
+          %td.name Contact ID
+          %td= @debtor.contact_id
+        %tr
+          %td.name Contact Status
+          %td= @debtor.contact_status
+        %tr
+          %td.name Account Number
+          %td= @debtor.account_number
+        %tr
+          %td.name Tax Number
+          %td= @debtor.tax_number
+        %tr
+          %td.name Addresses
+          %td= @debtor.addresses
+        %tr
+          %td.name Phones
+          %td= @debtor.phones
+        %tr
+          %td.name Value of Outstanding Invoices
+          %td= @debtor.value_of_outstanding_invoices

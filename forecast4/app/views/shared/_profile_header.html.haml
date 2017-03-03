@@ -1,0 +1,36 @@
+.col-md-2
+  - if @company.avatar_id
+    = cl_image_tag @company.avatar_id,
+      class: 'img-rounded',
+      width: 150,
+      height: 150,
+      crop: :fill
+  - else
+    = image_tag 'thumbnail_140.svg', class: 'img-rounded'
+.col-md-7
+  %h2
+    = @company.name
+    - if @company.user.buyer?
+      %span= "##{@company.user.account.id}"
+  %span
+    %em= @company.address
+
+  %p= @company.description
+  %span
+    %strong Years in business:
+    = @company.years_in_business
+  %span
+    %strong ACN:
+    = @company.acn
+  %p
+    %span
+      %strong Website:
+      - if @company.website
+        = link_to @company.website, @company.website, target: '_blank'
+    %span
+      %strong Phone:
+      = @company.phone_number
+.col-md-3
+  - if current_user == @company.user
+    = link_to 'Manage Profile', settings_path, class: 'button button-small',
+      style: 'float: right'

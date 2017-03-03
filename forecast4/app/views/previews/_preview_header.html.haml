@@ -1,0 +1,38 @@
+.row.auction-header
+  .col-md-2
+    - if @auction.seller_company.avatar_id
+      = cl_image_tag @auction.seller_company.avatar_id,
+        class: 'img-rounded',
+        width: 150,
+        height: 150,
+        crop: :fill
+    - else
+      = image_tag 'thumbnail_140.svg', class: 'img-rounded'
+  .col-md-6
+    %h2=@auction.seller_company_name
+    %span
+      %em= @auction.seller_company.address
+
+    %p= @auction.seller_company.description
+    %p
+      %span
+        %strong Years in business:
+        = @auction.seller_company.years_in_business
+      %span
+        %strong ACN:
+        = @auction.seller_company.acn
+    %p
+      %span
+        %strong Website:
+        = @auction.seller_company.website
+      %span
+        %strong Phone:
+        = @auction.seller_company.phone_number
+  .col-md-4
+    .bid-container
+      = button_to 'Confirm', auction_preview_path(@auction), class: 'button'
+      %p{ style: "padding-top: 10px;" }
+        %strong
+          Auction will start on
+          %br
+          = @auction.start_date.strftime('%e %B %Y')

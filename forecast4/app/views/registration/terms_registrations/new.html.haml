@@ -1,0 +1,86 @@
+.row.registration-terms
+  .col-md-10.col-md-offset-1
+    .wizard-progress
+      .row
+        .col-md-4
+          .step.filled
+            My Business
+            %span
+        .col-md-4
+          .step.filled
+            My Customers
+            %span
+        .col-md-4
+          .step.last.filled
+            Director Details
+            %span
+
+    .auction.with-progress-bar
+      -# .row
+      -#   .col-md-12
+      -#     -# %h5 To use our service you are required to accept our Terms &amp; Conditions.
+      -#     -# .blue-help-box
+      -#     -#   %p
+      -#     -#     %strong Important to note 
+      -#     -#     \- this does not commit you to use PostInvoice.
+      -#     -#     It just enables you to! Remember you only use us when you need to.
+      -#
+      -#     .fixed-height-content-container
+      -#       = render "msa"
+
+      .row
+        .col-md-12
+          .blue-help-box{ style: "margin-top: 0" }
+            %p
+              Please provide the details of one Director for your business. This
+              is required for identification purposes and e-signing of the Skippr
+              Terms &amp; Conditions.
+            %p
+              The elected Director will receive an email with Skippr's Terms and
+              Conditions which will need to be executed before invoices can be
+              funded.
+            %p
+              %span Important to note
+              \- All information is kept safe and secure via 128-bit SSL encryption.
+
+      = form_for @terms_registration, url: terms_registration_path do |f|
+        = render '/application/error_messages', object: @terms_registration
+        .row
+          .col-md-8
+            .form-group
+              = f.label :directors_name, "Director's Name"
+              = f.text_field :directors_name, class: "form-control"
+            .form-group
+              = f.label :directors_email, "Director's Email"
+              = f.text_field :directors_email, class: "form-control"
+            .form-group
+              = f.label :directors_address, "Director's Address"
+              = f.text_field :directors_address, class: "form-control"
+            .form-group
+              = f.label :drivers_license_number do
+                Driver License Number
+                %span.icon.entypo-help{ data: { toggle: "tooltip", placement: "top", title: "We use your Drivers License to verify your identity with ASIC. This information is kept safe and secure via 128-bit SSL encryption." } }
+              = f.text_field :drivers_license_number, class: "form-control"
+            .form-group
+              = f.label :dob_day, "Date of Birth"
+              .row
+                .col-sm-8
+                  .row
+                    .col-sm-3.dob-field
+                      = f.text_field :dob_day, placeholder: "DD", maxlength: 2, class: "form-control"
+                    .col-sm-3.dob-field
+                      = f.text_field :dob_month, placeholder: "MM", maxlength: 2, class: "form-control"
+                    .col-sm-4.dob-field
+                      = f.text_field :dob_year, placeholder: "YYYY", maxlength: 4, class: "form-control"
+          .col-md-12
+            .submit-field
+              = f.submit "Go to Seller Dashboard", class: 'button button-green'
+              -# %br
+              -# = link_to "Print Master Services Agreement",
+                page_path("print_terms"),
+                target: "_blank"
+
+:javascript
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  }) ;

@@ -1,0 +1,20 @@
+.row.header
+  .col-md-12
+    %h3.logo
+      = link_to (image_tag "skippr_logo.png"), signed_out_root_path
+    %h4 Sign in to your account.
+.row
+  .col-md-12
+    .wrapper.clearfix
+      .formy
+        .row
+          .col-md-12
+            = render 'sessions/form'
+
+    .already-account
+      = link_to t('.forgot_password'), new_password_path
+    - if Clearance.configuration.allow_sign_up?
+      .already-account
+        Don't have an account?
+        = link_to t('.sign_up'), sign_up_path
+        %br

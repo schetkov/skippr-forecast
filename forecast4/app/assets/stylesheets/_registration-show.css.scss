@@ -1,0 +1,31 @@
+.registration {
+
+  .new_registration_seller_registrar {
+    display: none;
+    padding-top: 15px;
+  }
+
+  /* Remove button */
+  .remove_fields {
+    padding: 10px 15px;
+    color: #444;
+    display: inline;
+  }
+
+  #registration_seller_registrar_existing_facility__secured {
+    width: 70%;
+    height: 38px;
+    display: inline-block;
+  }
+
+  .existing-facilities {
+    padding-bottom: 15px;
+
+    h5 {
+      font-weight: bold;
+      padding: 15px 0;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #eeeeee;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.admin-page__header
+  = link_to @seller.seller_company_name, "#", class: "admin-page__header_heading"
+  .admin-page__header--right
+    = link_to "Edit Seller", edit_custom_admin_seller_path(@seller), class: "button button-small"
+
+.main-content
+  %ul.main-content__heading
+    %li.main-content__heading_list_element
+      = link_to "Details", custom_admin_seller_path(@seller), class: "main-content__heading_title"
+    %li.main-content__heading_list_element
+      = link_to "Invoices", custom_admin_seller_invoices_path(@seller),
+        class: "main-content__heading_title seller-invoices"
+
+  %table.full-width__table
+    %tbody
+      %tr.head
+        %th ID
+        %th Invoice No
+        %th Customer
+        %th Face Value
+        %th Rating
+        %th Status
+        %th Action
+      - @invoices.each do |invoice|
+        %tr{ class: "invoice_#{invoice.id}" }
+          %td.reference= link_to invoice.id, custom_admin_invoice_path(invoice)
+          %td= invoice.invoice_no
+          %td= link_to invoice.debtor.try(:legal_business_name), "#"
+          %td= number_to_currency(invoice.face_value, precision: 0)
+          - if invoice.rating
+            %td= invoice.rating.master_rating_value
+          - else
+            %td -
+          %td= invoice.workflow_state.capitalize
+          %td
+            = link_to "View", custom_admin_invoice_path(invoice)
+            = link_to "Edit", "#"
+            = link_to "Delete", "#"

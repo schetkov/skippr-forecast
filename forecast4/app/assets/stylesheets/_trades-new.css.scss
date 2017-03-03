@@ -1,0 +1,82 @@
+
+.trade-show {
+
+  .trade-header {
+    padding-bottom: 9px;
+    margin: 40px 0 30px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .trade-summary {
+
+    .fees {
+      margin-top: 25px;
+      padding-bottom: 8px;
+
+      .fee {
+        padding: 10px 0;
+        color: #696969;
+        font-size: 15px;
+
+        @media(max-width: 767px) {
+          font-size: 13px;
+        }
+
+        .amount {
+          letter-spacing: 0.1px;
+          color: #84868A;
+          font-size: 16px;
+
+          @media(max-width: 767px) {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+
+  .headers {
+    color: #A9B0BB;
+    font-size: 13px;
+    letter-spacing: .3px;
+    border-bottom: 2px solid #EBECEE;
+    padding-bottom: 4px;
+  }
+
+  .trade-summary {
+    margin-bottom: 30px;
+  }
+
+  .trade-summary .fees {
+    border-bottom: none;
+  }
+
+  .trade-info {
+    border: 1px solid #bee1f3;
+    background: #f8fdfe;
+    padding: 20px 22px 18px 22px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+
+    p {
+      &.bold {
+        font-weight: 500;
+      }
+
+      &.bold.completed {
+        font-size: 16px;
+        color: #0F9B0F;
+      }
+
+      &.bold.pending {
+        font-size: 16px;
+        color: #D88C1B;
+      }
+    }
+  }
+
+  .button.button-green {
+    width: 100%;
+    margin: 15px 0;
+  }
+}

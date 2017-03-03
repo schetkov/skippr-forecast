@@ -1,0 +1,132 @@
+= react_component 'Radar', receivables: @invoices, payables: @payables, customers: @customers,
+  vendors: @vendors, scenarios: @scenarios, invoices_outstanding: @invoices_outstanding,
+  payables_outstanding: @payables_outstanding
+
+= render 'header'
+
+.radar-graph.container-fluid
+  = react_component 'RadarGraph', graphName: 'radar_graph'
+
+#scenarios
+  .container-fluid
+    = react_component 'ScenariosIndex'
+    = react_component 'MonthsSwitch'
+#features
+  #tabs
+    .container-fluid
+      .tabs-wrapper
+        %ul.nav.nav-tabs
+          %li.active
+            %a{ href: '#invoices', data: { toggle: 'tab' } }
+              Invoice Manager
+          %li
+            %a{ href: '#sales', data: { toggle: 'tab' } }
+              Sales
+          %li
+            %a{ href: '#expenses', data: { toggle: 'tab' } }
+              Expenses
+          %li
+            %a{ href: '#other_expenses', data: { toggle: 'tab' } }
+              Other expenses
+
+        .tab-content
+          #invoices.tab-pane.active
+            .tabs-wrapper
+              %ul.nav.nav-tabs
+                %li.active
+                  %a{ href: '#receivables', data: { toggle: 'tab' } }
+                    Receivables
+                %li
+                  %a{ href: '#payables', data: { toggle: 'tab' } }
+                    Payables
+                %li#filter-invoices
+                  = react_component 'FilterInvoices'
+                  
+              .tab-content
+                #receivables.tab-pane.active
+                  = react_component 'InvoicesIndex', type: 'receivables'
+                #payables.tab-pane
+                  = react_component 'InvoicesIndex', type: 'payables'
+
+          #sales.tab-pane
+            .row
+              .col-md-7
+                .tabs-wrapper
+                  %ul.nav.nav-tabs
+                    %li.active
+                      %a{ href: '#rules', data: { toggle: 'tab' } }
+                        Rules
+                    %li
+                      %a{ href: '#historical', data: { toggle: 'tab' } }
+                        Historical
+
+                  .tab-content
+                    #rules.tab-pane.active
+                      = react_component 'RulesIndex', type: 'sales_forecast'
+                    #historical.tab-pane
+                      = react_component 'HistoricalIndex', type: 'sales'
+
+              .col-md-5
+                .tabs-wrapper
+                  %ul.nav.nav-tabs
+                    %li.active
+                      %a{ href: '#projection', data: { toggle: 'tab' } }
+                        Projections
+                  .tab-content
+                    #projection.tab-pane.active
+                      = react_component 'SalesProjectionIndex', invoices: [], type: 'receivables'
+
+          #expenses.tab-pane
+            .row
+              .col-md-7
+                .tabs-wrapper
+                  %ul.nav.nav-tabs
+                    %li.active
+                      %a{ href: '#expense_rules', data: { toggle: 'tab' } }
+                        Rules
+                    %li
+                      %a{ href: '#expense_historical', data: { toggle: 'tab' } }
+                        Historical
+
+                  .tab-content
+                    #expense_rules.tab-pane.active
+                      = react_component 'RulesIndex', type: 'expense_forecast'
+                    #expense_historical.tab-pane
+                      = react_component 'HistoricalIndex', type: 'expense'
+
+              .col-md-5
+                .tabs-wrapper
+                  %ul.nav.nav-tabs
+                    %li.active
+                      %a{ href: '#payable_projection', data: { toggle: 'tab' } }
+                        Projections
+                  .tab-content
+                    #payable_projection.tab-pane.active
+                      = react_component 'ExpenseProjectionIndex', invoices: [], type: 'payables'
+
+          #other_expenses.tab-pane
+            .row
+              .col-md-7
+                .tabs-wrapper
+                  %ul.nav.nav-tabs
+                    %li.active
+                      %a{ href: '#other_expenses_rules', data: { toggle: 'tab' } }
+                        Rules
+
+                  .tab-content
+                    #other_expenses_rules.tab-pane.active
+                      = react_component 'RulesIndex', type: 'other_expenses_forecast'
+
+              .col-md-5
+                .tabs-wrapper
+                  %ul.nav.nav-tabs
+                    %li.active
+                      %a{ href: '#other_payable_projection', data: { toggle: 'tab' } }
+                        Projections
+                  .tab-content
+                    #other_payable_projection.tab-pane.active
+                      = react_component 'ExpenseProjectionIndex', invoices: [], type: 'other_payables'
+
+          = react_component 'SalesRuleForm'
+          = react_component 'ScenarioForm'
+

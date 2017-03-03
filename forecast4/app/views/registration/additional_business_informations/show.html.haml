@@ -1,0 +1,17 @@
+.row
+  .col-md-10.col-md-offset-1
+    .auction
+
+      %h3.registration-header Please enter additional information
+
+      .row
+        .col-md-12
+          = form_for @registration, url: registration_additional_business_information_path,
+            html: { role: 'form' } do |form|
+
+            = render '/application/error_messages', object: @registration
+            = render 'registration/additional_business_informations/form', f: form
+
+            .form-group{ style: "text-align: center; margin-top: 35px;" }
+              = content_tag 'button', class: 'button button-clear' do
+                %span Next step

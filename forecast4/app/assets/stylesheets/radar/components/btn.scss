@@ -1,0 +1,12 @@
+@import 'radar/variables';
+
+.btn {
+  text-transform: uppercase;
+  font-family: $header-font;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.btn-default {
+  border: 1px solid black;
+}

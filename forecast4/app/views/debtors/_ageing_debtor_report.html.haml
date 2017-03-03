@@ -1,0 +1,33 @@
+.row
+  .col-md-12
+    .financial-table.clearfix
+      .features-col.col-sm-10
+        .header
+          Ageing Customer Report
+          %span= last_updated_date_for_aged_receivables(@debtor)
+        .spec.financials
+          A/R Balance
+        .spec.financials
+          Invoices 1-30 Days
+        .spec.financials
+          Invoices 31-60 Days
+        .spec.financials
+          Invoices 61-90 Days
+        .spec.financials
+          Invoices over 90 Days
+      .plan-col.last.col-sm-2
+        .header{ style: "text-align: center" }
+          Amount
+          .price
+            ($AUD)
+        .spec
+          = number_to_currency(sum_of_oustanding_aged_receivables(@debtor),
+            precision: 0)
+        .spec
+          = number_to_currency(@debtor.thirty_days, precision: 0)
+        .spec
+          = number_to_currency(@debtor.sixty_days, precision: 0)
+        .spec
+          = number_to_currency(@debtor.ninety_days, precision: 0)
+        .spec
+          = number_to_currency(@debtor.over_ninety_days, precision: 0)

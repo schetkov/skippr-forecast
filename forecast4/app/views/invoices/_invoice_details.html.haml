@@ -1,0 +1,45 @@
+.financial-table.clearfix
+  .row
+    .features-col.col-sm-6
+      .heading
+        Invoice Details
+      %ul.invoice-details
+        %li
+          Face Value:
+          %strong
+            = number_to_currency(@invoice.face_value, precision: 0)
+        %li
+          Rating:
+          %strong
+            = @invoice.rating_value || "-"
+        %li
+          Invoice Payment Period:
+          %strong
+            = "#{payment_period(@invoice)} Days"
+        %li
+          Purchase Order Number:
+          %strong
+            - if @invoice.purchase_order_number.blank? || @invoice.purchase_order_number.nil?
+              = "-"
+            - else
+              = @invoice.purchase_order_number
+        %li
+          Date:
+          %strong
+            = @invoice.date.try(:strftime, ('%d/%m/%Y'))
+        %li
+          Due Date:
+          %strong
+            = @invoice.due_date.try(:strftime, ('%d/%m/%Y'))
+        %li
+          Anticipated Pay Date:
+          %strong
+            = @invoice.anticipated_pay_date.try(:strftime, ('%d/%m/%Y'))
+        %li
+          Debtor:
+          %span
+            = link_to @invoice.debtor.legal_business_name, debtor_path(@invoice.debtor)
+    .col-sm-6.preview
+      .preview-file
+        - if @invoice.invoice_document
+          = link_to(image_tag(cl_image_path(@invoice.invoice_document.file_name + ".jpg")), cl_image_path(@invoice.invoice_document.file_name), target: "_blank")

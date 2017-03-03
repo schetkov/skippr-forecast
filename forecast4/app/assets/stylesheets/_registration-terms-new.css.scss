@@ -1,0 +1,80 @@
+.registration-terms {
+  .new_registration_terms_registrar {
+    margin-top: 15px;
+  }
+
+  .dob-field {
+    padding-right: 0;
+  }
+
+  .terms-box {
+    label {
+      padding-left: 0;
+      font-weight: normal;
+    }
+  }
+
+  .submit-field {
+    display: block;
+    float: right;
+    margin-top: 30px;
+    text-align: center;
+
+    input[type="submit"] {
+      margin-bottom: 10px;
+    }
+  }
+
+  .blue-help-box {
+    h5 {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      span {
+        font-weight: bold;
+      }
+    }
+
+    border: 1px solid #bee1f3;
+    background: #f8fdfe;
+    padding: 20px 22px 18px 22px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    // margin-top: 30px;
+  }
+}
+
+#msa-content {
+  ol {
+    counter-reset: item;
+  }
+
+  ol li {
+    display: block;
+    position: relative;
+
+    span {
+      display: block;
+      margin-top: 10px;
+
+      &.spaced {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  ol li:before {
+    content : counters(item, ".")".";
+    counter-increment: item;
+    position: absolute;
+    margin-right: 100%;
+    right: 10px;
+  }
+}

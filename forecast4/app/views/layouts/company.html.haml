@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    = render "shared/meta_tags"
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body#company
+
+    = render "shared/failed_import"
+    = render 'shared/header'
+
+    = yield
+
+    = render 'shared/dark_footer'
+
+    = render "analytics"

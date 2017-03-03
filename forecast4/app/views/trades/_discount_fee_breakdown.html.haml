@@ -1,0 +1,50 @@
+#discount-fee-breakdown.modal{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h4#myModalLabel.modal-title Discount Fee Breakdown
+      .modal-body
+        .row
+          .col-md-12.trade-summary
+            .headers
+              .row
+                .col-xs-2
+                  Inv #
+                .col-xs-2
+                  Advance Amount
+                .col-xs-1
+                  Rating
+                .col-xs-2
+                  Discount Rate
+                .col-xs-2
+                  Payment Days (est)
+                .col-xs-2
+                  Discount Fee (est)
+
+            .fees
+              - @trade.invoices.each do |invoice|
+                .row.fee
+                  .col-xs-2
+                    = invoice.invoice_no
+                  .col-xs-2
+                    = number_to_currency(invoice.advance_amount_in_dollars, precision: 0)
+                  .col-xs-1
+                    = invoice.rating_value
+                  .col-xs-2
+                    = number_to_percentage discount_rate_for_invoice_with_trade(invoice), precision: 2
+                  .col-xs-2
+                    = payment_period(invoice).to_s + " Days"
+                  .col-xs-2
+                    = number_to_currency(invoice.discount_fee_in_dollars, precision: 0)
+
+
+      .modal-footer
+        .row
+          .col-md-4.col-md-offset-5
+            %strong
+              Total Discount Fee
+          .col-md-3.text-left
+            %strong
+              = number_to_currency(@trade.discount_fee, precision: 0)

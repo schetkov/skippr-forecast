@@ -1,0 +1,50 @@
+@import 'radar/variables';
+
+
+$border-color: darken($light-blue, 5%);
+
+.list-group-item.-rule {
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-image: linear-gradient(to bottom,lighten($light-blue,10%) 0,$light-blue 100%);
+  border: 1px solid $border-color;
+  color: #0F477E;
+  padding: 10px 15px;
+
+  .list-group-item-heading {
+    color: #281818;
+  }
+
+  h4 {
+    font-family: $subheader-font;
+    font-size: 1.4em;
+  }
+
+  &:hover {
+    transition: 1s;
+    background-image: linear-gradient(to bottom,lighten($light-blue,10%) 0, darken($light-blue, 10%) 100%);
+    border: 1px solid darken($border-color, 5%);
+    .edit-hint {
+      display: block;
+    }
+  }
+
+  .amount-text {
+    margin-bottom: 8px;
+    font-size: 1.4em;
+    font-weight: bold;
+    font-family: $subheader-font;
+  }
+
+  .edit-hint {
+    display: none;
+    font-size: 10px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+
+  &.-add-rule {
+    text-align: center;
+  }
+}

@@ -1,0 +1,14 @@
+.btn-wide {
+  width: 100%;
+}
+
+.btn-transparent {
+  color: white;
+  background-color: transparent;
+  border-color: white;
+
+  &:hover {
+    color: #333;
+    background-color: white;
+  }
+}

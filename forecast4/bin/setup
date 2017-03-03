@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+
+# Set up Rails app. Run this script immediately after cloning the codebase.
+# https://github.com/thoughtbot/guides/tree/master/protocol
+
+# Set up Ruby dependencies via Bundler
+if ! command -v bundle > /dev/null; then
+  gem install bundler --no-document
+fi
+
+bundle install
+
+# Add binstubs to PATH via export PATH=".git/safe/../../bin:$PATH" in ~/.zshenv
+if [ ! -d .git/safe ]; then
+  mkdir .git/safe
+fi
+
+# Set up deploys
+if ! git remote | grep 'staging' > /dev/null; then
+  git remote add staging git@heroku.com:ix-staging.git
+fi
+
+if ! git remote | grep 'production' > /dev/null; then
+  git remote add production git@heroku.com:ix-production.git
+fi
+
+if ! command -v heroku > /dev/null; then
+  printf 'Heroku Toolbelt is not installed.\n'
+  printf 'See https://toolbelt.heroku.com/ for install instructions.\n'
+fi
+
+if heroku join --app ix-staging > /dev/null; then
+  printf 'You are a collaborator on the "ix-staging" Heroku app\n'
+else
+  printf 'Ask for access to the "ix-staging" Heroku app\n'
+fi
+
+if heroku join --app ix-production > /dev/null; then
+  printf 'You are a collaborator on the "ix-production" Heroku app\n'
+else
+  printf 'Ask for access to the "ix-production" Heroku app\n'
+fi
+
+# Set up the database
+bundle exec rake db:setup
+
+# Run DB Seed file to create site preferences and master ratings
+bundle exec rake db:seed
+
+# Create admin users
+bundle exec rake admin:create_admin_users
+
+# Create Peninsula Capital (default buyer of trades)
+bundle exec rake admin:create_peninsula_capital
+
+# Set up configurable environment variables
+if [ ! -f .env ]; then
+  cp .sample.env .env
+fi
+
+# Pick a port for Foreman
+if ! command -v foreman > /dev/null; then
+  printf 'Foreman is not installed.\n'
+  printf 'See https://github.com/ddollar/foreman for install instructions.\n'
+  exit 1
+fi

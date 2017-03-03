@@ -1,0 +1,78 @@
+.registration-business {
+  .checkboxes {
+    label:first-of-type {
+      margin-right: 8px;
+    }
+  }
+
+  a.remove_fields {
+    display: inline-block;
+    padding: 7px 15px;
+  }
+
+  .facilities:nth-of-type(1) {
+    .remove_fields {
+      visibility: hidden;
+    }
+  }
+
+
+  .blue-help-box {
+    h5 {
+      margin-top: 0;
+    }
+
+    border: 1px solid #bee1f3;
+    background: #f8fdfe;
+    padding: 20px 22px 18px 22px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+  }
+
+  .existing-facilities {
+    display: none;
+  }
+
+  #financial_statement_upload, #bank_statement_upload, #other_documents_upload {
+    border-top: 1px solid #eeeeee;
+    padding: 15px 0 0px;
+
+    p {
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+
+    .upload_button {
+      margin-top: 7px;
+    }
+
+    .preview-financial-statement, .preview-bank-statement {
+      margin-top: 7px;
+    }
+  }
+
+  #financial_statement_upload {
+    border-top: none;
+  }
+
+  #other_documents_upload {
+    p.tip {
+      font-weight: normal;
+      font-style: italic;
+      margin: 5px 0 7px;
+    }
+  }
+
+  img {
+    margin-right: 7px;
+  }
+
+  .form-group {
+    margin-bottom: 30px;
+  }
+
+  .submit-field {
+    float: right;
+  }
+}

@@ -1,0 +1,11 @@
+## Customize the test machine
+machine:
+  # Add some environment variables
+  environment:
+    CLOUDINARY_API_KEY: 955415838167368
+    CLOUDINARY_API_SECRET: kFUGLE9HA8bJ3OXWBwaWUOcDjsA
+    CODECLIMATE_REPO_TOKEN: 4b3e05ade6bd748e189d15451a6654e7677ae82e23e9672b8d6a53666b8b1602
+
+general:
+  artifacts:
+    - "coverage"

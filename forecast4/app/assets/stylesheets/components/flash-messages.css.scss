@@ -1,0 +1,51 @@
+.alert {
+  &.alert-success {
+    margin-top: 20px;
+  }
+
+  &.alert-info {
+    margin-bottom: 0;
+    background: #F4F7FA;
+    text-align: center;
+    color: #333;
+    text-shadow: 1px 1px 1px #fff;
+  }
+
+  &.alert-notice {
+    text-align: center;
+    @include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
+  }
+}
+
+.home {
+  .alert {
+    &.alert-success, &.alert-warning {
+      margin: 0px;
+      text-align: center;
+    }
+  }
+}
+
+#auction {
+  .alert {
+    &.alert-success, &.alert-warning {
+      margin-top: 40px;
+    }
+  }
+}
+
+#company {
+  .alert {
+    &.alert-success {
+      margin-top: 0px;
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.alert {
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}

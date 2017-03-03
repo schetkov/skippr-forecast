@@ -1,0 +1,167 @@
+.tabs-wrapper
+  %ul.nav.nav-tabs
+    %li
+      %a{ href: "#approved", data: { toggle: "tab" } }
+        Approved Invoices
+    %li
+      %a{ href: "#awaiting-approval", data: { toggle: "tab" } }
+        Awaiting Approval
+    %li.active
+      %a{ href: "#pending", data: { toggle: "tab" } }
+        Pending Invoices
+
+  .tab-content
+    #approved.tab-pane.fade
+      - if @dashboard.approved_invoices.any?
+        %table
+          %thead
+            %tr
+              %th Issue Date
+              %th Face Value
+              %th Invoice Number
+              %th Invoice Rating
+              %th Customer
+              %th
+          %tbody
+            = form_tag new_trade_path, method: :get do
+              - @dashboard.approved_invoices.each do |invoice|
+                %tr{ class: "invoice_#{invoice.id}" }
+                  %td= invoice.date.strftime("%e %b %Y")
+                  %td= number_to_currency(invoice.face_value, precision: 2)
+                  %td= link_to invoice.invoice_no, invoice
+                  %td.rating
+                    = invoice.rating_value
+                    %span.icon.entypo-help{ data: { toggle: "tooltip", placement: "top", title: "Advance: #{number_to_percentage(invoice.rating.advance_amount * 100, precision: 1)} / Discount Rate: #{number_to_percentage(invoice.rating.discount_rate * 100, precision: 1)} (per 30 days)" } }
+                  %td= invoice.debtor.try(:legal_business_name)
+                  %td
+                    %span.button-checkbox
+                      %button.btn{"data-color" => "primary", :type => "button"} Sell Invoice
+                      = check_box_tag "invoices[]", invoice.id, false, id: "invoice_#{invoice.id}", class: "hidden"
+              %tr
+                %td
+                %td
+                %td
+                %td
+                %td{style: "padding-left: 15px;"}
+                  = submit_tag "Create Trade", class: "button button-green"
+
+      - else
+        %p.empty There are no approved invoices!
+
+    #awaiting-approval.tab-pane.fade
+      - if @dashboard.awaiting_approval_invoices.any?
+        %table
+          %thead
+            %tr
+              %th Issue Date
+              %th Face Value
+              %th Invoice Number
+              %th Customer
+              %th Actions
+          %tbody
+            - @dashboard.awaiting_approval_invoices.each do |invoice|
+              %tr{ class: "invoice_#{invoice.id}" }
+                %td= invoice.date.strftime("%e %b %Y")
+                %td= number_to_currency(invoice.face_value, precision: 2)
+                %td= link_to invoice.invoice_no, invoice
+                %td= invoice.debtor.try(:legal_business_name)
+                %td= link_to "Awaiting approval", "#", class: "round-filled-button"
+      - else
+        %p.empty There are no invoices awaiting approval
+
+    #pending.tab-pane.fade.active.in
+      - if @dashboard.pending_invoices.any?
+        %table
+          %thead
+            %tr
+              %th Issue Date
+              %th Face Value
+              %th Invoice Number
+              %th Customer
+              %th Actions
+          %tbody
+            - @dashboard.pending_invoices.each do |invoice|
+              %tr{ class: "invoice_#{invoice.id}" }
+                %td= invoice.date.strftime("%e %b %Y")
+                %td= number_to_currency(invoice.face_value, precision: 2)
+                %td= link_to invoice.invoice_no, invoice
+                %td= invoice.debtor.try(:legal_business_name)
+                %td
+                  = link_to "Submit for approval", "#",
+                    class: "round-empty-button",
+                    data: { toggle: "modal", target: "#submit_invoice_#{invoice.id}" }
+                  = render "submit_for_approval", invoice: invoice
+      - else
+        %p.empty There are no pending invoices!
+
+
+:javascript
+  $(function () {
+      $('.button-checkbox').each(function () {
+
+          // Settings
+          var $widget = $(this),
+              $button = $widget.find('button'),
+              $checkbox = $widget.find('input:checkbox'),
+              color = $button.data('color'),
+              settings = {
+                  on: {
+                      icon: 'glyphicon glyphicon-check'
+                  },
+                  off: {
+                      icon: 'glyphicon glyphicon-unchecked'
+                  }
+              };
+
+          // Event Handlers
+          $button.on('click', function () {
+              $checkbox.prop('checked', !$checkbox.is(':checked'));
+              $checkbox.triggerHandler('change');
+              updateDisplay();
+          });
+          $checkbox.on('change', function () {
+              updateDisplay();
+          });
+
+          // Actions
+          function updateDisplay() {
+              var isChecked = $checkbox.is(':checked');
+
+              // Set the button's state
+              $button.data('state', (isChecked) ? "on" : "off");
+
+              // Set the button's icon
+              $button.find('.state-icon')
+                  .removeClass()
+                  .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+              // Update the button's color
+              if (isChecked) {
+                  $button
+                      .removeClass('btn-default')
+                      .addClass('btn-' + color + ' active');
+              }
+              else {
+                  $button
+                      .removeClass('btn-' + color + ' active')
+                      .addClass('btn-default');
+              }
+          }
+
+          // Initialization
+          function init() {
+
+              updateDisplay();
+
+              // Inject the icon if applicable
+              if ($button.find('.state-icon').length == 0) {
+                  $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+              }
+          }
+          init();
+      });
+  });
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  }) ;

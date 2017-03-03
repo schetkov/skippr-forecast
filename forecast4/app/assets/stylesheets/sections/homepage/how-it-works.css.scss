@@ -1,0 +1,8 @@
+.how-it-works {
+  padding: 130px 0;
+
+  .benefit {
+    padding-top: 100px;
+    &:first-child { padding-top: 0 }
+  }
+}

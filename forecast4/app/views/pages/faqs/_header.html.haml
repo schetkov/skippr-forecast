@@ -1,0 +1,15 @@
+%header.navbar.navbar-inverse.hero{:role => "banner"}
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".bs-navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to "Skippr", signed_out_root_path, class: "navbar-brand"
+    %nav.collapse.navbar-collapse.bs-navbar-collapse{:role => "navigation"}
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to 'How it works', signed_out_root_path
+
+        %li=link_to 'Sign up', sign_up_path
+
+        %li=link_to 'Login', sign_in_path
